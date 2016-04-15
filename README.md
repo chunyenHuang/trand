@@ -1,25 +1,27 @@
 # my-stuff
-
+This is a website for people to manage their stuff(mostly stuff in closet) and share their idea with other people.
 ## Functionality:
-User can manage own closets (multiple closets available, like spring, summer...
-clothes, dress, wallet, handbags, watches, sunglasses….
-picture gallery
-category
-description with name, brand, price, purchased date, tags, sold?
-sort and search
-User can make combination and document
-combine suite
-document on date or events
-User can share and follow on other users
-timeline based on dress
+### User can manage own closets 
+1. multiple closets available, like spring, summer...  
+2. picture gallery  
+3. category (clothes, dress, wallet, handbags, watches, sunglasses….)  
+4. description with name, brand, price, purchased date, tags, sold?  
+5. sort and search  
 
-User can view recommends
-weather
-trend
-fashion
-following
-random combination of closet
-login with Facebook
+### User can make combination and document  
+1. combine suite  
+2. document on date or events  
+3. User can share and follow on other users  
+4. timeline based on dress  
+
+### User can view recommends  
+1. weather  
+2. trend  
+3. fashion  
+4. following  
+5. random combination of closet  
+
+### Login with Facebook  
 
 ## Database Structure
 Users
