@@ -1,12 +1,16 @@
 var express = require('express');
 var app = express();
 
-app.use(express.static('./public'));
+app.use(express.static('./public/'));
 
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/public/index.html');
+if (!require.main.loaded) {
+  app.listen(3000, function () {
+    console.log('running on port: 3000');
+  })
+}
+
+app.on('close', function() {
+  console.log('rs');
 })
 
-app.listen(3000, function () {
-  console.log('server on 3000');
-})
+module.exports = app;
