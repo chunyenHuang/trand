@@ -1,0 +1,22 @@
+{
+  "name": "trand",
+  "version": "1.0.0",
+  "description": "A Trend-Trading website in the barter system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chunyenHuang/trand.git"
+  },
+  "author": "Chunyen Huang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chunyenHuang/trand/issues"
+  },
+  "homepage": "https://github.com/chunyenHuang/trand#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
