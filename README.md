@@ -1,5 +1,7 @@
-# my-stuff
-This is a website for people to manage their stuff(mostly stuff in closet) and share their idea with other people.
+# Trand
+A Trend-Trading website in the barter system.
+This is a website for people to manage their stuff(mostly stuff in closet) and share their idea with other people.  
+
 ## Functionality:
 ### User can manage own closets 
 1. multiple closets available, like spring, summer...  
