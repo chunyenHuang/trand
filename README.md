@@ -14,12 +14,16 @@ This is a website for people to manage their stuff(mostly stuff in closet) and s
 3. User can share and follow on other users  
 4. timeline based on dress  
 
-### User can view recommends  
-1. weather  
-2. trend  
-3. fashion  
-4. following  
-5. random combination of closet  
+### User can view recommendation of:
+1. Weather  
+2. Trend  
+3. Fashion  
+4. Following  
+5. Random combination of closet  
+
+### User can Exchange with others
+1. User can send offers with their collection to exchange for others'.
+2. It's gonna be fun and the most important funtionality of this app
 
 ### Login with Facebook  
 
