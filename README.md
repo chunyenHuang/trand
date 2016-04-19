@@ -1,4 +1,5 @@
-# Trand
+# [Trand](http://trand.herokuapp.com) - Trade the Trend
+
 A Trend-Trading website in the barter system.
 This is a website for people to manage their stuff(mostly stuff in closet) and share their idea with other people.  
 
