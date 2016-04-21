@@ -1,5 +1,29 @@
 body {
-  background: rgb(42, 42, 42);
-  color: rgb(208, 208, 208);
+  /*background: rgb(42, 42, 42);
+  color: rgb(208, 208, 208);*/
   font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+}
+
+.no-padding {
+  padding: 0px;
+}
+.no-margin {
+  margin: 0px;
+}
+.no-background {
+  background-color: rgb(255, 255, 255);
+}
+.no-border {
+  border: 0px;
+}
+.no-hover:hover {
+  background-color: rgb(255, 255, 255);
+}
+
+.show-box {
+  min-height: 500px;
+}
+.show-box img {
+  max-height:350px;
+  max-width: 100%;
 }
