@@ -1,7 +1,6 @@
-# [Trand](http://trand.herokuapp.com) - Trade the Trend
+# [Trand](http://trand.herokuapp.com) - Explore Fashion's Infinite Style.
 
-Trand [(trand.herokuapp.com)](http://trand.herokuapp.com) is a Trend-Trading website in the barter system.
-This is a website for people to manage their stuff(mostly stuff in closet) and share their idea with other people.  
+Trand [(trand.herokuapp.com)](http://trand.herokuapp.com) is a Trend-Trading website in the barter system. Trand also provides the infinite customized fashion style. This is a website for people to and share their fashion with the world.  
 
 ## Functionality:
 ### User can make combination and document  
