@@ -1,6 +1,5 @@
 body {
-  /*background: rgb(42, 42, 42);
-  color: rgb(208, 208, 208);*/
+  background: rgb(230, 230, 230);
   font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
 }
 
@@ -21,9 +20,28 @@ body {
 }
 
 .show-box {
-  min-height: 500px;
+  margin-left: -10px;
+  margin-right: -10px;
+  margin-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0.5 0.5 0.5 0.5 black;
+  height: 400px;
+  white-space:nowrap;
+  text-overflow: ellipsis;
 }
-.show-box img {
-  max-height:350px;
+.show-box h5 {
+  text-align: center;
+}
+.show-box:hover {
+}
+.img-box {
+  text-align: center;
+  height:250px;
+}
+.img-box img{
+  height:250px;
   max-width: 100%;
 }
