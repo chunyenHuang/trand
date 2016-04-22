@@ -9,10 +9,11 @@ app.use(express.static('./public/'));
 app.get('/search', function (req, res) {
   console.log(req.url);
   var fts = req.query.fts;
+  var cat = req.query.cat;
   var offset = req.query.offset;
   var limit = req.query.limit;
   var p1 = new Promise(function(resolve, reject) {
-    request(apiUrl + '&fts='+ fts + '&offset=' + offset + '&limit=' + limit , function (err, res, body) {
+    request(apiUrl + '&fts='+ fts + '&offset=' + offset + '&cat=' + cat + '&limit=' + limit , function (err, res, body) {
       resolve(body);
       reject(err);
     })
@@ -51,8 +52,12 @@ app.get('/api-category', function(req, res) {
     var response = JSON.parse(body);
     var list = [];
     for (var i = 0; i < response.categories.length; i++) {
-      list.push(response.categories[i].id);
+      list.push({
+        name: response.categories[i].name,
+        id: response.categories[i].id,
+      });
     }
+    console.log(list.sort());
     res.json(list.sort());
   })
 })

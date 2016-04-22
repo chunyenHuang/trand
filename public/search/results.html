@@ -1,31 +1,33 @@
 <div class="row">
-  <div class="col-xs-6 col-sm-4 col-md-2" ng-repeat="item in search.results">
-    <div class="show-box">
-      <h5>{{item.brandedName}}</h5>
-      <p>
-        {{item.categories[0].name}}
-      </p>
-      <a href="#" ng-click="search.productDetail(item.id);">
-        <img src={{item.image.sizes.IPhone.url}}>
-      </a>
-      <p>
-        ${{item.price}}
-      </p>
-      <a href={{item.pageUrl}}>buy it</a>
-    </div>
-    <div class="modal fade" id={{item.id}} tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id={{item.id}}>{{item.brandedName}}</h4>
-          </div>
-          <div class="modal-body">
-            <img src={{item.image.sizes.IPhone.url}}></li>
-            {{item.categories[0].name}}
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  <div infinite-scroll="search.nextPage()" infinite-scroll-distance="0" infinite-scroll-immediate-check=false>
+    <div class="col-xs-6 col-sm-4 col-md-2" ng-repeat="item in search.results">
+      <div class="show-box">
+        <h5>{{item.brandedName}}</h5>
+        <p>
+          {{item.categories[0].name}}
+        </p>
+        <a href="#" ng-click="search.productDetail(item.id);">
+          <img src={{item.image.sizes.IPhone.url}}>
+        </a>
+        <p>
+          ${{item.price}}
+        </p>
+        <a href={{item.pageUrl}}>buy it</a>
+      </div>
+      <div class="modal fade" id={{item.id}} tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id={{item.id}}>{{item.brandedName}}</h4>
+            </div>
+            <div class="modal-body">
+              <img src={{item.image.sizes.IPhone.url}}></li>
+              {{item.categories[0].name}}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
           </div>
         </div>
       </div>
