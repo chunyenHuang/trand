@@ -21,6 +21,7 @@ function search($http, $scope, $location) {
     })
   }
   vm.nextPage = function () {
+    console.log(found);
     var limit = 18;
     var search = $http.get(
       '/search?fts=' + $scope.content + '&offset=' + found + '&limit=' + limit
@@ -30,6 +31,7 @@ function search($http, $scope, $location) {
         vm.results.push(res.data[i]);
       }
       found = found + res.data.length;
+      console.log(found);
       $location.path('/results');
     })
   }
