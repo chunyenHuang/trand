@@ -1,4 +1,4 @@
-casper.test.begin('Trand', 6, function suite(test) {
+casper.test.begin('Trand', 5, function suite(test) {
     casper.start('http://localhost:3000', function() {
         test.assertTitle("Trand", "Trand - Homepage title is the one expected");
         test.assertExists('form', "form - A form is found.");
