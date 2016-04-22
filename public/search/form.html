@@ -2,7 +2,7 @@
   <div class="form-group">
     <label for="content"></label>
     <div class="input-group">
-      <input type="text" class="form-control" ng-model="content" placeholder="search..." value='dress'>
+      <input type="text" class="form-control" ng-model="content" name='content' placeholder="search..." value='dress'>
       <div class="input-group-addon no-padding no-background">
         <button type="sumbit" class='btn btn-sm btn-default no-border no-hover'>Trand</button>
       </div>
@@ -10,7 +10,7 @@
   </div>
   <div class="form-group">
     <label for="category">Category</label>
-    <select class="form-control" ng-model='category'>
+    <select class="form-control" ng-model='category' name='category'>
       <option ng-repeat="item in search.categories" value={{item.id}}>
         {{item.name}}
       </option>
