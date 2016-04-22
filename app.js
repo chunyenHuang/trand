@@ -57,7 +57,6 @@ app.get('/api-category', function(req, res) {
         id: response.categories[i].id,
       });
     }
-    console.log(list.sort());
     res.json(list.sort());
   })
 })
