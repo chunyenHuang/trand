@@ -2,7 +2,8 @@ var express = require('express');
 var app = express();
 var port = process.env.PORT || 3000;
 var request = require('request');
-var apiUrl = 'http://api.shopstyle.com/api/v2/products?pid=uid41-33788821-64'
+var apiUrl = 'http://api.shopstyle.com/api/v2'
+var pid = '?pid=uid41-33788821-64'
 
 app.use(express.static('./public/'));
 
@@ -13,7 +14,7 @@ app.get('/search', function (req, res) {
   var offset = req.query.offset;
   var limit = req.query.limit;
   var p1 = new Promise(function(resolve, reject) {
-    request(apiUrl + '&fts='+ fts + '&offset=' + offset + '&cat=' + cat + '&limit=' + limit , function (err, res, body) {
+    request(apiUrl + '/products' + pid + '&fts='+ fts + '&offset=' + offset + '&cat=' + cat + '&limit=' + limit , function (err, res, body) {
       resolve(body);
       reject(err);
     })
@@ -98,6 +99,24 @@ app.get('/api-histogram', function(req, res) {
   p1.then(function (body) {
     var response = JSON.parse(body);
     res.json(response);
+  })
+})
+app.get('/retailers', function (req, res) {
+  console.log('get Retailers');
+  var p1 = new Promise(function(resolve, reject) {
+    request(apiUrl + '/retailers' + pid , function (err, res, body) {
+      resolve(body);
+    })
+  });
+  p1.then(function (body) {
+    var response = JSON.parse(body);
+    var list = [];
+    for (var i = 0; i < 300; i++) {
+      list.push({
+        name: response.retailers[i].name,
+      });
+    }
+    res.json(list);
   })
 })
 

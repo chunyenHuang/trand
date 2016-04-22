@@ -1,7 +1,7 @@
 var app = angular.module('trand');
 app.controller('searchController', search);
-app.$inject = ['$http', '$scope', '$location'];
-function search($http, $scope, $location) {
+app.$inject = ['$http', '$scope', '$location', 'listService'];
+function search($http, $scope, $location, listService) {
   var vm = this;
   var found = 0;
   vm.results =[];
@@ -43,6 +43,7 @@ function search($http, $scope, $location) {
   vm.productDetail = function (itemId) {
     $('#'+itemId).modal('show');
   }
+
   function getCategory() {
     var categories =$http.get('/api-category');
     categories.then(function (res) {

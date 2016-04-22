@@ -57,6 +57,12 @@ describe('Test on Trand:', function () {
         done();
       })
     })
+    it('GET: /retailers', function(done) {
+      request(url+'/retailers', function (err, res, body) {
+        assert.equal(res.statusCode, 200);
+        done();
+      })
+    })
   })
 
   after(function () {

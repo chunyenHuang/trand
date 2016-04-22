@@ -3,7 +3,7 @@
     <div class="col-xs-6 col-sm-4 col-md-2" ng-repeat="item in search.results">
       <div class="show-box">
         <div class="img-box">
-          <a href="/" ng-click="search.productDetail(item.id);">
+          <a ng-click="search.productDetail(item.id);">
             <img src={{item.image.sizes.IPhone.url}}>
           </a>
         </div>
@@ -15,6 +15,7 @@
         <h5>
           ${{item.price}}
         </h5>
+        <a>retailer</a>
       </div>
       <div class="modal fade" id={{item.id}} tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog">
@@ -26,6 +27,7 @@
             <div class="modal-body">
               <img src={{item.image.sizes.IPhone.url}}></li>
               {{item.categories[0].name}}
+              <a href={{item.clickUrl}} target='_blank'>Buy on {{item.retailer.name}}</a>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
