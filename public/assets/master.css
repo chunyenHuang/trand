@@ -1,9 +1,10 @@
 body {
-  /*background: rgb(42, 42, 42);
-  color: rgb(208, 208, 208);*/
+  background: rgb(230, 230, 230);
   font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
 }
-
+a[ng-click]{
+    cursor: pointer;
+}
 .no-padding {
   padding: 0px;
 }
@@ -21,9 +22,35 @@ body {
 }
 
 .show-box {
-  min-height: 500px;
+  margin-left: -10px;
+  margin-right: -10px;
+  margin-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0.5 0.5 0.5 0.5 black;
+  height: 350px;
 }
-.show-box img {
-  max-height:350px;
+.show-box p {
+  height: 15px;
+  line-height: 15px;
+  overflow:hidden;
+}
+.show-box h5 {
+  text-align: center;
+}
+.show-box:hover {
+}
+.img-box {
+  text-align: center;
+  vertical-align: middle;
+  height:250px;
+  padding-bottom: 10px;
+}
+.img-box img{
+  display: inline-block;
+  vertical-align: middle;
+  max-height:250px;
   max-width: 100%;
 }

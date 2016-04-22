@@ -15,3 +15,5 @@ gulp.task('casper', function () {
 gulp.task('go', function () {
   nodemon({script: 'app.js'}).on('start', ['test', 'casper']);
 })
+
+gulp.task('travis', ['test', 'casper']);

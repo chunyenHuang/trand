@@ -1,18 +1,21 @@
-<div class="row">
-  <div infinite-scroll="search.nextPage()" infinite-scroll-distance="2" infinite-scroll-immediate-check=false>
+<div class='container' infinite-scroll="search.nextPage()" infinite-scroll-distance="2" infinite-scroll-immediate-check=false infinite-scroll-disabled='search.busy' >
+  <div class="row">
     <div class="col-xs-6 col-sm-4 col-md-2" ng-repeat="item in search.results">
       <div class="show-box">
-        <h5>{{item.brandedName}}</h5>
+        <div class="img-box">
+          <a ng-click="search.productDetail(item.id);">
+            <img src={{item.image.sizes.IPhone.url}}>
+          </a>
+        </div>
+        <small>{{item.brand.name}}</small>
+        <small ng-show='!item.brand.name'>unbranded</small>
         <p>
-          {{item.categories[0].name}}
+          {{item.name}}
         </p>
-        <a href="#" ng-click="search.productDetail(item.id);">
-          <img src={{item.image.sizes.IPhone.url}}>
-        </a>
-        <p>
+        <h5>
           ${{item.price}}
-        </p>
-        <a href={{item.pageUrl}}>buy it</a>
+        </h5>
+        <a>retailer</a>
       </div>
       <div class="modal fade" id={{item.id}} tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog">
@@ -24,6 +27,7 @@
             <div class="modal-body">
               <img src={{item.image.sizes.IPhone.url}}></li>
               {{item.categories[0].name}}
+              <a href={{item.clickUrl}} target='_blank'>Buy on {{item.retailer.name}}</a>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

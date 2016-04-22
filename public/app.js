@@ -20,3 +20,14 @@ app.config(['$routeProvider', function($routeProvider) {
     //   }
     // });
 }]);
+
+app.factory('listService', listService);
+listService.$inject=['$http'];
+function listService($http) {
+  function getRetailers() {
+    return $http.get('/retailers');
+  }
+  return {
+    getRetailers: getRetailers,
+  }
+}
