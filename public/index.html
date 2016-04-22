@@ -11,13 +11,33 @@
   </head>
   <body ng-app='trand'>
     <div class="container">
-      <div ng-controller="homeController as home">
-        <greeting></greeting>
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3 text-center">
+          <a href="#/home"><h1>Trand</h1></a>
+        </div>
       </div>
     </div>
+    <div class="container" ng-controller="searchController as search">
+      <div class="row">
+        <div class="col-md-4 col-md-offset-4 text-center">
+          <search-form></search-form>
+        </div>
+      </div>
+      <results></results>
+    </div>
+    <div ng-view></div>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js'></script>
+    <script src='/assets/ng-infinite-scroll.min.js'></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
     <script src='app.js'></script>
     <script src='home/home.controller.js'></script>
     <script src='home/greeting.js'></script>
+    <script src='search/searchController.js'></script>
+    <script src='search/search.directives.js'></script>
+
   </body>
 </html>
