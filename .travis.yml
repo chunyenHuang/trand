@@ -5,4 +5,6 @@ install:
 before_script:
   - npm install -g gulp
   - npm install -g mocha
-script: gulp travis
+  - npm install -g phantomjs
+  - npm install -g casperjs
+script: gulp test

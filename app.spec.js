@@ -1,12 +1,7 @@
 var chai = require('chai');
 var assert = chai.assert;
 var request = require('request');
-// var app = require('./app.js');
-// var RANDOMIZE = 0;
-// var server = app.listen(3000);
-// var port = server.address().port;
-var port = 3000;
-var url ='http://localhost:' + port;
+var url ='http://localhost:' + 3000;
 
 describe('Test on Trand:', function () {
   describe('website', function () {
@@ -89,8 +84,5 @@ describe('Test on Trand:', function () {
       })
     })
   })
-  //
-  // after(function () {
-  //   server.close();
-  // })
+  
 })
