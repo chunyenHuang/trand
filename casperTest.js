@@ -1,23 +1,22 @@
-casper.test.begin('Trand', 5, function suite(test) {
-    casper.start('http://localhost:3000', function() {
-        test.assertTitle("Trand", "Trand - Homepage title is the one expected");
-        test.assertExists('form', "form - A form is found.");
-        test.assertExists('h1');
-        this.fill('form', {
-            content: "Dress"
-        }, true);
-    });
-
-    casper.then(function() {
+casper.test.begin('Trand', function suite(test) {
+  casper.start('http://localhost:3000', function() {
       test.assertTitle("Trand", "Trand - Homepage title is the one expected");
-      test.assertHttpStatus(200);
-      // test.assertEval(function() {
-      //     return __utils__.findAll("h3.r").length >= 10;
-      // }, "search results have 10 or more results");
+  });
 
-    });
+  casper.then(function () {
+    this.click("a[href^='#/search']");
+    test.assertUrlMatch('#/search', 'link to search page');
+  });
 
-    casper.run(function() {
-        test.done();
-    });
+  casper.then(function () {
+    this.mouse.click("a[href^='#/search']");
+    test.assertExists('form', "form - A form is found.");
+    this.fill('form', {
+        content: "Dress"
+    }, true);
+  });
+
+  casper.run(function () {
+      test.done();
+  });
 });

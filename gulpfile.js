@@ -2,9 +2,12 @@ var gulp = require('gulp');
 var nodemon = require('gulp-nodemon');
 var mocha = require('gulp-mocha');
 var casperJs = require('gulp-casperjs');
+var app = require('./app.js');
+var server = '';
 
-gulp.task('test', function () {
-  return gulp.src('app.spec.js').pipe(mocha());
+// Real time
+gulp.task('routes', function () {
+  return gulp.src('app.spec.js', {read: false}).pipe(mocha());
 })
 
 gulp.task('casper', function () {
@@ -13,7 +16,13 @@ gulp.task('casper', function () {
 });
 
 gulp.task('go', function () {
-  nodemon({script: 'app.js'}).on('start', ['test', 'casper']);
+  nodemon({script: 'app.js'})
+      .on('start', ['routes', 'casper'])
 })
 
-gulp.task('travis', ['test', 'casper']);
+// Travis
+gulp.task('test', ['go'], function () {
+  setTimeout(function () {
+    return process.exit();
+  }, 10000);
+});
