@@ -24,5 +24,5 @@ gulp.task('go', function () {
 gulp.task('test', ['go'], function () {
   setTimeout(function () {
     return process.exit();
-  }, 100);
+  }, 10000);
 });
