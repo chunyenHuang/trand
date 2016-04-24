@@ -2,6 +2,16 @@ body {
   background: rgb(230, 230, 230);
   font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
 }
+form input[type='text'] {
+  border: 0px;
+}
+form input[type='text']:hover {
+  box-shadow: 0 0 0 0;
+}
+form input[type='text']:active {
+  box-shadow: 0 0 0 0;
+}
+
 a[ng-click]{
     cursor: pointer;
 }
