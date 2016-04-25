@@ -1,4 +1,4 @@
-var app = angular.module('trand', ['ngRoute', 'infinite-scroll']);
+var app = angular.module('trand', ['ngRoute', 'infinite-scroll', 'ngSanitize']);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider

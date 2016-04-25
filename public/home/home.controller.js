@@ -3,7 +3,7 @@ app.controller('homeController', home);
 app.$inject = ['$http', 'listService'];
 function home($http, listService) {
   var vm = this;
-  function showRetailers() {
+  vm.showRetailers = function () {
     var retailers = listService.getRetailers();
     retailers.then(function (res) {
       vm.retailers = res.data;
@@ -11,7 +11,6 @@ function home($http, listService) {
     })
   }
   function activate() {
-    showRetailers();
   }
   activate();
 }

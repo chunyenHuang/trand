@@ -1,7 +1,7 @@
 var app = angular.module('trand');
 app.controller('searchController', search);
-app.$inject = ['$http', '$scope', '$location', 'listService'];
-function search($http, $scope, $location, listService) {
+app.$inject = ['$http', '$scope', '$location', 'listService', '$sce'];
+function search($http, $scope, $location, listService, $sce) {
   var vm = this;
   var found = 0;
   vm.results =[];
@@ -10,7 +10,7 @@ function search($http, $scope, $location, listService) {
     found = 0;
     vm.results =[];
     var offset = found;
-    var limit = 18;
+    var limit = 36;
     var search = $http.get(
       '/api/search?fts=' + $scope.content + '&cat=' + $scope.category +'&offset=' + offset + '&limit=' + limit
     );

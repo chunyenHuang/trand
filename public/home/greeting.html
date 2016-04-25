@@ -2,9 +2,16 @@
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3 text-center">
       <h3><small>Explore Fashion's Infinite Style.</small></h3>
+      <h5>
+        <a ng-click='home.showRetailers()'>
+          see all our retailers
+        </a>
+      </h5>
     </div>
   </div>
-  <span ng-repeat='item in home.retailers'>
-    {{item.name}} /
-  </span>
+  <div class="">
+    <span ng-repeat='item in home.retailers'>
+      {{item.name}} /
+    </span>
+  </div>
 </div>
