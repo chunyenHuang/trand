@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="/assets/master.css">
+    <link rel="stylesheet" href="/assets/xeditable.css">
+
   </head>
   <body ng-app='trand'>
     <nav class="navbar navbar-default">
@@ -28,26 +30,34 @@
             <li class="active"><a href="#/search">Search <i class="fa fa-search" aria-hidden="true"></i> </a></li>
             <li><a href="#">My Collections</a></li>
           </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
+          <ul class="nav navbar-nav navbar-right" ng-controller="userController as user">
+            <li ng-show='!logged'>
+              <a href='#/home'>Login</a>
+            </li>
+            <li class="dropdown" ng-show='logged'>
               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a>My Profile</a></li>
-                <li><a>My Balance</a></li>
+                <li><a href='#/user'>My Profile</a></li>
+                <li><a>My Collections</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a>Logout</a></li>
+                <li>
+                  <a ng-click='user.logout(user.currentUser.email)'>Logout</a>
+                </li>
               </ul>
             </li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
+
     <div ng-view></div>
+
     <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js'></script>
     <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.min.js'></script>
     <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-sanitize.min.js'></script>
+    <script src='/assets/xeditable.min.js'></script>
 
     <script src='/assets/ng-infinite-scroll.min.js'></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
@@ -57,6 +67,7 @@
     <script src='home/greeting.js'></script>
     <script src='search/searchController.js'></script>
     <script src='search/search.directives.js'></script>
+    <script src='user/userController.js'></script>
 
   </body>
 </html>
