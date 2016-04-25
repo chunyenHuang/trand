@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>
+        <a editable-text="user.currentUser.firstName" e-name='firstName' onbeforesave="user.update()">
+          {{ user.currentUser.firstName}}
+        </a>
+        <a editable-text="user.currentUser.lastName" e-name='lastName' onbeforesave="user.update()">
+          {{ user.currentUser.lastName }}
+        </a>
+
+      </h3>
+
+      <h5>
+        <a editable-text="user.currentUser.email" e-name='email' onbeforesave="user.update()">
+          {{user.currentUser.email}}
+        </a>
+      </h5>
+
+      <h5>
+        <a editable-text="user.currentUser.password" e-name='password' onbeforesave="user.update()">
+          {{user.currentUser.password}}
+        </a>
+      </h5>
+      <h5>
+        {{user.currentUser.registerDate | date: 'yyyy-MM-dd HH:mm' }}
+      </h5>
+    </div>
+  </div>
+</div>
