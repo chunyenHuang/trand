@@ -82,3 +82,8 @@ a[ng-click]{
   width: 85%;
   max-width: 1200px;
 }
+
+.modal-descriptoin-box {
+  word-wrap: break-word;
+  max-width: 95%;
+}

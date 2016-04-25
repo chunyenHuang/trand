@@ -1,7 +1,7 @@
 var app = angular.module('trand');
 app.controller('searchController', search);
-app.$inject = ['$http', '$scope', '$location', 'listService'];
-function search($http, $scope, $location, listService) {
+app.$inject = ['$http', '$scope', '$location', 'listService', '$sce'];
+function search($http, $scope, $location, listService, $sce) {
   var vm = this;
   var found = 0;
   vm.results =[];
@@ -40,11 +40,6 @@ function search($http, $scope, $location, listService) {
   }
   vm.productDetail = function (itemId) {
     $('#'+itemId).modal('show');
-  }
-  vm.changeImg = function (url) {
-    vm.imgUrl = url;
-    console.log(url);
-    console.log(imgUrl);
   }
 
   function getCategory() {

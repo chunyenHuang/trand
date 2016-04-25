@@ -43,10 +43,6 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id={{item.id}}>{{item.brandedName}}</h4>
-            </div>
-            <div class="modal-body">
               <div class="row">
                 <div class="col-md-4">
                   <div class="pull-right" >
@@ -63,17 +59,19 @@
                   <p>
                     price: ${{item.price}}
                   </p>
-                  {{item.description}}
+                  <div class='modal-descriptoin-box' ng-bind-html="item.description"></div>
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-10 col-md-offset-2">
-                <span ng-repeat='img in item.alternateImages'>
-                  <a ng-click="$parent.imgUrl=img.sizes.IPhone.url">
-                    <img src={{img.sizes.Medium.url}} height="100px" ng-mouseover="$parent.imgUrl=img.sizes.IPhone.url">
-                  </a>
-                </span>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <span ng-repeat='img in item.alternateImages'>
+                    <a ng-click="$parent.imgUrl=img.sizes.IPhone.url">
+                      <img src={{img.sizes.Medium.url}} height="100px" ng-mouseover="$parent.imgUrl=img.sizes.IPhone.url">
+                    </a>
+                  </span>
+                </div>
               </div>
             </div>
             <div class="modal-footer">
