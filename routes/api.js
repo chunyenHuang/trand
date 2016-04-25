@@ -92,13 +92,13 @@ router.get('/retailers', function (req, res) {
   });
   p1.then(function (body) {
     var response = JSON.parse(body);
-    var list = [];
-    for (var i = 0; i < 300; i++) {
-      list.push({
-        name: response.retailers[i].name,
-      });
-    }
-    res.json(list);
+    // var list = [];
+    // for (var i = 0; i < 300; i++) {
+    //   list.push({
+    //     name: response.retailers[i].name,
+    //   });
+    // }
+    res.json(response.retailers);
   })
 })
 

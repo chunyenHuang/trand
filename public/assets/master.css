@@ -87,3 +87,21 @@ a[ng-click]{
   word-wrap: break-word;
   max-width: 95%;
 }
+
+.greeting-logo-box {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: rgb(255, 255, 255)
+}
+
+.greeting-logo-box .col-sm-1 {
+  float:none;
+  display:inline-block;
+  vertical-align:middle;
+  margin-right:15px;
+}
+
+.greeting-logo-box img{
+  width: 150%;
+  margin-right: 30px;
+}

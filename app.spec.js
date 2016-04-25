@@ -13,10 +13,10 @@ describe('Test on Trand:', function () {
     })
   })
   describe('User Routes', function () {
-    it('POST: /register', function (done) {
+    it('POST: /user/register', function (done) {
       request({
         method: 'post',
-        url: url + '/register',
+        url: url + '/user/register',
         json:{
           firstName: 'firstname',
           lastName: 'lastname',
@@ -29,10 +29,30 @@ describe('Test on Trand:', function () {
         done();
       })
     })
-    it('DELETE: /resign', function (done) {
+
+    it('POST: /user/login', function (done) {
+      request({
+        method: 'post',
+        url: url + '/user/login',
+        json: {
+          email: '1234567@gmail.com',
+          password: '12345678',
+        }
+      }, function (err, res, body) {
+        assert.equal(res.statusCode, 200);
+        done();
+      })
+    })
+    it('GET: /user/logout/:email', function (done) {
+      request(url + '/user/logout/1234567@gmail.com', function (err, res, body) {
+        assert.equal(res.statusCode, 200);
+        done();
+      })
+    })
+    it('DELETE: /user/resign/:email', function (done) {
       request({
         method: 'delete',
-        url: url + '/resign/' + '1234567@gmail.com',
+        url: url + '/user/resign/' + '1234567@gmail.com',
       }, function (err, res, body) {
         assert.equal(res.statusCode, 200);
         done();
@@ -84,5 +104,5 @@ describe('Test on Trand:', function () {
       })
     })
   })
-  
+
 })
