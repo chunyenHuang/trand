@@ -3,17 +3,19 @@
     <label for="content"></label>
     <div class="input-group">
       <input type="text" class="form-control" ng-model="content" name='content' placeholder="search..." value='dress'>
-      <div class="input-group-addon no-padding no-background">
-        <button type="sumbit" class='btn btn-sm btn-default no-border no-hover'>Trand</button>
+      <div class="input-group-addon" ng-click='search.search()'>
+        <a ng-click='search.search()'>
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </a>
       </div>
     </div>
   </div>
-  <div class="form-group">
+  <!-- <div class="form-group">
     <label for="category">Category</label>
     <select class="form-control" ng-model='category' name='category'>
       <option ng-repeat="item in search.categories" value={{item.id}}>
         {{item.name}}
       </option>
     </select>
-  </div>
+  </div> -->
 </form>

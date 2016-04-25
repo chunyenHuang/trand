@@ -10,7 +10,7 @@ function search($http, $scope, $location, listService) {
     found = 0;
     vm.results =[];
     var offset = found;
-    var limit = 18;
+    var limit = 36;
     var search = $http.get(
       '/api/search?fts=' + $scope.content + '&cat=' + $scope.category +'&offset=' + offset + '&limit=' + limit
     );
@@ -40,6 +40,11 @@ function search($http, $scope, $location, listService) {
   }
   vm.productDetail = function (itemId) {
     $('#'+itemId).modal('show');
+  }
+  vm.changeImg = function (url) {
+    vm.imgUrl = url;
+    console.log(url);
+    console.log(imgUrl);
   }
 
   function getCategory() {

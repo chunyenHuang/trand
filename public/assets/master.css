@@ -12,6 +12,10 @@ form input[type='text']:active {
   box-shadow: 0 0 0 0;
 }
 
+form .input-group-addon {
+  border: 0px;
+}
+
 a[ng-click]{
     cursor: pointer;
 }
@@ -29,6 +33,9 @@ a[ng-click]{
 }
 .no-hover:hover {
   background-color: rgb(255, 255, 255);
+}
+.text-center {
+  text-align: center;
 }
 
 .show-box {
@@ -50,7 +57,13 @@ a[ng-click]{
 .show-box h5 {
   text-align: center;
 }
-.show-box:hover {
+.show-box-hover {
+  position: absolute;
+  margin-left: auto;
+  top:60%;
+  height: 10%;
+  width: 80%;
+  background-color: rgba(223, 223, 223, 0.5);
 }
 .img-box {
   text-align: center;
@@ -63,4 +76,9 @@ a[ng-click]{
   vertical-align: middle;
   max-height:250px;
   max-width: 100%;
+}
+
+.modal-dialog {
+  width: 85%;
+  max-width: 1200px;
 }
