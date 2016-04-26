@@ -2,6 +2,7 @@ var app = angular.module('trand', ['ngRoute', 'infinite-scroll', 'ngSanitize', '
 
 app.run(function ($rootScope) {
   $rootScope.logged = false;
+  $rootScope.collections = [];
 })
 
 app.run(function(editableOptions) {
@@ -29,6 +30,11 @@ app.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'user/profile.html',
       controller: 'userController',
       controllerAs: 'user',
+    })
+    .when('/collections', {
+      templateUrl: 'collections/collections.html',
+      controller: 'collectionsController',
+      controllerAs: 'collections',
     })
 }]);
 
@@ -72,5 +78,25 @@ function userService($http) {
     logout: logout,
     resign: resign,
     update: update,
+  }
+}
+
+app.factory('collectionsService', collectionsService);
+collectionsService.$inject=['$http'];
+function collectionsService($http) {
+  function getCollections() {
+    return $http.get('/collections');
+  }
+  function update(json) {
+    return $http.put('/collections/update', json);
+  }
+  function remove(json) {
+    return $http.delete('/collections/delete/', json);
+  }
+
+  return {
+    getCollections: getCollections,
+    update: update,
+    remove: remove,
   }
 }

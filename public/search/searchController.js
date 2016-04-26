@@ -1,7 +1,7 @@
 var app = angular.module('trand');
 app.controller('searchController', search);
-app.$inject = ['$http', '$scope', '$location', 'listService', '$sce'];
-function search($http, $scope, $location, listService, $sce) {
+app.$inject = ['$http', '$scope', '$location', 'listService', '$sce', 'collectionsService'];
+function search($http, $scope, $location, listService, $sce, collectionsService, $rootScope) {
   var vm = this;
   var found = 0;
   vm.results =[];
@@ -15,7 +15,6 @@ function search($http, $scope, $location, listService, $sce) {
       '/api/search?fts=' + $scope.content + '&cat=' + $scope.category +'&offset=' + offset + '&limit=' + limit
     );
     search.then(function (res) {
-      console.log(res.data[0]);
       for (var i = 0; i < res.data.length; i++) {
         vm.results.push(res.data[i]);
       }
@@ -40,6 +39,9 @@ function search($http, $scope, $location, listService, $sce) {
   }
   vm.productDetail = function (itemId) {
     $('#'+itemId).modal('show');
+  }
+  vm.addToCollections = function (item) {
+    var addItem = collectionsService.update(item);
   }
 
   function getCategory() {
