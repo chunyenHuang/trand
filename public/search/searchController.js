@@ -19,6 +19,7 @@ function search($http, $scope, $location, listService, $sce, collectionsService,
         vm.results.push(res.data[i]);
       }
       found = found + parseInt(res.data.length);
+      vm.searched = true
     })
   }
   vm.nextPage = function () {

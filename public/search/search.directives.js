@@ -9,3 +9,8 @@ app.directive('results', function () {
     templateUrl: 'search/results.html'
   }
 })
+app.directive('ad', function () {
+  return {
+    templateUrl: 'search/ad.html'
+  }
+})
