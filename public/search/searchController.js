@@ -38,20 +38,64 @@ function search($http, $scope, $location, listService, $sce, collectionsService,
     })
   }
   vm.productDetail = function (itemId) {
-    $('#'+itemId).modal('show');
+    var detail = collectionsService.productDetail(itemId);
   }
   vm.addToCollections = function (item) {
-    var addItem = collectionsService.update(item);
+    var addItem = collectionsService.update(item.id);
+    addItem.then(function () {
+      vm.added = true;
+      for (var i = 0; i < $rootScope.collections.length; i++) {
+        if ($rootScope.collections[i] === item.id) {
+          var exist = true;
+          break;
+        }
+      }
+      if (!exist) {
+        $rootScope.collections.push(item.id);
+      }
+      for (var i = 0; i < $rootScope.recentCollections.length; i++) {
+        if ($rootScope.recentCollections[i] === item.id) {
+          var exist = true;
+          break;
+        }
+      }
+      if (!exist) {
+        $rootScope.recentCollections.push({id:item.id, thumb:item.image.sizes.Small.url});
+      }
+      console.log($rootScope.recentCollections);
+    })
   }
-
+  vm.removeFromCollections = function (item) {
+    var removeItem = collectionsService.remove(item.id);
+    removeItem.then(function () {
+      vm.added = false;
+      var position = $rootScope.collections.indexOf(item.id);
+      $rootScope.collections.splice(position, 1);
+      var matched = _.where($rootScope.recentCollections, {id: item.id});
+      var position = $rootScope.collections.indexOf(matched[0]);
+      $rootScope.recentCollections.splice(position, 1);
+      console.log($rootScope.recentCollections);
+    })
+  }
   function getCategory() {
     var categories =$http.get('/api/category');
     categories.then(function (res) {
       vm.categories = res.data;
     })
   }
+  function loadCollections() {
+    var collections = collectionsService.getCollections();
+    collections.then(function (res) {
+      for (var i = 0; i < res.data.length; i++) {
+        $rootScope.collections.push(parseInt(res.data[i].itemId));
+      }
+      console.log($rootScope.collections);
+    })
+  }
+
   function activate() {
     getCategory();
+    loadCollections();
   }
   activate();
 }
