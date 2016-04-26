@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var _ = require('underscore');
 
 var request = require('request');
 var apiUrl = 'http://api.shopstyle.com/api/v2'
@@ -98,6 +99,7 @@ router.get('/retailers', function (req, res) {
     //     name: response.retailers[i].name,
     //   });
     // }
+    response.retailers = _.sortBy(response.retailers, 'name');
     res.json(response.retailers);
   })
 })
