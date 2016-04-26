@@ -21,6 +21,7 @@ router.get('/', function (req, res) {
       var collections = db.collection('collections');
       collections.find({email: req.currentUser.email}).toArray(function (err, results) {
         if (results.length>0) {
+          results[0].collections = _.sortBy(results[0].collections, 'date').reverse();
           res.json(results[0].collections);
           db.close();
         } else {

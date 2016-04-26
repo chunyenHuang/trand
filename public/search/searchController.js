@@ -62,7 +62,6 @@ function search($http, $scope, $location, listService, $sce, collectionsService,
       if (!exist) {
         $rootScope.recentCollections.push({id:item.id, thumb:item.image.sizes.Small.url});
       }
-      console.log($rootScope.recentCollections);
     })
   }
   vm.removeFromCollections = function (item) {
@@ -71,10 +70,9 @@ function search($http, $scope, $location, listService, $sce, collectionsService,
       vm.added = false;
       var position = $rootScope.collections.indexOf(item.id);
       $rootScope.collections.splice(position, 1);
+
       var matched = _.where($rootScope.recentCollections, {id: item.id});
-      var position = $rootScope.collections.indexOf(matched[0]);
-      $rootScope.recentCollections.splice(position, 1);
-      console.log($rootScope.recentCollections);
+      $rootScope.recentCollections = _.without($rootScope.recentCollections, matched[0]);
     })
   }
   function getCategory() {
