@@ -3,6 +3,7 @@ var app = angular.module('trand', ['ngRoute', 'infinite-scroll', 'ngSanitize', '
 app.run(function ($rootScope) {
   $rootScope.logged = false;
   $rootScope.collections = [];
+  $rootScope.recentCollections = [];
 })
 
 app.run(function(editableOptions) {
@@ -87,16 +88,24 @@ function collectionsService($http) {
   function getCollections() {
     return $http.get('/collections');
   }
-  function update(json) {
-    return $http.put('/collections/update', json);
+  function update(id) {
+    return $http.put('/collections/update/' + id);
   }
-  function remove(json) {
-    return $http.delete('/collections/delete/', json);
+  function remove(id) {
+    return $http.put('/collections/remove/' + id);
+  }
+  function getItem(id) {
+    return $http.get('/collections/item/' + id);
+  }
+  function productDetail(itemId) {
+    $('#'+itemId).modal('show');
   }
 
   return {
     getCollections: getCollections,
     update: update,
     remove: remove,
+    getItem: getItem,
+    productDetail: productDetail,
   }
 }
