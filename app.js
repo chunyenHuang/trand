@@ -12,6 +12,7 @@ var dbUrl = 'mongodb://localhost/' + database;
 var checkCurrentUser = require('./routes/checkCurrentUser.js');
 var api = require('./routes/api');
 var userRoute = require('./routes/user');
+var collections = require('./routes/collections');
 
 // Module Tools
 var request = require('request');
@@ -33,6 +34,7 @@ app.use(cookieParser());
 app.use(checkCurrentUser);
 app.use('/api', api);
 app.use('/user', userRoute);
+app.use('/collections', collections);
 
 app.use(express.static('./public/'));
 
