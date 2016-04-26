@@ -28,7 +28,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#/search">Search <i class="fa fa-search" aria-hidden="true"></i> </a></li>
-            <li ng-show='logged'><a href="#/collections">My Collections <i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
+            <li ng-show='logged'><a href="#/collections">My Collections <i class="fa fa-heart" aria-hidden="true"></i></a></li>
             <li ng-show='logged' ng-controller="collectionsController as collections" class='nav-show-list'>
               <span ng-repeat="item in recentCollections">
                 <img src={{item.thumb}}>

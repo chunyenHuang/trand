@@ -2,7 +2,7 @@ var app = angular.module('trand', ['ngRoute', 'infinite-scroll', 'ngSanitize', '
 
 app.run(function ($rootScope) {
   $rootScope.logged = false;
-  $rootScope.collections = [];
+  $rootScope.loadedCollections = [];
   $rootScope.recentCollections = [];
 })
 

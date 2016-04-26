@@ -21,6 +21,17 @@ function collections($http, $scope, $location, userService, $sce, $rootScope, co
   vm.productDetail = function (itemId) {
     var detail = collectionsService.productDetail(itemId);
   }
+  vm.removeFromCollections = function (item) {
+    var removeItem = collectionsService.remove(item.id);
+    removeItem.then(function () {
+      vm.added = false;
+      var position = $rootScope.loadedCollections.indexOf(item.id);
+      $rootScope.loadedCollections.splice(position, 1);
+
+      var matched = _.where($rootScope.recentCollections, {id: item.id});
+      $rootScope.recentCollections = _.without($rootScope.recentCollections, matched[0]);
+    })
+  }
   function activate() {
     getCollections();
   }
