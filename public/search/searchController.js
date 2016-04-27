@@ -20,8 +20,6 @@ function search($http, $scope, $location, listService, $sce, collectionsService,
     } else {
       var content = $scope.content;
     }
-    console.log(content);
-    console.log($scope.cat);
     var search = $http.get(
       '/api/search?fts=' + content + '&cat=' + $scope.cat +'&offset=' + offset + '&limit=' + limit
     );
@@ -102,7 +100,15 @@ function search($http, $scope, $location, listService, $sce, collectionsService,
       vm.catSub2 = res.data;
     })
   }
-
+  vm.getItem = function(id) {
+    var item = collectionsService.getItem(id);
+    item.then(function(res) {
+      $('#item-modal').modal('show');
+      vm.item = res.data;
+      console.log(res.data);
+      vm.coverImgUrl = res.data.image.sizes.Best.url;
+    })
+  }
   function getCategory() {
     var categories =$http.get('/api/category');
     categories.then(function (res) {

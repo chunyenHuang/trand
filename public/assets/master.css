@@ -12,7 +12,6 @@ form input[type='text']:hover {
 form input[type='text']:active {
   box-shadow: 0 0 0 0;
 }
-
 form .input-group-addon {
   border: 0px;
 }
@@ -41,7 +40,16 @@ div[ng-click]{
 .text-center {
   text-align: center;
 }
+.btn{
+  border: 0px;
+  border-radius: 0 0 0 0 ;
+  background-color: rgb(255, 255, 255);
+}
+.btn:hover{
+  background-color: rgb(245, 245, 245);
+}
 
+/*individual*/
 .show-box {
   margin-left: -10px;
   margin-right: -10px;
@@ -121,14 +129,7 @@ div[ng-click]{
 .btn-group {
   margin-bottom: 20px;
 }
-.search-filters .btn{
-  border: 0px;
-  border-radius: 0 0 0 0 ;
-  background-color: inherit;
-}
-.search-filters .btn:hover{
-  background-color: rgb(255, 255, 255)
-}
+
 .search-filters .selected {
   background-color: rgb(255, 255, 255);
 }
@@ -137,4 +138,16 @@ div[ng-click]{
 }
 .search-filters input {
   display: none;
+}
+.item-modal-imgbox {
+  text-align: center;
+}
+.item-modal-imgbox img{
+  max-width: 100%;
+  max-height: 950px;
+}
+.item-modal-gallery img{
+  max-width: 60px;
+  max-height: 60px;
+  margin: 5px;
 }
