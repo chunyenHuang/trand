@@ -30,16 +30,19 @@ function search($http, $scope, $location, listService, $sce, collectionsService,
         vm.results.push(res.data[i]);
       }
       found = found + parseInt(res.data.length);
-      vm.searched = true
+      vm.searched = true;
+      return searchObject = {
+        content: content,
+        cat: $scope.cat,
+      }
     })
   }
   vm.nextPage = function () {
     if (this.busy) return;
     this.busy = true;
-
     var limit = 12;
     var search = $http.get(
-      '/api/search?fts=' + $scope.content + '&offset=' + found + '&limit=' + limit
+      '/api/search?fts=' + searchObject.content + '&cat=' + searchObject.cat + '&offset=' + found + '&limit=' + limit
     );
     search.then(function (res) {
       found = found + res.data.length;

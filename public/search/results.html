@@ -1,4 +1,4 @@
-<div class='container' infinite-scroll="search.nextPage()" infinite-scroll-distance="2" infinite-scroll-immediate-check=false infinite-scroll-disabled='search.busy' >
+<div class='container' infinite-scroll="search.nextPage()" infinite-scroll-distance="1" infinite-scroll-immediate-check=false infinite-scroll-disabled='search.busy' >
   <div class="row">
     <div class="col-xs-6 col-sm-4 col-md-2" ng-repeat="item in search.results">
       <div class="show-box" ng-mouseenter='hover=true' ng-mouseleave='hover=false'>
@@ -27,7 +27,7 @@
         </div>
       </div>
 
-      <div class="modal fade" id={{item.id}} tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+      <!-- <div class="modal fade" id={{item.id}} tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -79,7 +79,62 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
+
     </div>
   </div>
 </div>
+<!--
+<div class="modal fade" id={{item.id}} tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="pull-right" >
+              <img ng-init="imgUrl=item.image.sizes.IPhone.url" src={{imgUrl}}>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <h5>{{item.brand.name}}</h5>
+            <h4 class="modal-title" id={{item.id}}>{{item.brandedName}}</h4>
+            <h5>{{item.categories[0].name}}</h5>
+            <p>
+              instock: {{item.inStock}}
+            </p>
+            <p>
+              price: ${{item.price}}
+            </p>
+            <div class='modal-descriptoin-box' ng-bind-html="item.description"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <a ng-click="imgUrl=item.image.sizes.IPhone.url">
+              <img src={{item.image.sizes.Medium.url}} height="100px" ng-mouseover='imgUrl=item.image.sizes.IPhone.url'>
+            </a>
+            <span ng-repeat='img in item.alternateImages'>
+              <a ng-click="$parent.imgUrl=img.sizes.IPhone.url">
+                <img src={{img.sizes.Medium.url}} height="100px" ng-mouseover="$parent.imgUrl=img.sizes.IPhone.url">
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click='search.addToCollections(item)' ng-show='logged && loadedCollections.indexOf(item.id) == -1'>
+          Add to My Collection <i class="fa fa-heart-o fa-lg" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="btn btn-default" ng-click='search.removeFromCollections(item)' ng-show='logged && loadedCollections.indexOf(item.id) > -1'>
+          Remove from My Collection <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
+        </button>
+        <a href={{item.clickUrl}} target='_blank' class='btn btn-default' role='button'>
+          Buy at <strong>{{item.retailer.name}}</strong>
+        </a>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close Window</button>
+      </div>
+    </div>
+  </div>
+</div> -->
