@@ -1,80 +1,82 @@
-  <!-- <div ng-repeat="item in collections.list">
-    {{item.date | date:'yyyy-MM-dd HH:mm'}}
-    {{item.item.name}}
-  </div> -->
-
-  <div class='container'>
-    <div class="row">
-      <div class="col-xs-6 col-sm-4 col-md-2" ng-repeat="collection in collections.list" ng-show='loadedCollections.indexOf(collection.item.id) > -1'>
-        <div class="show-box" ng-mouseenter='hover=true' ng-mouseleave='hover=false'>
-          <div class="img-box">
-            <a ng-click="collections.productDetail(collection.item.id)">
-              <img src={{collection.item.image.sizes.IPhone.url}}>
-            </a>
-          </div>
-          <p>
-            <small>{{collection.item.brand.name}}</small>
-            <small ng-show='!collection.item.brand.name'>unbranded</small>
-          </p>
-          <p>
-            {{collection.item.name}}
-          </p>
-          <h5>
-            ${{collection.item.price}}
-          </h5>
-          <div class='show-box-hover' ng-class={'hide':!hover} ng-show='logged'>
-            <div class="row">
-              <div class="col-xs-12 text-center" ng-click='collections.removeFromCollections(collection.item)' >
-                <h5><i class="fa fa-heart fa-lg" aria-hidden="true"></i></h5>
-              </div>
-            </div>
-          </div>
+<div class='container'>
+  <div class="row">
+    <div class="col-xs-6 col-sm-4 col-md-2" ng-repeat="collection in collections.list" ng-show='loadedCollections.indexOf(collection.item.id) > -1'>
+      <div class="show-box" ng-mouseenter='hover=true' ng-mouseleave='hover=false'>
+        <div class="img-box">
+          <a ng-click="collections.getItem(collection.item.id)">
+            <img src={{collection.item.image.sizes.IPhone.url}}>
+          </a>
         </div>
-        <div class="modal fade" ng-class={'show':modal} id={{collection.item.id}} tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="pull-right" >
-                      <img ng-init="imgUrl=collection.item.image.sizes.IPhone.url" src={{imgUrl}}>
-                    </div>
-                  </div>
-                  <div class="col-md-8">
-                    <h5>{{collection.item.brand.name}}</h5>
-                    <h4 class="modal-title" id={{collection.item.id}}>{{collection.item.brandedName}}</h4>
-                    <h5>{{collection.item.categories[0].name}}</h5>
-                    <p>
-                      instock: {{collection.item.inStock}}
-                    </p>
-                    <p>
-                      price: ${{collection.item.price}}
-                    </p>
-                    <div class='modal-descriptoin-box' ng-bind-html="collection.item.description"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-body">
-                <div class="row">
-                  <div class="col-md-12">
-                    <span ng-repeat='img in collection.item.alternateImages'>
-                      <a ng-click="$parent.imgUrl=img.sizes.IPhone.url">
-                        <img src={{img.sizes.Medium.url}} height="100px" ng-mouseover="$parent.imgUrl=img.sizes.IPhone.url">
-                      </a>
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button ng-click type="button" class="btn btn-default" ng-show='logged'>Add to My Collection</button>
-                <a href={{collection.item.clickUrl}} target='_blank' class='btn btn-default' role='button'>
-                  Buy at <strong>{{collection.item.retailer.name}}</strong>
-                </a>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close Window</button>
-              </div>
-            </div>
+        <p>
+          <small>{{collection.item.brand.name}}</small>
+          <small ng-show='!collection.item.brand.name'>unbranded</small>
+        </p>
+        <p>
+          {{collection.item.name}}
+        </p>
+        <h5>
+          {{collection.item.price | currency}}
+        </h5>
+        <div class='show-box-hover' ng-class={'hide':!hover} ng-show='logged'>
+          <div class='click-box' ng-click='collections.removeFromCollections(collection.item)'>
+            <i class="fa fa-times" aria-hidden="true"></i>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<div class="modal fade" id='item-modal' tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="item-modal-imgbox">
+              <img src={{collections.coverImgUrl}}>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <i class="fa fa-times fa-lg" aria-hidden="true"></i>
+            </button>
+            <h5>{{collections.item.brand.name}}</h5>
+            <h4 class="modal-title" id={{collections.item.id}}>
+              {{collections.item.brandedName}}
+            </h4>
+            <p ng-show='collections.item.inStock'>
+              instock: yes
+            </p>
+            <p ng-show='!collections.item.inStock'>
+              Out of Stock
+            </p>
+            <p>
+              price: {{search.item.price | currency}}
+            </p>
+            <div class='modal-descriptoin-box' ng-bind-html="collections.item.description"></div>
+            <hr>
+            <div class="item-modal-gallery">
+              <a ng-click="collections.coverImgUrl=search.item.image.sizes.Best.url">
+                <img src={{collections.item.image.sizes.Medium.url}} ng-mouseover='collections.coverImgUrl=collections.item.image.sizes.Best.url'>
+              </a>
+              <a ng-click="collections.coverImgUrl=img.sizes.Best.url" ng-repeat='img in collections.item.alternateImages'>
+                <img src={{img.sizes.Medium.url}} ng-mouseover="collections.coverImgUrl=img.sizes.Best.url">
+              </a>
+            </div>
+            <hr>
+            <button type="button" class="btn btn-default" ng-click='collections.addToCollections(collections.item)' ng-show='logged && loadedCollections.indexOf(collections.item.id) == -1'>
+              Add to My Collection <i class="fa fa-heart-o fa-lg" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="btn btn-default" ng-click='collections.removeFromCollections(collections.item)' ng-show='logged && loadedCollections.indexOf(collections.item.id) > -1'>
+              Remove from My Collection <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
+            </button>
+            <a href={{collections.item.clickUrl}} target='_blank' class='btn btn-default' role='button'>
+              Buy at <strong>{{collections.item.retailer.name}}</strong>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

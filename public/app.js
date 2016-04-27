@@ -97,15 +97,11 @@ function collectionsService($http) {
   function getItem(id) {
     return $http.get('/collections/item/' + id);
   }
-  function productDetail(itemId) {
-    $('#'+itemId).modal('show');
-  }
 
   return {
     getCollections: getCollections,
     update: update,
     remove: remove,
     getItem: getItem,
-    productDetail: productDetail,
   }
 }

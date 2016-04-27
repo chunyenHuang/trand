@@ -16,13 +16,11 @@
           {{item.price | currency}}
         </h5>
         <div class='show-box-hover' ng-class={'hide':!hover} ng-show='logged'>
-          <div class="row">
-            <div class="col-xs-12 text-center" ng-click='search.removeFromCollections(item)' ng-show='loadedCollections.indexOf(item.id) > -1'>
-              <h5><i class="fa fa-heart fa-lg" aria-hidden="true"></i></h5>
-            </div>
-            <div class="col-xs-12 text-center" ng-click='search.addToCollections(item)' ng-show='loadedCollections.indexOf(item.id) == -1'>
-              <h5><i class="fa fa-heart-o fa-lg" aria-hidden="true"></i></h5>
-            </div>
+          <div class='click-box' ng-click='search.removeFromCollections(item)' ng-show='loadedCollections.indexOf(item.id) > -1'>
+            <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
+          </div>
+          <div class='click-box' ng-click='search.addToCollections(item)' ng-show='loadedCollections.indexOf(item.id) == -1'>
+            <i class="fa fa-heart-o fa-lg" aria-hidden="true"></i>
           </div>
         </div>
       </div>
@@ -41,7 +39,9 @@
             </div>
           </div>
           <div class="col-md-6">
-            <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <i class="fa fa-times fa-lg" aria-hidden="true"></i>
+            </button>
             <h5>{{search.item.brand.name}}</h5>
             <h4 class="modal-title" id={{item.id}}>
               {{search.item.brandedName}}

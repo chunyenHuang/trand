@@ -18,8 +18,14 @@ function collections($http, $scope, $location, userService, $sce, $rootScope, co
       }
     })
   }
-  vm.productDetail = function (itemId) {
-    var detail = collectionsService.productDetail(itemId);
+  vm.getItem = function (itemId) {
+    var item = collectionsService.getItem(itemId);
+    item.then(function (res) {
+      $('#item-modal').modal('show');
+      vm.item = res.data;
+      console.log(res.data);
+      vm.coverImgUrl = res.data.image.sizes.Best.url;
+    })
   }
   vm.removeFromCollections = function (item) {
     var removeItem = collectionsService.remove(item.id);
