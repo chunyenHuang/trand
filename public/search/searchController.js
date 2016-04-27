@@ -6,13 +6,24 @@ function search($http, $scope, $location, listService, $sce, collectionsService,
   var found = 0;
   vm.results =[];
   vm.busy = false;
-  vm.search = function () {
+  vm.search = function (option) {
     found = 0;
     vm.results =[];
     var offset = found;
     var limit = 36;
+    if (option) {
+      if ($scope.content) {
+        var content = $scope.content;
+      } else {
+        var content = option;
+      }
+    } else {
+      var content = $scope.content;
+    }
+    console.log(content);
+    console.log($scope.cat);
     var search = $http.get(
-      '/api/search?fts=' + $scope.content + '&cat=' + $scope.category +'&offset=' + offset + '&limit=' + limit
+      '/api/search?fts=' + content + '&cat=' + $scope.cat +'&offset=' + offset + '&limit=' + limit
     );
     search.then(function (res) {
       for (var i = 0; i < res.data.length; i++) {
@@ -76,6 +87,19 @@ function search($http, $scope, $location, listService, $sce, collectionsService,
       $rootScope.recentCollections = _.without($rootScope.recentCollections, matched[0]);
     })
   }
+  vm.digCategory1 = function (id) {
+    var dig = $http.get('/api/category/'+ id);
+    dig.then(function (res) {
+      vm.catSub1 = res.data;
+    })
+  }
+  vm.digCategory2 = function (id) {
+    var dig = $http.get('/api/category/'+ id);
+    dig.then(function (res) {
+      vm.catSub2 = res.data;
+    })
+  }
+
   function getCategory() {
     var categories =$http.get('/api/category');
     categories.then(function (res) {
@@ -88,7 +112,6 @@ function search($http, $scope, $location, listService, $sce, collectionsService,
       for (var i = 0; i < res.data.length; i++) {
         $rootScope.loadedCollections.push(parseInt(res.data[i].itemId));
       }
-      console.log($rootScope.loadedCollections);
     })
   }
 

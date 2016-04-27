@@ -27,22 +27,32 @@ router.get('/brand', function(req, res) {
 })
 router.get('/category', function(req, res) {
   var p1 = new Promise(function(resolve, reject) {
-    request('http://api.shopstyle.com/api/v2/categories?pid=uid41-33788821-64', function (err, res, body) {
+    request('http://api.shopstyle.com/api/v2/categories?pid=uid41-33788821-64&depth=1', function (err, res, body) {
       resolve(body);
     })
   });
   p1.then(function (body) {
     var response = JSON.parse(body);
     var list = [];
-    for (var i = 0; i < response.categories.length; i++) {
-      list.push({
-        name: response.categories[i].name,
-        id: response.categories[i].id,
-      });
-    }
-    res.json(list.sort());
+    list.push(response.categories[0]);
+    list.push(response.categories[1]);
+    res.json(list);
   })
 })
+
+router.get('/category/:id', function(req, res) {
+  var p1 = new Promise(function(resolve, reject) {
+    request('http://api.shopstyle.com/api/v2/categories?pid=uid41-33788821-64&depth=1&cat=' + req.params.id , function (err, res, body) {
+      resolve(body);
+    })
+  });
+  p1.then(function (body) {
+    var response = JSON.parse(body);
+    res.json(response.categories);
+    console.log(response.categories[0]);
+  })
+})
+
 router.get('/query', function(req, res) {
   var p1 = new Promise(function(resolve, reject) {
     request('http://api.shopstyle.com/api/v2/products?pid=uid41-33788821-64&fts=red+dress&offset=0&limit=2', function (err, res, body) {

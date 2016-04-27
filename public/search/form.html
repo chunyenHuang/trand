@@ -1,21 +1,41 @@
-<form class="form" ng-submit='search.search()'>
-  <div class="form-group">
-    <label for="content"></label>
-    <div class="input-group">
-      <input type="text" class="form-control" ng-model="content" name='content' placeholder="search..." value='dress'>
-      <div class="input-group-addon" ng-click='search.search()'>
-        <a ng-click='search.search()'>
-          <i class="fa fa-search" aria-hidden="true"></i>
-        </a>
-      </div>
+<div class="container" >
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 text-center">
+      <form class="form" ng-submit='search.search(false)'>
+        <div class="form-group">
+          <label for="content"></label>
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="content" name='content' placeholder="search..." value='dress'>
+            <div class="input-group-addon" ng-click='search.search()'>
+              <a ng-click='search.search()'>
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="search-filters">
+          <div class="btn-group" role="group" aria-label="...">
+            <label ng-repeat="item in search.categories" ng-click="search.search(item.name);search.digCategory1(item.id)" class="btn btn-default" ng-class="{'selected':$parent.cat==item.id, 'related':$parent.related==item.id}">
+              <input type="radio" ng-model='$parent.cat' value={{item.id}}>
+              {{item.name}}
+            </label>
+          </div>
+          <br>
+          <div class="btn-group" role="group" aria-label="...">
+            <label ng-repeat="item in search.catSub1" ng-click="search.search(item.name);search.digCategory2(item.id);$parent.related=item.parentId" class="btn btn-default"  ng-class="{'selected':$parent.cat==item.id, 'related':$parent.relatedTwo==item.id}">
+              <input type="radio" ng-model='$parent.cat' value={{item.id}}>
+                {{item.name}}
+            </label>
+          </div>
+          <br>
+          <div class="btn-group" role="group" aria-label="...">
+            <label ng-repeat="item in search.catSub2" ng-click="search.search(item.name);$parent.relatedTwo=item.parentId" class="btn btn-default" ng-class="{'selected':$parent.cat==item.id}">
+              <input type="radio" ng-model='$parent.cat' value={{item.id}}>
+                {{item.name}}
+            </label>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
-  <!-- <div class="form-group">
-    <label for="category">Category</label>
-    <select class="form-control" ng-model='category' name='category'>
-      <option ng-repeat="item in search.categories" value={{item.id}}>
-        {{item.name}}
-      </option>
-    </select>
-  </div> -->
-</form>
+</div>

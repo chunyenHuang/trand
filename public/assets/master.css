@@ -67,7 +67,7 @@ div[ng-click]{
   top:60%;
   height: 10%;
   width: 80%;
-  background-color: rgba(232, 232, 232, 0.5);
+  background-color: rgba(232, 232, 232, 0.9);
 }
 .img-box {
   text-align: center;
@@ -116,4 +116,25 @@ div[ng-click]{
 .nav-show-list img {
   margin-left: 5px;
   height: 100%;
+}
+
+.btn-group {
+  margin-bottom: 20px;
+}
+.search-filters .btn{
+  border: 0px;
+  border-radius: 0 0 0 0 ;
+  background-color: inherit;
+}
+.search-filters .btn:hover{
+  background-color: rgb(255, 255, 255)
+}
+.search-filters .selected {
+  background-color: rgb(255, 255, 255);
+}
+.search-filters .related {
+  background-color: rgb(245, 245, 245);
+}
+.search-filters input {
+  display: none;
 }

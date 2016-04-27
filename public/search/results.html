@@ -26,6 +26,7 @@
           </div>
         </div>
       </div>
+
       <div class="modal fade" id={{item.id}} tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -53,6 +54,9 @@
             <div class="modal-body">
               <div class="row">
                 <div class="col-md-12">
+                  <a ng-click="imgUrl=item.image.sizes.IPhone.url">
+                    <img src={{item.image.sizes.Medium.url}} height="100px" ng-mouseover='imgUrl=item.image.sizes.IPhone.url'>
+                  </a>
                   <span ng-repeat='img in item.alternateImages'>
                     <a ng-click="$parent.imgUrl=img.sizes.IPhone.url">
                       <img src={{img.sizes.Medium.url}} height="100px" ng-mouseover="$parent.imgUrl=img.sizes.IPhone.url">
