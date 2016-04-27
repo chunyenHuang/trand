@@ -1,8 +1,14 @@
 var app = angular.module('trand', ['ngRoute', 'infinite-scroll', 'ngSanitize', 'xeditable']);
-
-app.run(function ($rootScope) {
+app.$inject = ['$http'];
+app.run(function ($rootScope, $http) {
   $rootScope.logged = false;
   $rootScope.loadedCollections = [];
+  var collections = $http.get('/collections');
+  collections.then(function (res) {
+    for (var i = 0; i < res.data.length; i++) {
+      $rootScope.loadedCollections.push(parseInt(res.data[i].item.id));
+    }
+  })
   $rootScope.recentCollections = [];
 })
 
@@ -84,9 +90,9 @@ function userService($http) {
 
 app.factory('collectionsService', collectionsService);
 collectionsService.$inject=['$http'];
-function collectionsService($http) {
-  function getCollections() {
-    return $http.get('/collections');
+function collectionsService($http, $rootScope) {
+  function getCollections(sort) {
+    return $http.get('/collections?sort=' + sort);
   }
   function update(id) {
     return $http.put('/collections/update/' + id);
@@ -97,7 +103,6 @@ function collectionsService($http) {
   function getItem(id) {
     return $http.get('/collections/item/' + id);
   }
-
   return {
     getCollections: getCollections,
     update: update,

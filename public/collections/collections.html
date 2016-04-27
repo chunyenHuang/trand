@@ -1,5 +1,28 @@
 <div class='container'>
   <div class="row">
+    <div class="col-md-12">
+      <div class="search-filters">
+        <div class="btn-group" role="group" aria-label="...">
+          <label type="button" class='btn btn-default' ng-click='collections.getCollections("date")'>
+            Date
+          </label>
+          <label type="button" class='btn btn-default' ng-click='collections.getCollections("category")'>
+            Category
+          </label>
+          <label type="button" class='btn btn-default' ng-click='collections.getCollections("top")'>
+            Top
+          </label>
+          <label type="button" class='btn btn-default' ng-click='collections.getCollections("bot")'>
+            Bot
+          </label>
+          <label type="button" class='btn btn-default' ng-click='collections.getCollections("accessories")'>
+            Accessories
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-xs-6 col-sm-4 col-md-2" ng-repeat="collection in collections.list" ng-show='loadedCollections.indexOf(collection.item.id) > -1'>
       <div class="show-box" ng-mouseenter='hover=true' ng-mouseleave='hover=false'>
         <div class="img-box">

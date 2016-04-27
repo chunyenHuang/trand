@@ -115,18 +115,9 @@ function search($http, $scope, $location, listService, $sce, collectionsService,
       vm.categories = res.data;
     })
   }
-  function loadCollections() {
-    var collections = collectionsService.getCollections();
-    collections.then(function (res) {
-      for (var i = 0; i < res.data.length; i++) {
-        $rootScope.loadedCollections.push(parseInt(res.data[i].itemId));
-      }
-    })
-  }
 
   function activate() {
     getCategory();
-    loadCollections();
   }
   activate();
 }

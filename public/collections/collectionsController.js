@@ -4,18 +4,11 @@ app.$inject = ['$http', '$scope', '$location', 'userService', '$sce', 'collectio
 
 function collections($http, $scope, $location, userService, $sce, $rootScope, collectionsService) {
   var vm = this;
-  function getCollections() {
-    var collections = collectionsService.getCollections();
+  vm.getCollections = function (sort) {
+    var collections = collectionsService.getCollections(sort);
     collections.then(function (res) {
-      console.log(res.data);
-      vm.list = [];
-      for (var i = 0; i < res.data.length; i++) {
-        var date = res.data[i].date
-        var item = collectionsService.getItem(res.data[i].itemId);
-        item.then(function (res) {
-          vm.list.push({date: date, item: res.data});
-        })
-      }
+      vm.list = res.data;
+      console.log(vm.list[0].email);
     })
   }
   vm.getItem = function (itemId) {
@@ -23,7 +16,6 @@ function collections($http, $scope, $location, userService, $sce, $rootScope, co
     item.then(function (res) {
       $('#item-modal').modal('show');
       vm.item = res.data;
-      console.log(res.data);
       vm.coverImgUrl = res.data.image.sizes.Best.url;
     })
   }
@@ -39,7 +31,7 @@ function collections($http, $scope, $location, userService, $sce, $rootScope, co
     })
   }
   function activate() {
-    getCollections();
+    vm.getCollections('date');
   }
   activate();
 }
