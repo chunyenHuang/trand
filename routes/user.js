@@ -68,7 +68,6 @@ router.get('/logout/:email', function (req, res) {
 })
 
 router.put('/update', function (req, res) {
-  console.log(req.body);
   dbClient.connect(dbUrl, function (err, db) {
     if (!err) {
       var users = db.collection('users');
@@ -99,7 +98,6 @@ router.post('/register', function (req, res) {
     token: token,
     loginCount: 1,
   }
-  console.log(newUser);
   dbClient.connect(dbUrl, function (err, db) {
     if (!err) {
       var users = db.collection('users');

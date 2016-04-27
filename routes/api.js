@@ -49,7 +49,6 @@ router.get('/category/:id', function(req, res) {
   p1.then(function (body) {
     var response = JSON.parse(body);
     res.json(response.categories);
-    console.log(response.categories[0]);
   })
 })
 
@@ -95,7 +94,6 @@ router.get('/histogram', function(req, res) {
 })
 
 router.get('/retailers', function (req, res) {
-  console.log('get Retailers');
   var p1 = new Promise(function(resolve, reject) {
     request(apiUrl + '/retailers' + pid , function (err, res, body) {
       resolve(body);
@@ -115,7 +113,6 @@ router.get('/retailers', function (req, res) {
 })
 
 router.get('/search', function (req, res) {
-  console.log(req.url);
   var fts = req.query.fts;
   var cat = req.query.cat;
   var offset = req.query.offset;
@@ -130,7 +127,6 @@ router.get('/search', function (req, res) {
     var response = JSON.parse(body);
     res.json(response.products);
   }, function (err) {
-    console.log(err);
     res.sendStatus(404);
   })
 })

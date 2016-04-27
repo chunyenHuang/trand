@@ -21,8 +21,7 @@ router.get('/', function (req, res) {
       var collections = db.collection('collections');
       collections.find({email: req.currentUser.email}).toArray(function (err, results) {
         if (results.length>0) {
-          results[0].collections = _.sortBy(results[0].collections, 'date').reverse();
-          res.json(results[0].collections);
+          res.json(results);
           db.close();
         } else {
           res.sendStatus(404);
@@ -37,7 +36,6 @@ router.get('/', function (req, res) {
 })
 
 router.get('/item/:id', function (req, res) {
-  console.log(parseInt(req.params.id));
   var p1 = new Promise(function(resolve, reject) {
     request('http://api.shopstyle.com/api/v2/products/' + parseInt(req.params.id) + '?pid=uid41-33788821-64', function (err, res, body) {
       resolve(body);
@@ -50,26 +48,43 @@ router.get('/item/:id', function (req, res) {
 })
 
 router.put('/update/:id', function (req, res) {
-  dbClient.connect(dbUrl, function (err, db) {
-    if (!err) {
-      var collections = db.collection('collections');
-      collections.update({email: req.currentUser.email}, {
-        $addToSet: {
-          collections: {
-            itemId: req.params.id,
-          }
-        }
-      }, {
-          upsert: true,
-        }, function (err, results) {
-        console.log('add'+ req.params.id);
-        res.sendStatus(200);
-        db.close();
+  var p1 = new Promise(function(resolve, reject) {
+    request('http://api.shopstyle.com/api/v2/products/' + parseInt(req.params.id) + '?pid=uid41-33788821-64', function (err, res, body) {
+      resolve(body);
+    })
+  });
+  p1.then(function (body) {
+    var response = JSON.parse(body);
+    var p2 = new Promise(function(resolve, reject) {
+      request('http://api.shopstyle.com/api/v2/categories?pid=uid41-33788821-64' + '&cat=' + response.categories[0].id, function (err, res, body) {
+        resolve(body);
       })
-    } else {
-      res.sendStatus(404);
-      db.close();
-    }
+    });
+    p2.then(function (body) {
+      var categoriesJSON = JSON.parse(body);
+      var category = categoriesJSON.metadata.root.parentId;
+      dbClient.connect(dbUrl, function (err, db) {
+        if (!err) {
+          var collections = db.collection('collections');
+          collections.update({email: req.currentUser.email, item: {id: response.id }}, {
+            $set: {
+              item: response,
+              date: new Date(),
+              category: category,
+              body: 'body',
+            }
+          }, {
+              upsert: true,
+            }, function (err, results) {
+            res.sendStatus(200);
+            db.close();
+          })
+        } else {
+          res.sendStatus(404);
+          db.close();
+        }
+      })
+    })
   })
 })
 
@@ -77,14 +92,7 @@ router.put('/remove/:id', function (req, res) {
   dbClient.connect(dbUrl, function (err, db) {
     if (!err) {
       var collections = db.collection('collections');
-      collections.update({email: req.currentUser.email}, {
-        $pull: {
-          collections: {
-            itemId: req.params.id,
-          }
-        }
-      }, function (err, result) {
-        console.log('remove' + req.params.id);
+      collections.remove({email: req.currentUser.email, item: {id: response.id }}, function (err, result) {
         res.sendStatus(200);
         db.close;
       });
