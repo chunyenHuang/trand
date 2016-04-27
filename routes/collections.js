@@ -21,6 +21,15 @@ router.get('/', function (req, res) {
       var collections = db.collection('collections');
       collections.find({email: req.currentUser.email}).toArray(function (err, results) {
         if (results.length>0) {
+          if (req.query.sort == 'category') {
+            results = _.sortBy(results, 'category').reverse();
+            console.log('sort by category');
+          }
+          if (req.query.sort == 'date') {
+            results = _.sortBy(results, 'date').reverse();
+            console.log('sort by date');
+
+          }
           res.json(results);
           db.close();
         } else {
@@ -92,7 +101,7 @@ router.put('/remove/:id', function (req, res) {
   dbClient.connect(dbUrl, function (err, db) {
     if (!err) {
       var collections = db.collection('collections');
-      collections.remove({email: req.currentUser.email, item: {id: response.id }}, function (err, result) {
+      collections.remove({email: req.currentUser.email, item: {id: parseInt(req.params.id) }}, function (err, result) {
         res.sendStatus(200);
         db.close;
       });
