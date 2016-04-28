@@ -294,7 +294,6 @@ router.get('/update-lists', function (req, res) {
         hed: _.uniq(hed.sort()),
         nec: _.uniq(nec.sort()),
         eye: _.uniq(eye.sort()),
-
       }
       resolve(body);
     })
