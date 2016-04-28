@@ -13,48 +13,9 @@
 
   </head>
   <body ng-app='trand'>
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#/home">Trand</a>
-        </div>
-
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#/search">Search <i class="fa fa-search" aria-hidden="true"></i> </a></li>
-            <li ng-show='logged'><a href="#/collections">My Collections <i class="fa fa-heart" aria-hidden="true"></i></a></li>
-            <li ng-show='logged' class='nav-show-list'>
-              <span ng-repeat="item in recentCollections">
-                <img src={{item.image.sizes.Small.url}}>
-              </span>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right" ng-controller="userController as user">
-            <li ng-show='!logged'>
-              <a href='#/home'>Login</a>
-            </li>
-            <li class="dropdown" ng-show='logged'>
-              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href='#/user'>My Profile</a></li>
-                <li><a href='#/collections'>My Collections</a></li>
-                <li role="separator" class="divider"></li>
-                <li>
-                  <a ng-click='user.logout(user.currentUser.email)'>Logout</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-
+    <div ng-controller="navController as nav">
+      <trand></trand>
+    </div>
     <div ng-view></div>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js'></script>
     <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
@@ -63,12 +24,12 @@
     <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.min.js'></script>
     <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-sanitize.min.js'></script>
     <script src='/assets/xeditable.min.js'></script>
-
     <script src='/assets/ng-infinite-scroll.min.js'></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
     <script src='app.js'></script>
-    <script src='home/home.controller.js'></script>
+    <script src='nav/navController.js'></script>
+    <script src='home/homeController.js'></script>
     <script src='home/greeting.js'></script>
     <script src='search/searchController.js'></script>
     <script src='search/search.directives.js'></script>
