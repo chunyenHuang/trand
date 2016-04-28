@@ -3,9 +3,12 @@ app.controller('searchController', search);
 app.$inject = ['$http', '$scope', '$location', 'listService', '$sce', 'collectionsService'];
 function search($http, $scope, $location, listService, $sce, collectionsService, $rootScope) {
   var vm = this;
+  $scope._ = _;
   var found = 0;
   vm.results =[];
   vm.busy = false;
+  $scope._ = _;
+
   vm.search = function (option) {
     found = 0;
     vm.results =[];
@@ -54,39 +57,10 @@ function search($http, $scope, $location, listService, $sce, collectionsService,
     var detail = collectionsService.productDetail(itemId);
   }
   vm.addToCollections = function (item) {
-    var addItem = collectionsService.update(item.id);
-    addItem.then(function () {
-      vm.added = true;
-      for (var i = 0; i < $rootScope.loadedCollections.length; i++) {
-        if ($rootScope.loadedCollections[i] === item.id) {
-          var exist = true;
-          break;
-        }
-      }
-      if (!exist) {
-        $rootScope.loadedCollections.push(item.id);
-      }
-      for (var i = 0; i < $rootScope.recentCollections.length; i++) {
-        if ($rootScope.recentCollections[i] === item.id) {
-          var exist = true;
-          break;
-        }
-      }
-      if (!exist) {
-        $rootScope.recentCollections.push({id:item.id, thumb:item.image.sizes.Small.url});
-      }
-    })
+    var add = collectionsService.update(item, $rootScope);
   }
   vm.removeFromCollections = function (item) {
-    var removeItem = collectionsService.remove(item.id);
-    removeItem.then(function () {
-      vm.added = false;
-      var position = $rootScope.loadedCollections.indexOf(item.id);
-      $rootScope.loadedCollections.splice(position, 1);
-
-      var matched = _.where($rootScope.recentCollections, {id: item.id});
-      $rootScope.recentCollections = _.without($rootScope.recentCollections, matched[0]);
-    })
+    var removeItem = collectionsService.remove(item, $rootScope);
   }
   vm.digCategory1 = function (id) {
     var dig = $http.get('/api/category/'+ id);

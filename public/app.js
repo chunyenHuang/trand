@@ -1,15 +1,25 @@
 var app = angular.module('trand', ['ngRoute', 'infinite-scroll', 'ngSanitize', 'xeditable']);
 app.$inject = ['$http'];
+function getLastFifteen(array) {
+  array = array.reverse();
+  var fifteen = _.first(array, 15);
+  array = array.reverse();
+  return  fifteen;
+}
 app.run(function ($rootScope, $http) {
   $rootScope.logged = false;
   $rootScope.loadedCollections = [];
+  $rootScope.recentCollections = [];
   var collections = $http.get('/collections?sort=date');
   collections.then(function (res) {
     for (var i = 0; i < res.data.length; i++) {
-      $rootScope.loadedCollections.push(parseInt(res.data[i].item.id));
+      $rootScope.loadedCollections.push(res.data[i].item);
+    }
+    var reversed = res.data.reverse();
+    for (var i = 1; i <= 15; i++) {
+      $rootScope.recentCollections.push(reversed[i].item);
     }
   })
-  $rootScope.recentCollections = [];
 })
 
 app.run(function(editableOptions) {
@@ -94,11 +104,30 @@ function collectionsService($http, $rootScope) {
   function getCollections(sort) {
     return $http.get('/collections?sort=' + sort);
   }
-  function update(id) {
-    return $http.put('/collections/update/' + id);
+  function update(item, $rootScope) {
+    var addItem = $http.put('/collections/update/' + item.id);
+    addItem.then(function () {
+      for (var i = 0; i < $rootScope.loadedCollections.length; i++) {
+        if ($rootScope.loadedCollections[i].id === item.id) {
+          var exist = true;
+          break;
+        }
+      }
+      if (!exist) {
+        $rootScope.loadedCollections.push(item);
+      }
+      $rootScope.recentCollections = getLastFifteen($rootScope.loadedCollections);
+    })
   }
-  function remove(id) {
-    return $http.put('/collections/remove/' + id);
+  function remove(item, $rootScope) {
+    var removeItem = $http.put('/collections/remove/' + item.id);
+    removeItem.then(function () {
+      var matched = _.where($rootScope.loadedCollections, {id: item.id});
+      var position = $rootScope.loadedCollections.indexOf(matched[0]);
+      $rootScope.loadedCollections.splice(position, 1);
+      $rootScope.recentCollections = getLastFifteen($rootScope.loadedCollections);
+    })
+
   }
   function getItem(id) {
     return $http.get('/collections/item/' + id);

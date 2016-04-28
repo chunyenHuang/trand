@@ -4,11 +4,11 @@ app.$inject = ['$http', '$scope', '$location', 'userService', '$sce', 'collectio
 
 function collections($http, $scope, $location, userService, $sce, $rootScope, collectionsService) {
   var vm = this;
+  $scope._ = _;
   vm.getCollections = function (sort) {
     var collections = collectionsService.getCollections(sort);
     collections.then(function (res) {
       vm.list = res.data;
-      console.log(vm.list);
     })
   }
   vm.getItem = function (itemId) {
@@ -17,19 +17,10 @@ function collections($http, $scope, $location, userService, $sce, $rootScope, co
       $('#item-modal').modal('show');
       vm.item = res.data;
       vm.coverImgUrl = res.data.image.sizes.Best.url;
-      console.log(res.data);
     })
   }
   vm.removeFromCollections = function (item) {
-    var removeItem = collectionsService.remove(item.id);
-    removeItem.then(function () {
-      vm.added = false;
-      var position = $rootScope.loadedCollections.indexOf(item.id);
-      $rootScope.loadedCollections.splice(position, 1);
-
-      var matched = _.where($rootScope.recentCollections, {id: item.id});
-      $rootScope.recentCollections = _.without($rootScope.recentCollections, matched[0]);
-    })
+    var removeItem = collectionsService.remove(item, $rootScope);
   }
   function activate() {
     vm.getCollections('date');
