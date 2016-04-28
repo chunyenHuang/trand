@@ -28,28 +28,3 @@ Trand [(trand.herokuapp.com)](http://trand.herokuapp.com) is a Trend-Trading web
 2. It's gonna be fun and the most important funtionality of this app
 
 ### Login with Facebook  
-
-## Database Structure
-Users
-id
-basic_info
-user_posts
-[{date: date, post: post, replies: {user_id: user_id, reply: reply}}]
-user_combinations
-user_closets
-name
-categories(top, bot, hand, head)
-sub-categories(jacket, dress, skirt…)
-item
-id
-name
-price
-picture
-Following Systems:
-user_id
-following_ids
-follower_ids
-Message Systems:
-id
-[userA_id, userB_id...]
-[{user_id, date_time, message}]
