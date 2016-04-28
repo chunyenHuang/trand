@@ -4,7 +4,6 @@ app.$inject = ['$scope', '$location'];
 function nav($scope, $location) {
   var vm = this;
   $scope.isActive = function (location) {
-    console.log($location.path());
     return location === $location.path();
   };
 }
