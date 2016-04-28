@@ -37,7 +37,7 @@ router.get('/', function (req, res) {
                 var found = [];
                 _.each(array, function (item) {
                   for (var i = 0; i < arrayCompare.length; i++) {
-                    if (item.category === arrayCompare[i]) {
+                    if (item.item.categories[0].id === arrayCompare[i]) {
                       found.push(item);
                       break;
                     }
@@ -66,7 +66,7 @@ router.get('/', function (req, res) {
                 results = findMatch(results, bodylist.ace);
                 resolve(results);
               }
-              if (req.query.sort === 'shoes') {
+              if (req.query.sort === 'foot') {
                 results = findMatch(results, bodylist.sho);
                 resolve(results);
               }
@@ -76,6 +76,18 @@ router.get('/', function (req, res) {
               }
               if (req.query.sort === 'bags') {
                 results = findMatch(results, bodylist.bag);
+                resolve(results);
+              }
+              if (req.query.sort === 'eye') {
+                results = findMatch(results, bodylist.eye);
+                resolve(results);
+              }
+              if (req.query.sort === 'neck') {
+                results = findMatch(results, bodylist.nec);
+                resolve(results);
+              }
+              if (req.query.sort === 'head') {
+                results = findMatch(results, bodylist.hed);
                 resolve(results);
               }
             });
@@ -109,6 +121,36 @@ router.get('/item/:id', function (req, res) {
 })
 
 router.put('/update/:id', function (req, res) {
+  var p1 = new Promise(function(resolve, reject) {
+    request('http://api.shopstyle.com/api/v2/products/' + parseInt(req.params.id) + '?pid=uid41-33788821-64', function (err, res, body) {
+      resolve(body);
+    })
+  });
+  p1.then(function (body) {
+    var response = JSON.parse(body);
+    dbClient.connect(dbUrl, function (err, db) {
+      if (!err) {
+        var collections = db.collection('collections');
+        collections.update({email: req.currentUser.email, item: {id: response.id }}, {
+          $set: {
+            item: response,
+            date: new Date(),
+          }
+        }, {
+            upsert: true,
+          }, function (err, results) {
+          res.sendStatus(200);
+          db.close();
+        })
+      } else {
+        res.sendStatus(404);
+        db.close();
+      }
+    })
+  })
+})
+
+router.put('/update-withcat/:id', function (req, res) {
   var p1 = new Promise(function(resolve, reject) {
     request('http://api.shopstyle.com/api/v2/products/' + parseInt(req.params.id) + '?pid=uid41-33788821-64', function (err, res, body) {
       resolve(body);
@@ -167,7 +209,7 @@ router.put('/remove/:id', function (req, res) {
 router.get('/update-lists', function (req, res) {
   var promise = new Promise(function(resolve, reject) {
     var p1 = new Promise(function(resolve, reject) {
-      request('http://api.shopstyle.com/api/v2/categories?pid=uid41-33788821-64&depth=4', function (err, res, body) {
+      request('http://api.shopstyle.com/api/v2/categories?pid=uid41-33788821-64', function (err, res, body) {
         resolve(body);
       })
     });
@@ -176,6 +218,9 @@ router.get('/update-lists', function (req, res) {
       var bot = [];
       var sho = [];
       var ful = [];
+      var nec = [];
+      var hed = [];
+      var eye = [];
       var ace = [];
       var bag = [];
 
@@ -194,9 +239,9 @@ router.get('/update-lists', function (req, res) {
         push(item, top, 'outerwear');
         push(item, top, 'sweaters');
         push(item, top, 'sweatshirts');
+        push(item, top, 'jackets');
 
         push(item, bot, 'pants');
-        push(item, bot, 'sneakers');
         push(item, bot, 'jeans');
         push(item, bot, 'skirts');
 
@@ -206,6 +251,7 @@ router.get('/update-lists', function (req, res) {
         push(item, sho, 'pumps');
         push(item, sho, 'wedges');
         push(item, sho, 'sandals');
+        push(item, sho, 'sneakers');
 
         push(item, ful, 'intimates');
         push(item, ful, 'suits');
@@ -221,16 +267,34 @@ router.get('/update-lists', function (req, res) {
         push(item, ace, 'diamond');
         push(item, ace, 'makeup');
         push(item, ace, 'wallets');
+        push(item, ace, 'necklaces');
+        push(item, ace, 'rings');
+        push(item, ace, 'ring');
+        push(item, ace, 'watches');
 
         push(item, bag, 'bags');
+        push(item, bag, 'satchels');
+
+        push(item, hed, 'caps');
+        push(item, hed, 'hats');
+
+        push(item, nec, 'necklaces');
+        push(item, nec, 'scarves');
+
+        push(item, eye, 'sunglasses');
+
       });
       var body = {
-        top: top,
-        bot: bot,
-        sho: sho,
-        ful: ful,
-        bag: bag,
-        ace: ace,
+        top: _.uniq(top.sort()),
+        bot: _.uniq(bot.sort()),
+        sho: _.uniq(sho.sort()),
+        ful: _.uniq(ful.sort()),
+        bag: _.uniq(bag.sort()),
+        ace: _.uniq(ace.sort()),
+        hed: _.uniq(hed.sort()),
+        nec: _.uniq(nec.sort()),
+        eye: _.uniq(eye.sort()),
+
       }
       resolve(body);
     })
