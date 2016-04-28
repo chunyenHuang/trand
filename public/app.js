@@ -1,7 +1,15 @@
 var app = angular.module('trand', ['ngRoute', 'infinite-scroll', 'ngSanitize', 'xeditable']);
-
-app.run(function ($rootScope) {
+app.$inject = ['$http'];
+app.run(function ($rootScope, $http) {
   $rootScope.logged = false;
+  $rootScope.loadedCollections = [];
+  var collections = $http.get('/collections?sort=date');
+  collections.then(function (res) {
+    for (var i = 0; i < res.data.length; i++) {
+      $rootScope.loadedCollections.push(parseInt(res.data[i].item.id));
+    }
+  })
+  $rootScope.recentCollections = [];
 })
 
 app.run(function(editableOptions) {
@@ -29,6 +37,11 @@ app.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'user/profile.html',
       controller: 'userController',
       controllerAs: 'user',
+    })
+    .when('/collections', {
+      templateUrl: 'collections/collections.html',
+      controller: 'collectionsController',
+      controllerAs: 'collections',
     })
 }]);
 
@@ -72,5 +85,28 @@ function userService($http) {
     logout: logout,
     resign: resign,
     update: update,
+  }
+}
+
+app.factory('collectionsService', collectionsService);
+collectionsService.$inject=['$http'];
+function collectionsService($http, $rootScope) {
+  function getCollections(sort) {
+    return $http.get('/collections?sort=' + sort);
+  }
+  function update(id) {
+    return $http.put('/collections/update/' + id);
+  }
+  function remove(id) {
+    return $http.put('/collections/remove/' + id);
+  }
+  function getItem(id) {
+    return $http.get('/collections/item/' + id);
+  }
+  return {
+    getCollections: getCollections,
+    update: update,
+    remove: remove,
+    getItem: getItem,
   }
 }

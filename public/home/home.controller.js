@@ -1,7 +1,7 @@
 var app = angular.module('trand');
 app.controller('homeController', home);
-app.$inject = ['$http', 'listService'];
-function home($http, listService) {
+app.$inject = ['$http', 'listService', 'collectionsService'];
+function home($http, listService, collectionsService, $rootScope) {
   var vm = this;
   vm.showRetailers = function () {
     var retailers = listService.getRetailers();

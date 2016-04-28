@@ -29,7 +29,6 @@ describe('Test on Trand:', function () {
         done();
       })
     })
-
     it('POST: /user/login', function (done) {
       request({
         method: 'post',
@@ -60,7 +59,16 @@ describe('Test on Trand:', function () {
     })
   })
 
-  describe('APIs', function () {
+  describe('Collections', function () {
+    it('GET: /collections/item', function (done) {
+      request(url + '/collections/item/506845070', function (err, res, body) {
+        assert.equal(res.statusCode, 200);
+        done();
+      })
+    })
+  })
+
+  describe('API', function () {
     it('GET: /api/search?fts=dress&offset=0&limit=2', function (done) {
       request(url + '/api/search?fts=dress&offset=0&limit=2', function (err, res, body) {
         assert.equal(res.statusCode, 200);

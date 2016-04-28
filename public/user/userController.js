@@ -1,7 +1,7 @@
 var app = angular.module('trand');
 app.controller('userController', user);
-app.$inject = ['$http', '$scope', '$location', 'userService', '$sce'];
-function user($http, $scope, $location, userService, $sce, $rootScope) {
+app.$inject = ['$http', '$scope', '$location', 'userService', '$sce', 'collectionsService'];
+function user($http, $scope, $location, userService, $sce, $rootScope, collectionsService) {
   var vm = this;
   $scope.loginEmail = 'business@gmail.com';
   $scope.loginPassword = '123';

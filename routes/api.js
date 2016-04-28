@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var _ = require('underscore');
 
 var request = require('request');
 var apiUrl = 'http://api.shopstyle.com/api/v2'
@@ -26,22 +27,31 @@ router.get('/brand', function(req, res) {
 })
 router.get('/category', function(req, res) {
   var p1 = new Promise(function(resolve, reject) {
-    request('http://api.shopstyle.com/api/v2/categories?pid=uid41-33788821-64', function (err, res, body) {
+    request('http://api.shopstyle.com/api/v2/categories?pid=uid41-33788821-64&depth=1', function (err, res, body) {
       resolve(body);
     })
   });
   p1.then(function (body) {
     var response = JSON.parse(body);
     var list = [];
-    for (var i = 0; i < response.categories.length; i++) {
-      list.push({
-        name: response.categories[i].name,
-        id: response.categories[i].id,
-      });
-    }
-    res.json(list.sort());
+    list.push(response.categories[0]);
+    list.push(response.categories[1]);
+    res.json(list);
   })
 })
+
+router.get('/category/:id', function(req, res) {
+  var p1 = new Promise(function(resolve, reject) {
+    request('http://api.shopstyle.com/api/v2/categories?pid=uid41-33788821-64&depth=1&cat=' + req.params.id , function (err, res, body) {
+      resolve(body);
+    })
+  });
+  p1.then(function (body) {
+    var response = JSON.parse(body);
+    res.json(response.categories);
+  })
+})
+
 router.get('/query', function(req, res) {
   var p1 = new Promise(function(resolve, reject) {
     request('http://api.shopstyle.com/api/v2/products?pid=uid41-33788821-64&fts=red+dress&offset=0&limit=2', function (err, res, body) {
@@ -84,7 +94,6 @@ router.get('/histogram', function(req, res) {
 })
 
 router.get('/retailers', function (req, res) {
-  console.log('get Retailers');
   var p1 = new Promise(function(resolve, reject) {
     request(apiUrl + '/retailers' + pid , function (err, res, body) {
       resolve(body);
@@ -92,18 +101,12 @@ router.get('/retailers', function (req, res) {
   });
   p1.then(function (body) {
     var response = JSON.parse(body);
-    // var list = [];
-    // for (var i = 0; i < 300; i++) {
-    //   list.push({
-    //     name: response.retailers[i].name,
-    //   });
-    // }
+    response.retailers = _.sortBy(response.retailers, 'name');
     res.json(response.retailers);
   })
 })
 
 router.get('/search', function (req, res) {
-  console.log(req.url);
   var fts = req.query.fts;
   var cat = req.query.cat;
   var offset = req.query.offset;
@@ -118,7 +121,6 @@ router.get('/search', function (req, res) {
     var response = JSON.parse(body);
     res.json(response.products);
   }, function (err) {
-    console.log(err);
     res.sendStatus(404);
   })
 })
