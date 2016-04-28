@@ -16,32 +16,84 @@ router.use(bodyParser.json());
 router.use(cookieParser());
 
 router.get('/', function (req, res) {
-  dbClient.connect(dbUrl, function (err, db) {
-    if (!err) {
-      var collections = db.collection('collections');
-      collections.find({email: req.currentUser.email}).toArray(function (err, results) {
-        if (results.length>0) {
-          if (req.query.sort == 'category') {
-            results = _.sortBy(results, 'category').reverse();
-            console.log('sort by category');
-          }
-          if (req.query.sort == 'date') {
-            results = _.sortBy(results, 'date').reverse();
-            console.log('sort by date');
-
-          }
-          res.json(results);
-          db.close();
-        } else {
-          res.sendStatus(404);
-          db.close();
-        }
+  var dbPromise = new Promise(function(resolve, reject) {
+    dbClient.connect(dbUrl, function (err, db) {
+      var lists = db.collection('lists');
+      lists.find({type: 'body-list'}).toArray(function (err, results) {
+        var bodylist = results[0].body;
+        db.close();
+        resolve(bodylist);
       })
-    } else {
-      res.sendStatus(404);
-      db.close();
-    }
+    });
   });
+  dbPromise.then(function (bodylist) {
+    dbClient.connect(dbUrl, function (err, db) {
+      if (!err) {
+        var collections = db.collection('collections');
+        collections.find({email: req.currentUser.email}).toArray(function (err, results) {
+          if (results.length>0) {
+            var resPromise = new Promise(function(resolve, reject) {
+              function findMatch(array, arrayCompare) {
+                var found = [];
+                _.each(array, function (item) {
+                  for (var i = 0; i < arrayCompare.length; i++) {
+                    if (item.category === arrayCompare[i]) {
+                      found.push(item);
+                      break;
+                    }
+                  }
+                })
+                console.log(found.length);
+                return found;
+              }
+              if (req.query.sort === 'date') {
+                results = _.sortBy(results, 'date').reverse();
+                resolve(results);
+              }
+              if (req.query.sort === 'cat') {
+                results = _.sortBy(results, 'category').reverse();
+                resolve(results);
+              }
+              if (req.query.sort === 'top') {
+                results = findMatch(results, bodylist.top);
+                resolve(results);
+              }
+              if (req.query.sort === 'bot') {
+                results = findMatch(results, bodylist.bot);
+                resolve(results);
+              }
+              if (req.query.sort === 'accessories') {
+                results = findMatch(results, bodylist.ace);
+                resolve(results);
+              }
+              if (req.query.sort === 'shoes') {
+                results = findMatch(results, bodylist.sho);
+                resolve(results);
+              }
+              if (req.query.sort === 'fullbody') {
+                results = findMatch(results, bodylist.ful);
+                resolve(results);
+              }
+              if (req.query.sort === 'bags') {
+                results = findMatch(results, bodylist.bag);
+                resolve(results);
+              }
+            });
+            resPromise.then(function (body) {
+              res.json(body);
+              db.close();
+            })
+          } else {
+            res.sendStatus(404);
+            db.close();
+          }
+        })
+      } else {
+        res.sendStatus(404);
+        db.close();
+      }
+    });
+  })
 })
 
 router.get('/item/:id', function (req, res) {
@@ -111,5 +163,93 @@ router.put('/remove/:id', function (req, res) {
     }
   })
 });
+
+router.get('/update-lists', function (req, res) {
+  var promise = new Promise(function(resolve, reject) {
+    var p1 = new Promise(function(resolve, reject) {
+      request('http://api.shopstyle.com/api/v2/categories?pid=uid41-33788821-64&depth=4', function (err, res, body) {
+        resolve(body);
+      })
+    });
+    p1.then(function (body) {
+      var top = [];
+      var bot = [];
+      var sho = [];
+      var ful = [];
+      var ace = [];
+      var bag = [];
+
+      var response = JSON.parse(body);
+      var list = [];
+      for (var i = 0; i < response.categories.length; i++) {
+        list.push(response.categories[i].id);
+      }
+      _.each(list, function (item) {
+        function push(item, category, kind) {
+          if (item.indexOf(kind)>-1) {category.push(item)};
+        }
+        push(item, top, 'tops');
+        push(item, top, 'womens-clothes');
+        push(item, top, 'mens-clothes');
+        push(item, top, 'outerwear');
+        push(item, top, 'sweaters');
+        push(item, top, 'sweatshirts');
+
+        push(item, bot, 'pants');
+        push(item, bot, 'sneakers');
+        push(item, bot, 'jeans');
+        push(item, bot, 'skirts');
+
+        push(item, sho, 'shoes');
+        push(item, sho, 'boots');
+        push(item, sho, 'flats');
+        push(item, sho, 'pumps');
+        push(item, sho, 'wedges');
+        push(item, sho, 'sandals');
+
+        push(item, ful, 'intimates');
+        push(item, ful, 'suits');
+        push(item, ful, 'dresses');
+        push(item, ful, 'swimshirts');
+        push(item, ful, 'bridal');
+
+        push(item, ace, 'beauty');
+        push(item, ace, 'mens-accessories');
+        push(item, ace, 'womens-accessories');
+        push(item, ace, 'jewelry');
+        push(item, ace, 'jewelery');
+        push(item, ace, 'diamond');
+        push(item, ace, 'makeup');
+        push(item, ace, 'wallets');
+
+        push(item, bag, 'bags');
+      });
+      var body = {
+        top: top,
+        bot: bot,
+        sho: sho,
+        ful: ful,
+        bag: bag,
+        ace: ace,
+      }
+      resolve(body);
+    })
+  });
+  promise.then(function (body) {
+    dbClient.connect(dbUrl, function (err, db) {
+      var allLists = db.collection('lists');
+      if (!err) {
+        allLists.remove({}, function () {
+          allLists.insert({type: 'body-list', body: body}, function (err, result) {
+            db.close();
+            res.sendStatus(200);
+          })
+        });
+      } else {
+        res.sendStatus(404);
+      }
+    })
+  })
+})
 
 module.exports = router;

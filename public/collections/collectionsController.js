@@ -8,7 +8,7 @@ function collections($http, $scope, $location, userService, $sce, $rootScope, co
     var collections = collectionsService.getCollections(sort);
     collections.then(function (res) {
       vm.list = res.data;
-      console.log(vm.list[0].email);
+      console.log(vm.list);
     })
   }
   vm.getItem = function (itemId) {
@@ -17,6 +17,7 @@ function collections($http, $scope, $location, userService, $sce, $rootScope, co
       $('#item-modal').modal('show');
       vm.item = res.data;
       vm.coverImgUrl = res.data.image.sizes.Best.url;
+      console.log(res.data);
     })
   }
   vm.removeFromCollections = function (item) {

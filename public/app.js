@@ -3,7 +3,7 @@ app.$inject = ['$http'];
 app.run(function ($rootScope, $http) {
   $rootScope.logged = false;
   $rootScope.loadedCollections = [];
-  var collections = $http.get('/collections');
+  var collections = $http.get('/collections?sort=date');
   collections.then(function (res) {
     for (var i = 0; i < res.data.length; i++) {
       $rootScope.loadedCollections.push(parseInt(res.data[i].item.id));
