@@ -195,9 +195,21 @@ router.put('/remove/:id', function (req, res) {
   dbClient.connect(dbUrl, function (err, db) {
     if (!err) {
       var collections = db.collection('collections');
-      collections.remove({email: req.currentUser.email, item: {id: parseInt(req.params.id) }}, function (err, result) {
-        res.sendStatus(200);
-        db.close;
+      collections.find({email: req.currentUser.email}).toArray(function (err, results) {
+        var p1 = new Promise(function(resolve, reject) {
+          for (var i = 0; i < results.length; i++) {
+            if (results[i].item.id === parseInt(req.params.id)) {
+              var matched = results[i];
+            }
+          }
+          resolve(matched);
+        });
+        p1.then(function (matched) {
+          collections.remove(matched, function (err, results) {
+            res.sendStatus(200);
+            db.close();
+          })
+        })
       });
     } else {
       res.sendStatus(404);
