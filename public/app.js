@@ -20,6 +20,8 @@ app.run(function ($rootScope, $http) {
       $rootScope.recentCollections.push(reversed[i].item);
     }
   })
+  $rootScope.currentCombination = {};
+  $rootScope.query = {};
 })
 
 app.run(function(editableOptions) {

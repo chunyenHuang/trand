@@ -1,0 +1,135 @@
+<div class="row">
+  <div class="col-md-12">
+    <h3>Thumbs</h3>
+  </div>
+  <div class="col-md-12">
+    <div>
+      <h5>
+        <a ng-click="last(combinations.top, query.top, 'top')">
+          <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </a>
+        <span>
+          Top
+          {{query.top + 1}} |
+          {{combinations.top.length}}
+        </span>
+        <a ng-click="next(combinations.top, query.top, 'top')">
+          <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </a>
+      </h5>
+    </div>
+    <span ng-repeat="item in combinations.top">
+      <a ng-click='query.top = $index'>
+        <img src={{item.item.image.sizes.Medium.url}} height="60px;" width="auto">
+      </a>
+    </span>
+  </div>
+</div>
+
+
+<!-- <div>
+  <h5>
+    <a ng-click="last(combinations.foot, query.foot, 'foot')">
+      <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </a>
+    <span>
+      Top
+      {{query.foot + 1}} |
+      {{combinations.foot.length}}
+    </span>
+    <a ng-click="next(combinations.foot, query.foot, 'foot')">
+      <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </a>
+  </h5>
+</div> -->
+
+<div>
+  <h5>
+    <a ng-click="last(combinations.head, query.head, 'head')">
+      <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </a>
+    <span>
+      Head
+      {{query.head+1}} |
+      {{combinations.head.length}}
+    </span>
+    <a ng-click="next(combinations.head, query.head, 'head')">
+      <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </a>
+  </h5>
+</div>
+<div>
+  <h5>
+    <a ng-click="last(combinations.eye, query.eye, 'eye')">
+      <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </a>
+    <span>
+      Eyes
+      {{query.eye + 1}} |
+      {{combinations.eye.length}}
+    </span>
+    <a ng-click="next(combinations.eye, query.eye, 'eye')">
+      <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </a>
+  </h5>
+</div>
+<div>
+  <h5>
+    <a ng-click="last(combinations.bags, query.bags, 'bags')">
+      <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </a>
+    <span>
+      Bags
+      {{query.bags+1}} |
+      {{combinations.bags.length}}
+    </span>
+    <a ng-click="next(combinations.bags, query.bags, 'bags')">
+      <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </a>
+  </h5>
+</div>
+<div>
+  <h5>
+    <a ng-click="last(combinations.top, query.top, 'top')">
+      <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </a>
+    <span>
+      Tops
+      {{query.top+1}} |
+      {{combinations.top.length}}
+    </span>
+    <a ng-click="next(combinations.top, query.top, 'top')">
+      <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </a>
+  </h5>
+</div>
+<div>
+  <h5>
+    <a ng-click="last(combinations.bot, query.bot, 'bot')">
+      <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </a>
+    <span>
+      Bot
+      {{query.bot + 1}} |
+      {{combinations.bot.length}}
+    </span>
+    <a ng-click="next(combinations.bot, query.bot, 'bot')">
+      <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </a>
+  </h5>
+</div>
+<div>
+  <h5>
+    <a ng-click="last(combinations.fullbody, query.fullbody, 'fullbody')">
+      <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </a>
+    <span>
+      FullBody
+      {{query.fullbody+1}} |
+      {{combinations.fullbody.length}}
+    </span>
+    <a ng-click="next(combinations.fullbody, query.fullbody, 'fullbody')">
+      <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </a>
+  </h5>
+</div>
