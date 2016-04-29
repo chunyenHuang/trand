@@ -163,27 +163,13 @@ div[ng-click]{
 
 .combinations {
   background-color: rgb(255, 255, 255);
-  text-align: center;
 }
-
-#comb-top-field {
-  margin: auto;
-  width: 300px;
-  height: 200px;
+.combinations img{
+  width: 100%;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
-.comb-top-imgbox {
-}
-.comb-top-imgbox img {
-  max-height: 200px;
-}
-
-#comb-bot-field {
-  margin: auto;
-  width: 300px;
-  height: 200px;
-}
-.comb-bot-imgbox {
-}
-.comb-bot-imgbox img {
-  max-height: 200px;
-}
+/*div[ng-scrollable]{
+  overflow-y:hidden;
+  cursor: pointer;
+}*/

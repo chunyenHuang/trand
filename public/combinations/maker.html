@@ -1,50 +1,87 @@
-<div class="container combinations">
-  <div id='body-top'>
-    <div ng-repeat="item in combinations.top" ng-init='combinations.queryTop = 0'>
-      <div ng-show="$index == combinations.queryTop">
-        <h3>
-          <a ng-click="lastTop(combinations.top)">
+<div class="container combinations" ng-controller="combinationsController as combinations">
+  <div class="row">
+    <div class="col-md-4">
+      <div ng-init='combinations.queryTop = 0'>
+        <h5>
+          <a ng-click="last(combinations.top, 'top', combinations.queryTop)">
             <i class="fa fa-chevron-left" aria-hidden="true"></i>
           </a>
           <span>
-            {{$index+1}} |
+            Tops
+            {{combinations.queryTop+1}} |
             {{combinations.top.length}}
           </span>
-          <a ng-click="nextTop(combinations.top)">
+          <a ng-click="next(combinations.top, 'top', combinations.queryTop)">
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
           </a>
-        </h3>
-        <div id="comb-top-field">
-          <div class='comb-top-imgbox' ng-draggable='dragOptions'>
-            <img src={{item.item.image.sizes.IPhone.url}} >
+        </h5>
+      </div>
+      <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 300px;">
+        <div ng-repeat="item in combinations.top">
+          <div ng-show="$index == combinations.queryTop">
+            <div class="row">
+              <div class="col-md-12">
+                <div>
+                  <img src={{item.item.image.sizes.Best.url}}>
+                </div>
+              </div>
+            </div>
           </div>
-          <!-- <div draggable-up-down ng-animate-swap="number" class="comb-top-imgbox">
-            <img src={{item.item.image.sizes.IPhone.url}}>
-          </div> -->
         </div>
       </div>
-    </div>
-  </div>
-  <div id='body-bot'>
-    <div ng-repeat="item in combinations.bot" ng-init='combinations.queryBot = 0'>
-      <div ng-show="$index == combinations.queryBot">
-        <div id="comb-bot-field">
-          <div class='comb-bot-imgbox' ng-draggable='dragOptions'>
-            <img src={{item.item.image.sizes.IPhone.url}} >
+      <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 400px;">
+        <div ng-repeat="item in combinations.bot" ng-init='combinations.queryBot = 0'>
+          <div ng-show="$index == combinations.queryBot">
+            <div id="comb-bot-field">
+              <div>
+                <img src={{item.item.image.sizes.Best.url}} >
+              </div>
+            </div>
           </div>
         </div>
-        <h3>
-          <a ng-click="lastBot(combinations.bot)">
+      </div>
+      <div ng-init='combinations.queryBot = 0'>
+        <h5>
+          <a ng-click="last(combinations.bot, 'bot', combinations.queryBot)">
             <i class="fa fa-chevron-left" aria-hidden="true"></i>
           </a>
           <span>
-            {{$index+1}} |
-            {{combinations.bot.length}}
+            Bottoms
+            {{combinations.queryBot+1}} |
+            {{combinations.top.length}}
           </span>
-          <a ng-click="nextBot(combinations.bot)">
+          <a ng-click="next(combinations.bot, 'bot', combinations.queryBot)">
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
           </a>
-        </h3>
+        </h5>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div ng-init='combinations.queryFullbody = 0'>
+        <h5>
+          <a ng-click="last(combinations.queryFullbody, 'fullbody', combinations.queryFullbody)">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+          </a>
+          <span>
+            FullBody
+            {{combinations.queryFullbody+1}} |
+            {{combinations.fullbody.length}}
+          </span>
+          <a ng-click="next(combinations.queryFullbody, 'fullbody', combinations.queryFullbody)">
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+          </a>
+        </h5>
+      </div>
+      <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 700px;">
+        <div ng-repeat="item in combinations.fullbody" ng-init='combinations.queryFullbody = 0'>
+          <div ng-show="$index == combinations.queryFullbody">
+            <div id="comb-bot-field">
+              <div>
+                <img src={{item.item.image.sizes.Best.url}} >
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -54,7 +91,8 @@
 
 
 
-
+  <hr>
   <a ng-click='combinations.newComb()'>Save This Combination</a>
+  |
   <a ng-click>Startover Again</a>
 </div>
