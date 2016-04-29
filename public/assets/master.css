@@ -168,8 +168,8 @@ div[ng-click]{
   width: 100%;
   margin-top: 50px;
   margin-bottom: 50px;
+  z-index: 9999;
 }
-/*div[ng-scrollable]{
-  overflow-y:hidden;
-  cursor: pointer;
-}*/
+
+div[ng-scrollable]{
+}

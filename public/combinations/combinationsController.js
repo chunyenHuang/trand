@@ -41,6 +41,21 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     if (location === 'fullbody') {
       vm.queryFullbody = target;
     }
+    if (location === 'head') {
+      vm.queryHead = target;
+    }
+    if (location === 'eye') {
+      vm.queryEye = target;
+    }
+    if (location === 'neck') {
+      vm.queryNeck = target;
+    }
+    if (location === 'bags') {
+      vm.queryBags = target;
+    }
+    if (location === 'food') {
+      vm.queryFoot = target;
+    }
   }
   $scope.next = function (array, location, index) {
     if ((index + 1) === array.length) {
@@ -56,6 +71,21 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     }
     if (location === 'fullbody') {
       vm.queryFullbody = target;
+    }
+    if (location === 'head') {
+      vm.queryHead = target;
+    }
+    if (location === 'eye') {
+      vm.queryEye = target;
+    }
+    if (location === 'neck') {
+      vm.queryNeck = target;
+    }
+    if (location === 'bags') {
+      vm.queryBags = target;
+    }
+    if (location === 'foot') {
+      vm.queryFoot = target;
     }
   }
 
@@ -85,8 +115,35 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       if (sort === 'fullbody') {
         vm.fullbody = res.data;
       }
+      if (sort === 'head') {
+        vm.head = res.data;
+      }
+      if (sort === 'eye') {
+        vm.eye = res.data;
+      }
+      if (sort === 'neck') {
+        vm.neck = res.data;
+      }
+      if (sort === 'bags') {
+        vm.bags = res.data;
+      }
     })
   }
+
+  vm.savePic = function () {
+    html2canvas($("#comb-canvas"), {
+      allowTaint: true,
+      logging:true,
+      onrendered: function(canvas) {
+        // document.body.appendChild(canvas);
+        // $("#img-out").append(canvas);
+        canvas.toBlob(function(blob) {
+            saveAs(blob, "comb-canvas.png");
+        });
+      }
+    });
+  }
+
   function getCombinations() {
     var getComb = $http.get('/combinations');
     getComb.then(function (res) {
@@ -99,6 +156,12 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     vm.getCollectionsOf('bot');
     vm.getCollectionsOf('foot');
     vm.getCollectionsOf('fullbody');
+    vm.getCollectionsOf('head');
+    vm.getCollectionsOf('eye');
+    vm.getCollectionsOf('neck');
+    vm.getCollectionsOf('bags');
+
+
   }
   activate();
 }
