@@ -245,6 +245,12 @@ router.get('/update-lists', function (req, res) {
         function push(item, category, kind) {
           if (item.indexOf(kind)>-1) {category.push(item)};
         }
+        function remove(category, kind) {
+          var position = category.indexOf(kind);
+          if (position > -1) {
+            category.splice(position, 1);
+          }
+        }
         push(item, top, 'tops');
         push(item, top, 'womens-clothes');
         push(item, top, 'mens-clothes');
@@ -270,6 +276,7 @@ router.get('/update-lists', function (req, res) {
         push(item, ful, 'dresses');
         push(item, ful, 'swimshirts');
         push(item, ful, 'bridal');
+        remove(ful, 'bridal-shoes');
 
         push(item, ace, 'beauty');
         push(item, ace, 'mens-accessories');
@@ -317,7 +324,7 @@ router.get('/update-lists', function (req, res) {
         allLists.remove({}, function () {
           allLists.insert({type: 'body-list', body: body}, function (err, result) {
             db.close();
-            res.sendStatus(200);
+            res.json(body);
           })
         });
       } else {

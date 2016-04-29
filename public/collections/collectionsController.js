@@ -15,6 +15,8 @@ function collections($http, $scope, $location, userService, $sce, $rootScope, co
     var item = collectionsService.getItem(itemId);
     item.then(function (res) {
       $('#item-modal').modal('show');
+      console.log(res.data);
+      console.log(res.data.categories[0].id);
       vm.item = res.data;
       vm.coverImgUrl = res.data.image.sizes.Best.url;
     })
