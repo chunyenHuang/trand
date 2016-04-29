@@ -1,17 +1,12 @@
-<div class="container">
+<div class="container combinations">
   <div class="row">
     <div class="col-md-12">
-      <h1>combinations</h1>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
-      <a ng-click='nav.addNewCombination();'>Add a new combination</a>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      shows here
+      <a ng-click='maker=true'>Add a new combination</a>
     </div>
   </div>
 </div>
+<maker ng-show='maker'></maker>
