@@ -47,15 +47,15 @@
 }
 
 .scrollable:hover .scrollable-bar {
-    opacity: 0;
+    opacity: 0.5;
 }
 
 .scrollable .scrollable-bar:hover {
-    opacity: 0;
+    opacity: 0.5;
 }
 
 .scrollable.active .scrollable-bar {
-    opacity: 0;
+    opacity: 0.5;
 }
 
 .scrollable .scrollable-slider {

@@ -7,8 +7,8 @@
             <div class="row">
               <div class="col-md-12">
                 <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 180px;">
-                  <div ng-repeat="item in combinations.head">
-                    <div ng-show="$index == query.head">
+                  <div ng-repeat="item in (_.where(queryLists, {name:'head'})[0].data)">
+                    <div ng-show="$index == _.where(query, {name:'head'})[0].index">
                       <div class="comb-head">
                         <img src={{item.item.image.sizes.Best.url}} >
                       </div>
@@ -18,8 +18,8 @@
               </div>
               <div class="col-md-12">
                 <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 180px;">
-                  <div ng-repeat="item in combinations.eye">
-                    <div ng-show="$index == query.eye">
+                  <div ng-repeat="item in (_.where(queryLists, {name:'eye'})[0].data)">
+                    <div ng-show="$index == _.where(query, {name:'eye'})[0].index">
                       <div class="comb-head">
                         <img src={{item.item.image.sizes.Best.url}} >
                       </div>
@@ -28,9 +28,9 @@
                 </div>
               </div>
               <div class="col-md-12">
-                <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 300px;">
-                  <div ng-repeat="item in combinations.bags">
-                    <div ng-show="$index == query.bags">
+                <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 180px;">
+                  <div ng-repeat="item in (_.where(queryLists, {name:'bags'})[0].data)">
+                    <div ng-show="$index == _.where(query, {name:'bags'})[0].index">
                       <div class="comb-head">
                         <img src={{item.item.image.sizes.Best.url}} >
                       </div>
@@ -44,40 +44,21 @@
             <div class="row">
               <div class="col-md-12">
                 <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 300px;">
-                  <div ng-repeat="item in combinations.top">
-                    <div ng-show="$index == query.top">
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div>
-                            <img src={{item.item.image.sizes.Best.url}}>
-                          </div>
-                        </div>
+                  <div ng-repeat="item in (_.where(queryLists, {name:'top'})[0].data)">
+                    <div ng-show="$index == _.where(query, {name:'top'})[0].index">
+                      <div class="comb-head">
+                        <img src={{item.item.image.sizes.Best.url}} >
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="col-md-12">
-                <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 300px;">
-                  <div ng-repeat="item in combinations.bot">
-                    <div ng-show="$index === query.bot">
-                      <div id="comb-bot-field">
-                        <div>
-                          <img src={{item.item.image.sizes.Best.url}} >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 300px;">
-                  <div ng-repeat="item in combinations.foot">
-                    <div ng-show="$index === query.foot">
-                      <div id="comb-bot-field">
-                        <div>
-                          <img src={{item.item.image.sizes.Best.url}} >
-                        </div>
+                <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 350px;">
+                  <div ng-repeat="item in (_.where(queryLists, {name:'bot'})[0].data)">
+                    <div ng-show="$index == _.where(query, {name:'bot'})[0].index">
+                      <div class="comb-head">
+                        <img src={{item.item.image.sizes.Best.url}} >
                       </div>
                     </div>
                   </div>
@@ -88,13 +69,22 @@
           <div class="col-md-4">
             <div class="row">
               <div class="col-md-12">
-                <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 700px;">
-                  <div ng-repeat="item in combinations.fullbody">
-                    <div ng-show="$index === query.fullbody">
-                      <div id="comb-bot-field">
-                        <div>
-                          <img src={{item.item.image.sizes.Best.url}} >
-                        </div>
+                <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 450px;">
+                  <div ng-repeat="item in (_.where(queryLists, {name:'fullbody'})[0].data)">
+                    <div ng-show="$index == _.where(query, {name:'fullbody'})[0].index">
+                      <div class="comb-head">
+                        <img src={{item.item.image.sizes.Best.url}} >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 300px;">
+                  <div ng-repeat="item in (_.where(queryLists, {name:'foot'})[0].data)">
+                    <div ng-show="$index == _.where(query, {name:'foot'})[0].index">
+                      <div class="comb-head">
+                        <img src={{item.item.image.sizes.Best.url}} >
                       </div>
                     </div>
                   </div>
