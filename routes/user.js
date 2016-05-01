@@ -45,7 +45,6 @@ router.post('/login', function (req, res) {
       })
     } else {
       db.close();
-      res.sendStatus(404);
     }
   })
 })
@@ -61,7 +60,6 @@ router.get('/logout/:email', function (req, res) {
       })
     } else {
       res.sendStatus(404);
-      db.close();
     }
   })
 })
@@ -81,7 +79,6 @@ router.put('/update', function (req, res) {
       })
     } else {
       res.sendStatus(404);
-      db.close();
     }
   })
 })
@@ -107,7 +104,6 @@ router.post('/register', function (req, res) {
       });
     } else {
       res.sendStatus(404);
-      db.close;
     }
   })
 });
@@ -122,7 +118,6 @@ router.delete('/resign/:email', function (req, res) {
       });
     } else {
       res.sendStatus(404);
-      db.close;
     }
   })
 });
