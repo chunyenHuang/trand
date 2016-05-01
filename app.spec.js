@@ -67,6 +67,35 @@ describe('Test on Trand:', function () {
       })
     })
   })
+  describe('combinations', function () {
+    it('GET: /combinations', function (done) {
+      request(url + '/combinations', function (err, res, body) {
+        assert.equal(res.statusCode, 200);
+        done();
+      })
+    })
+    it('POST: /combinations/new', function (done) {
+      request({
+        method: 'post',
+        url: url + '/combinations/new',
+        json: {
+          combinations: 'combination test'
+        }
+      }, function (err, res, body) {
+        assert.equal(res.statusCode, 200);
+        done();
+      })
+    })
+    it('DELETE: /combinations/remove-null', function (done) {
+      request({
+        method: 'delete',
+        url: url + '/combinations/remove-null'
+      }, function (err, res, body) {
+        assert.equal(res.statusCode, 200);
+        done();
+      })
+    })
+  })
 
   describe('API', function () {
     it('GET: /api/search?fts=dress&offset=0&limit=2', function (done) {

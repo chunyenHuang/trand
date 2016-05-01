@@ -4,8 +4,7 @@ var router = express.Router();
 var mongodb = require('mongodb');
 var dbClient = mongodb.MongoClient;
 var ObjectId = mongodb.ObjectId;
-var database = 'trand';
-var dbUrl = 'mongodb://localhost/' + database;
+var dbUrl = process.env.MONGODB_URI || 'mongodb://localhost/trand'
 
 var request = require('request');
 var _ = require('underscore');
@@ -195,9 +194,21 @@ router.put('/remove/:id', function (req, res) {
   dbClient.connect(dbUrl, function (err, db) {
     if (!err) {
       var collections = db.collection('collections');
-      collections.remove({email: req.currentUser.email, item: {id: parseInt(req.params.id) }}, function (err, result) {
-        res.sendStatus(200);
-        db.close;
+      collections.find({email: req.currentUser.email}).toArray(function (err, results) {
+        var p1 = new Promise(function(resolve, reject) {
+          for (var i = 0; i < results.length; i++) {
+            if (results[i].item.id === parseInt(req.params.id)) {
+              var matched = results[i];
+            }
+          }
+          resolve(matched);
+        });
+        p1.then(function (matched) {
+          collections.remove(matched, function (err, results) {
+            res.sendStatus(200);
+            db.close();
+          })
+        })
       });
     } else {
       res.sendStatus(404);
@@ -233,6 +244,12 @@ router.get('/update-lists', function (req, res) {
         function push(item, category, kind) {
           if (item.indexOf(kind)>-1) {category.push(item)};
         }
+        function remove(category, kind) {
+          var position = category.indexOf(kind);
+          if (position > -1) {
+            category.splice(position, 1);
+          }
+        }
         push(item, top, 'tops');
         push(item, top, 'womens-clothes');
         push(item, top, 'mens-clothes');
@@ -258,6 +275,7 @@ router.get('/update-lists', function (req, res) {
         push(item, ful, 'dresses');
         push(item, ful, 'swimshirts');
         push(item, ful, 'bridal');
+        remove(ful, 'bridal-shoes');
 
         push(item, ace, 'beauty');
         push(item, ace, 'mens-accessories');
@@ -305,7 +323,7 @@ router.get('/update-lists', function (req, res) {
         allLists.remove({}, function () {
           allLists.insert({type: 'body-list', body: body}, function (err, result) {
             db.close();
-            res.sendStatus(200);
+            res.json(body);
           })
         });
       } else {

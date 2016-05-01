@@ -160,3 +160,29 @@ div[ng-click]{
   max-height: 60px;
   margin: 5px;
 }
+
+.combinations {
+  background-color: rgb(255, 255, 255);
+}
+.combinations img{
+  width: 100%;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  z-index: 9999;
+}
+.comb-thumbs {
+  background-color: rgb(255, 255, 255);
+}
+
+.comb-thumbs img {
+  max-height: 60px;
+  max-width: 60px;
+  background-color: rgb(255, 255, 255);
+  opacity: 0.3;
+}
+.onshow img{
+  opacity: 1;
+}
+
+div[ng-scrollable]{
+}

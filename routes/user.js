@@ -4,8 +4,7 @@ var router = express.Router();
 var mongodb = require('mongodb');
 var dbClient = mongodb.MongoClient;
 var ObjectId = mongodb.ObjectId;
-var database = 'trand';
-var dbUrl = 'mongodb://localhost/' + database;
+var dbUrl = process.env.MONGODB_URI || 'mongodb://localhost/trand'
 
 var request = require('request');
 var _ = require('underscore');

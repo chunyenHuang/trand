@@ -16,10 +16,10 @@
           {{item.price | currency}}
         </h5>
         <div class='show-box-hover' ng-class={'hide':!hover} ng-show='logged'>
-          <div class='click-box' ng-click='search.removeFromCollections(item)' ng-show='loadedCollections.indexOf(item.id) > -1'>
+          <div class='click-box' ng-click='search.removeFromCollections(item)' ng-show='_.where(loadedCollections, {id: item.id}).length > 0'>
             <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
           </div>
-          <div class='click-box' ng-click='search.addToCollections(item)' ng-show='loadedCollections.indexOf(item.id) == -1'>
+          <div class='click-box' ng-click='search.addToCollections(item)' ng-show='_.where(loadedCollections, {id: item.id}).length == 0'>
             <i class="fa fa-heart-o fa-lg" aria-hidden="true"></i>
           </div>
         </div>

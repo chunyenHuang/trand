@@ -6,13 +6,14 @@ var port = process.env.PORT || 3000;
 var mongodb = require('mongodb');
 var dbClient = mongodb.MongoClient;
 var ObjectId = mongodb.ObjectId;
-var database = 'trand';
-var dbUrl = 'mongodb://localhost/' + database;
+var dbUrl = process.env.MONGODB_URI || 'mongodb://localhost/trand'
+
 // Routes
 var checkCurrentUser = require('./routes/checkCurrentUser.js');
 var api = require('./routes/api');
 var userRoute = require('./routes/user');
 var collections = require('./routes/collections');
+var combinations = require('./routes/combinations');
 
 // Module Tools
 var request = require('request');
@@ -35,6 +36,7 @@ app.use(checkCurrentUser);
 app.use('/api', api);
 app.use('/user', userRoute);
 app.use('/collections', collections);
+app.use('/combinations', combinations);
 
 app.use(express.static('./public/'));
 
