@@ -101,7 +101,6 @@ router.get('/', function (req, res) {
         })
       } else {
         res.sendStatus(404);
-        db.close();
       }
     });
   })
@@ -143,7 +142,6 @@ router.put('/update/:id', function (req, res) {
         })
       } else {
         res.sendStatus(404);
-        db.close();
       }
     })
   })
@@ -183,7 +181,6 @@ router.put('/update-withcat/:id', function (req, res) {
           })
         } else {
           res.sendStatus(404);
-          db.close();
         }
       })
     })
@@ -212,7 +209,6 @@ router.put('/remove/:id', function (req, res) {
       });
     } else {
       res.sendStatus(404);
-      db.close;
     }
   })
 });

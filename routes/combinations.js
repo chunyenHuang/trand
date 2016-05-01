@@ -30,7 +30,6 @@ router.get('/', function (req, res) {
       })
     } else {
       res.sendStatus(404);
-      db.close();
     }
   });
 })
@@ -50,7 +49,6 @@ router.post('/new', function (req, res) {
       })
     } else {
       res.sendStatus(404);
-      db.close();
     }
   })
 })
@@ -76,7 +74,6 @@ router.post('/update', function (req, res) {
       })
     } else {
       res.sendStatus(404);
-      db.close();
     }
   })
 })
@@ -90,7 +87,6 @@ router.delete('/remove/:id', function (req, res) {
       });
     } else {
       res.sendStatus(404);
-      db.close;
     }
   })
 });
@@ -104,7 +100,6 @@ router.delete('/remove-null/', function (req, res) {
       });
     } else {
       res.sendStatus(404);
-      db.close;
     }
   })
 });
