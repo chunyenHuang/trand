@@ -5,7 +5,12 @@ app.$inject = ['$http', '$scope', '$location', 'userService', '$sce', 'collectio
 function combinations($http, $scope, $location, userService, $sce, $rootScope, collectionsService, $timeout) {
   var vm = this;
   $scope._ = _;
-
+  if ($rootScope.currentCombination.title) {
+    $scope.author = $rootScope.currentCombination.author;
+    $scope.title = $rootScope.currentCombination.title;
+    $scope.eventType = $rootScope.currentCombination.eventType;
+    $scope.descrition = $rootScope.currentCombination.descrition;
+  }
   // 'use strict';
 
   $scope.posX = 0;
@@ -64,6 +69,15 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     theOne[0].imgUrl = theOne[0].data[theOne[0].index].item.image.sizes.Best.url;
   }
 
+  $scope.save = function () {
+    $rootScope.currentCombination = {
+      author: $scope.author,
+      title: $scope.title,
+      eventType: $scope.eventType,
+      descrition: $scope.descrition,
+    }
+  }
+
   vm.newComb = function () {
     $scope.thumbShow = 'save';
     $scope.saveMsg = 'Saving...';
@@ -72,10 +86,10 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     for (var i = 0; i < rootArray.length; i++) {
       var theOne = rootArray[i].data[rootArray[i].index];
       var object = {
-        author: '',
-        title: '',
-        eventType: '',
-        descrition: '',
+        author: $scope.author,
+        title: $scope.title,
+        eventType: $scope.eventType,
+        descrition: $scope.descrition,
         imgUrl: rootArray[i].imgUrl,
         index: rootArray[i].index,
         name: rootArray[i].name,

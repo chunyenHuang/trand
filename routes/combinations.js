@@ -35,9 +35,10 @@ router.get('/', function (req, res) {
 })
 
 router.post('/new', function (req, res) {
+  console.log(req.url);
   var newComb = {
     email: req.currentUser.email,
-    combinations: req.body.combinations,
+    combinations: req.body,
     date: new Date(),
   }
   dbClient.connect(dbUrl, function (err, db) {

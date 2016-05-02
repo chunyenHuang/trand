@@ -23,9 +23,7 @@ app.run(function ($rootScope, $http) {
     }
   })
   $rootScope.currentCombination = {};
-  // $rootScope.query = [];
   $rootScope.queryLists = [];
-
 })
 
 app.run(function(editableOptions) {

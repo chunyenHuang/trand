@@ -54,7 +54,22 @@
   </div>
   <div ng-show='thumbShow=="description"'>
     <div class="col-md-12">
-      <h5>Description:</h5>
+      <div class="form-group">
+        <label for="">Your Name</label>
+        <input class='form-control' type="text" ng-keyup='save()' ng-model="author">
+      </div>
+      <div class="form-group">
+        <label for="">Title</label>
+        <input class='form-control' type="text" ng-keyup='save()' ng-model="title">
+      </div>
+      <div class="form-group">
+        <label for="">Event</label>
+        <input class='form-control' type="text" ng-keyup='save()' ng-model="eventType">
+      </div>
+      <div class="form-group">
+        <label for="">Descrition</label>
+        <textarea class='form-control'  type="text" ng-keyup='save()' ng-model="descrition"></textarea>
+      </div>
     </div>
   </div>
   <div ng-show='thumbShow=="preview"' class='comb-thumbs-preview'>
