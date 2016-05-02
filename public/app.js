@@ -62,6 +62,11 @@ app.config(['$routeProvider', function($routeProvider) {
       controller: 'combinationsController',
       controllerAs: 'combinations',
     })
+    .when('/ideas', {
+      templateUrl: 'ideas/ideas.html',
+      controller: 'ideasController',
+      controllerAs: 'ideas',
+    })
 }]);
 
 app.factory('listService', listService);
