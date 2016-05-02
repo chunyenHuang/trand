@@ -26,60 +26,20 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     $scope.posY = 410;
   };
 
-  $scope.last = function (array, index, location) {
-    if (index === 0 ) {
-      var target = array.length - 1;
+  $scope.last = function (name) {
+    var theOne = _.where($rootScope.queryLists, {name: name});
+    if ((theOne[0].index)===0) {
+      theOne[0].index = theOne[0].data.length - 1 ;
     } else {
-      var target = index - 1;
-    }
-    if (location === 'fullbody') {
-      $rootScope.query.fullbody = target;
-    }
-    if (location === 'head') {
-      $rootScope.query.head = target;
-    }
-    if (location === 'eye') {
-      $rootScope.query.eye = target;
-    }
-    if (location === 'top') {
-      $rootScope.query.top = target;
-    }
-    if (location === 'bot') {
-      $rootScope.query.bot = target;
-    }
-    if (location === 'foot') {
-      $rootScope.query.foot = target;
-    }
-    if (location === 'bags') {
-      $rootScope.query.bags = target;
+      theOne[0].index -- ;
     }
   }
-  $scope.next = function (array, index, location) {
-    if ((index + 1) === array.length) {
-      var target = 0;
+  $scope.next = function (name) {
+    var theOne = _.where($rootScope.queryLists, {name: name});
+    if ((theOne[0].index + 1) === theOne[0].data.length) {
+      theOne[0].index = 0;
     } else {
-      var target = index + 1;
-    }
-    if (location === 'fullbody') {
-      $rootScope.query.fullbody = target;
-    }
-    if (location === 'head') {
-      $rootScope.query.head = target;
-    }
-    if (location === 'eye') {
-      $rootScope.query.eye = target;
-    }
-    if (location === 'top') {
-      $rootScope.query.top = target;
-    }
-    if (location === 'bot') {
-      $rootScope.query.bot = target;
-    }
-    if (location === 'foot') {
-      $rootScope.query.foot = target;
-    }
-    if (location === 'bags') {
-      $rootScope.query.bags = target;
+      theOne[0].index ++ ;
     }
   }
 
@@ -102,12 +62,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
         $rootScope.queryLists.push({
           name: sort,
           data: res.data,
-        })
-      }
-      var edited = _.where($rootScope.query, {name: sort});
-      if (edited.length==0){
-        $rootScope.query.push({
-          name: sort,
           index: 0,
         })
       }
@@ -162,10 +116,11 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       $( ".combox-bags-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
       $scope.ready = true;
       $( ".combox-top-img" ).resizable();
+      console.log($scope.queryLists);
+
     }, 2500);
   }
   function activate() {
-
   }
   activate();
 }

@@ -9,7 +9,7 @@
           <div ng-show='ready' ng-repeat="name in ['top', 'bot', 'fullbody', 'foot', 'neck', 'head', 'eye', 'bags']">
             <div class="combox combox-{{name}}-draggable">
               <div ng-repeat="item in (_.where(queryLists, {name: name})[0].data)" class='combox-{{name}}' >
-                <div ng-show="$index == _.where(query, {name: name})[0].index">
+                <div ng-show="$index == _.where(queryLists, {name: name})[0].index">
                   <img src={{item.item.image.sizes.Best.url}} id='combox-{{name}}-img'>
                 </div>
               </div>

@@ -21,7 +21,7 @@ app.run(function ($rootScope, $http) {
     }
   })
   $rootScope.currentCombination = {};
-  $rootScope.query = [];
+  // $rootScope.query = [];
   $rootScope.queryLists = [];
 
 })
