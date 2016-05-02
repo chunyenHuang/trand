@@ -35,19 +35,34 @@ router.get('/', function (req, res) {
 })
 
 router.post('/new', function (req, res) {
-  console.log(req.url);
   var newComb = {
     email: req.currentUser.email,
-    combinations: req.body,
+    information: req.body.information,
+    combinations: req.body.combinations,
     date: new Date(),
   }
   dbClient.connect(dbUrl, function (err, db) {
     if (!err) {
       var combinations = db.collection('combinations');
-      combinations.insert(newComb, function (err, results) {
-        res.sendStatus(200);
-        db.close();
-      })
+      if (typeof(req.body.information._id)==='undefined') {
+        console.log('create');
+        combinations.insert(newComb, function (err, results) {
+          res.status(201).send(results.ops[0]._id);
+          db.close();
+        })
+      } else {
+        console.log('update');
+        combinations.update({_id: ObjectId(req.body.information._id)}, {
+          $set: {
+            information: req.body.information,
+            combinations: req.body.combinations,
+            date: new Date(),
+          }
+        }, function (err, results) {
+          res.sendStatus(200);
+          db.close();
+        })
+      }
     } else {
       res.sendStatus(404);
     }

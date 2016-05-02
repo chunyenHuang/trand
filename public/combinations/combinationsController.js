@@ -70,12 +70,11 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
   }
 
   $scope.save = function () {
-    $rootScope.currentCombination = {
-      author: $scope.author,
-      title: $scope.title,
-      eventType: $scope.eventType,
-      descrition: $scope.descrition,
-    }
+    $rootScope.currentCombination.author = $scope.author;
+    $rootScope.currentCombination.title = $scope.title;
+    $rootScope.currentCombination.eventType = $scope.eventType;
+    $rootScope.currentCombination.descrition = $scope.descrition;
+    console.log($rootScope.currentCombination.author);
   }
 
   vm.newComb = function () {
@@ -86,10 +85,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     for (var i = 0; i < rootArray.length; i++) {
       var theOne = rootArray[i].data[rootArray[i].index];
       var object = {
-        author: $scope.author,
-        title: $scope.title,
-        eventType: $scope.eventType,
-        descrition: $scope.descrition,
         imgUrl: rootArray[i].imgUrl,
         index: rootArray[i].index,
         name: rootArray[i].name,
@@ -109,8 +104,15 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       saveComb[i].item.retailerName = theOne.item.retailer.name;
       saveComb[i].item.categories = theOne.item.categories;
     }
-    var newComb = $http.post('/combinations/new', saveComb);
+    var json = {
+      information: $rootScope.currentCombination,
+      combinations: saveComb,
+    }
+    var newComb = $http.post('/combinations/new', json);
     newComb.then(function (response) {
+      if (response.status == '201') {
+        $rootScope.currentCombination._id = response.data;
+      }
       // getCombinations();
       $timeout(function () {
         $scope.saveMsg = 'Saved successfully!';
