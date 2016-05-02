@@ -1,12 +1,23 @@
 var app = angular.module('trand');
 app.controller('ideasController', ideas);
-app.$inject = ['$scope', '$location'];
-function ideas($scope, $location) {
+app.$inject = ['$http', '$scope', '$location'];
+function ideas($http, $scope, $location) {
   var vm = this;
+  function getAllCombs() {
+    var combs = $http.get('/ideas');
+    combs.then(function (response) {
+      console.log(response.data);
+      vm.combs = response.data;
+    })
+  }
+  function activate() {
+    getAllCombs();
+  }
+  activate();
 }
 
-app.directive('show', function () {
+app.directive('minishow', function () {
   return {
-    templateUrl: 'ideas/combination.html'
+    templateUrl: 'ideas/minishow.html'
   }
 })
