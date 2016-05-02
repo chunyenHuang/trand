@@ -89,7 +89,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
         fullbody: vm.fullbody[$rootScope.query.fullbody].item
       }
     }
-    console.log(json);
     var newComb = $http.post('/combinations/new', json);
     newComb.then(function (response) {
       getCombinations();
@@ -98,11 +97,13 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
   vm.getCollectionsOf = function (sort) {
     var collections = collectionsService.getCollections(sort);
     collections.then(function (res) {
-      $rootScope.queryLists.push({
-        name: sort,
-        data: res.data,
-      })
-      console.log($rootScope.queryLists);
+      var added = _.where($rootScope.queryLists, {name: sort});
+      if (added.length == 0) {
+        $rootScope.queryLists.push({
+          name: sort,
+          data: res.data,
+        })
+      }
       var edited = _.where($rootScope.query, {name: sort});
       if (edited.length==0){
         $rootScope.query.push({
@@ -110,49 +111,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
           index: 0,
         })
       }
-
-      // if (sort === 'top') {
-      //   vm.top = res.data;
-      //   if (!$rootScope.query.top) {
-      //     $rootScope.query.top=0;
-      //   }
-      // }
-      // if (sort === 'bot') {
-      //   vm.bot = res.data;
-      //   if (!$rootScope.query.bot) {
-      //     $rootScope.query.bot=0;
-      //   }
-      // }
-      // if (sort === 'foot') {
-      //   vm.foot = res.data;
-      //   if (!$rootScope.query.foot) {
-      //     $rootScope.query.foot=0;
-      //   }
-      // }
-      // if (sort === 'fullbody') {
-      //   vm.fullbody = res.data;
-      //   if (!$rootScope.query.fullbody) {
-      //     $rootScope.query.fullbody=0;
-      //   }
-      // }
-      // if (sort === 'head') {
-      //   vm.head = res.data;
-      //   if (!$rootScope.query.head) {
-      //     $rootScope.query.head=0;
-      //   }
-      // }
-      // if (sort === 'eye') {
-      //   vm.eye = res.data;
-      //   if (!$rootScope.query.eye) {
-      //     $rootScope.query.eye=0;
-      //   }
-      // }
-      // if (sort === 'bags') {
-      //   vm.bags = res.data;
-      //   if (!$rootScope.query.bags) {
-      //     $rootScope.query.bags=0;
-      //   }
-      // }
     })
   }
 
@@ -184,6 +142,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     for (var i = 0; i < bodyParts.length; i++) {
       vm.getCollectionsOf(bodyParts[i]);
     }
+
     $scope.posX = 0;
     $scope.posY = 0;
 

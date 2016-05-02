@@ -42,7 +42,6 @@ router.get('/', function (req, res) {
                     }
                   }
                 })
-                console.log(found.length);
                 return found;
               }
               if (req.query.sort === 'date') {
