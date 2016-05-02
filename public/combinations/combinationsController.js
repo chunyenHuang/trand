@@ -49,6 +49,18 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     theOne[0].show = !theOne[0].show;
   }
 
+  $scope.setPosition = function (name) {
+    var theOne = _.where($rootScope.queryLists, {name: name});
+    var current = document.getElementById('combox-'+ name + '-draggable');
+    theOne[0].position = current.getAttribute('style');
+    console.log(theOne[0].position);
+  }
+
+  $scope.select = function (name, index, url) {
+    var theOne = _.where($rootScope.queryLists, {name: name});
+    theOne[0].index = index;
+    theOne[0].imgUrl = url;
+  }
   vm.newComb = function () {
     var json ={
       combinations: {
@@ -71,9 +83,34 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
           data: res.data,
           index: 0,
           show: true,
+          imgUrl: res.data[0].item.image.sizes.Best.url,
         }
-        if (sort === 'fullbody' || sort === 'neck') {
+        if (sort === 'top') {
+          object.position = 'left: 350px';
+        }
+        if (sort === 'bot') {
+          object.position = 'left: 350px; top: 350px';
+        }
+        if (sort === 'fullbody') {
           object.show = false;
+          object.position = 'right: 15px; top:15px;'
+        }
+        if (sort === 'foot') {
+          object.position = 'right: 15px; bottom: 15px;';
+        }
+        if (sort === 'head') {
+          object.show = false;
+          object.position = 'left: 15px; top: 15px;';
+        }
+        if (sort === 'eye') {
+          object.position = 'left: 15px; top: 200px;';
+        }
+        if (sort === 'neck') {
+          object.show = false;
+          object.position = 'left:15px; top:300px;'
+        }
+        if (sort === 'bags') {
+          object.position = 'left: 15px; bottom: 15px;';
         }
         $rootScope.queryLists.push(object);
       }
@@ -118,19 +155,19 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     $scope.$broadcast('content.reload');
 
     $timeout(function(){
-      $( ".combox-top-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( ".combox-bot-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( ".combox-fullbody-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( ".combox-foot-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( ".combox-eye-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( ".combox-head-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( ".combox-neck-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( ".combox-bags-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( "#combox-top-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( "#combox-bot-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( "#combox-fullbody-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( "#combox-foot-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( "#combox-eye-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( "#combox-head-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( "#combox-neck-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( "#combox-bags-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
       $scope.ready = true;
       $( ".combox-top-img" ).resizable();
       console.log($scope.queryLists);
 
-    }, 2500);
+    }, 2000);
   }
   function activate() {
   }

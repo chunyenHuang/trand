@@ -24,7 +24,7 @@
     </h5>
     <div  ng-show='!showname' ng-scrollable="{scrollX:'bottom',scrollY:'right'}" style="width: 350px; height: 70px;">
       <span ng-repeat="item in list.data">
-        <a ng-click='_.where(queryLists, {name: list.name})[0].index = $index' ng-class="{onshow: $index == _.where(queryLists, {name: list.name})[0].index}">
+        <a ng-click='select(list.name, $index, item.item.image.sizes.Best.url)' ng-class="{onshow: $index == _.where(queryLists, {name: list.name})[0].index}">
           <img src={{item.item.image.sizes.Medium.url}}>
         </a>
       </span>
