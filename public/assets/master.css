@@ -164,12 +164,85 @@ div[ng-click]{
 .combinations {
   background-color: rgb(255, 255, 255);
 }
-.combinations img{
+
+#combox-wrapper {
+  height: 900px;
+  padding: 15px;
+}
+
+.combox {
+  display: inline-block;
+}
+
+.combox-top-draggable {
+  position: absolute;
+  left: 350px;
+}
+.combox-bot-draggable {
+  position: absolute;
+  left: 350px;
+  top: 350px;
+}
+.combox-fullbody-draggable {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+.combox-foot-draggable {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+}
+.combox-head-draggable {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+}
+.combox-eye-draggable {
+  position: absolute;
+  left: 15px;
+  top: 200px;
+}
+.combox-neck-draggable {
+  position: absolute;
+  left: 15px;
+  top: 300px;
+}
+.combox-bags-draggable {
+  position: absolute;
+  left: 15px;
+  bottom: 15px;
+}
+.combox img{
   width: 100%;
-  margin-top: 50px;
-  margin-bottom: 50px;
   z-index: 9999;
 }
+.combox-top {
+  width: 200px;
+}
+.combox-bot {
+  width: 200px;
+}
+.combox-head {
+  width: 200px;
+}
+.combox-eye {
+  width: 200px;
+}
+.combox-foot {
+  width: 200px;
+}
+.combox-fullbody {
+  width: 200px;
+}
+.combox-neck {
+  width: 200px;
+}
+.combox-bags {
+  width: 200px;
+}
+
+
 .comb-thumbs {
   background-color: rgb(255, 255, 255);
 }

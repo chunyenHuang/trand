@@ -1,8 +1,8 @@
 var app = angular.module('trand');
 app.controller('combinationsController', combinations);
-app.$inject = ['$http', '$scope', '$location', 'userService', '$sce', 'collectionsService'];
+app.$inject = ['$http', '$scope', '$location', 'userService', '$sce', 'collectionsService', '$timeout'];
 
-function combinations($http, $scope, $location, userService, $sce, $rootScope, collectionsService) {
+function combinations($http, $scope, $location, userService, $sce, $rootScope, collectionsService, $timeout) {
   var vm = this;
   $scope._ = _;
 
@@ -134,7 +134,10 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       vm.combs = res.data;
     })
   }
-  function activate() {
+
+  vm.maker = function () {
+    $scope.maker = true;
+    $scope.ready = false;
     getCombinations();
 
     var bodyParts = ['top', 'bot', 'foot', 'fullbody',
@@ -142,12 +145,26 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     for (var i = 0; i < bodyParts.length; i++) {
       vm.getCollectionsOf(bodyParts[i]);
     }
-
     $scope.posX = 0;
     $scope.posY = 0;
 
     $scope.$broadcast('content.changed');
     $scope.$broadcast('content.reload');
+
+    $timeout(function(){
+      $( ".combox-top-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( ".combox-bot-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( ".combox-fullbody-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( ".combox-foot-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( ".combox-eye-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( ".combox-head-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( ".combox-neck-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( ".combox-bags-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $scope.ready = true;
+      $( ".combox-top-img" ).resizable();
+    }, 2500);
+  }
+  function activate() {
 
   }
   activate();
