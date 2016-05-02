@@ -199,12 +199,13 @@ div[ng-click]{
 
 .combox {
   display: inline-block;
+  position: absolute;
 }
-
+/*
 .combox-top-draggable {
   position: absolute;
-  left: 350px;
-}
+  /*left: 350px;*/
+/*}
 .combox-bot-draggable {
   position: absolute;
   left: 350px;
@@ -239,7 +240,7 @@ div[ng-click]{
   position: absolute;
   left: 15px;
   bottom: 15px;
-}
+}*/
 .combox img{
   width: 100%;
   z-index: 9999;
