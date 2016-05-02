@@ -17,10 +17,10 @@ form .input-group-addon {
 }
 
 a[ng-click]{
-    cursor: pointer;
+  cursor: pointer;
 }
 div[ng-click]{
-    cursor: pointer;
+  cursor: pointer;
 }
 .no-padding {
   padding: 0px;
@@ -193,7 +193,8 @@ div[ng-click]{
 }
 
 #combox-wrapper {
-  height: 900px;
+  min-height: 650px;
+  height: 60vh;
   padding: 15px;
   border: 1px solid rgb(194, 194, 194);
 }
@@ -202,6 +203,7 @@ div[ng-click]{
   display: inline-block;
   position: absolute;
   padding: 15px;
+  cursor: pointer;
 }
 .combox:hover{
   background-color: rgba(252, 252, 252, 0.8);
