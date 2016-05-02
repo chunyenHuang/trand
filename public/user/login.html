@@ -1,4 +1,4 @@
-<form class="form" ng-submit="user.login()" ng-show='!newUser' ng-hide="logged">
+<form class="form" ng-submit="user.login()" ng-show='!newUser'>
   <div class="form-group">
     <label for="loginEmail"></label>
     <input type="email" class="form-control" ng-model="loginEmail" name='loginEmail' placeholder='email'>
@@ -8,5 +8,5 @@
     <input type="password" class="form-control" ng-model="loginPassword" name='loginPassword' placeholder='password'>
   </div>
   <button type="submit" name="button" class='btn btn-default'>Login</button>
-  <a ng-click='newUser = true'>New User</a>
+  <button type="button" class='btn btn-default' ng-click='newUser = true'>New User</button>
 </form>

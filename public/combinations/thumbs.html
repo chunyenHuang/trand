@@ -2,23 +2,29 @@
   <div class="col-md-12">
     <h3>My Collections</h3>
   </div>
-  <div class="col-md-12" ng-repeat="list in queryLists">
+  <div class="col-md-12" ng-repeat="list in queryLists | orderBy:'order'" ng-init='showname=!list.show'>
     <h5>
-      <a ng-click="last(combinations.top, query.top, 'top')">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i>
-      </a>
+      {{list.name}}
       <span>
-        {{list.name}}
-        {{_.where(query, {name: list.name})[0].index +1}} |
-        {{list.data.length}}
+        <a ng-click="showInBox(list.name);showname=!showname">
+          <span ng-show='showname'>show</span>
+          <span ng-show='!showname'>hide</span>
+        </a>
       </span>
-      <a ng-click="next(combinations.top, query.top, 'top')">
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
+      <span class='pull-right' ng-show='!showname'>
+        {{_.where(queryLists, {name: list.name})[0].index +1}} |
+        {{list.data.length}}
+        <a ng-click="last(list.name)">
+          <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </a>
+        <a ng-click="next(list.name)">
+          <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </a>
+      </span>
     </h5>
-    <div ng-scrollable="{scrollX:'bottom',scrollY:'right'}" style="width: 350px; height: 70px;">
+    <div  ng-show='!showname' ng-scrollable="{scrollX:'bottom',scrollY:'right'}" style="width: 350px; height: 70px;">
       <span ng-repeat="item in list.data">
-        <a ng-click='_.where(query, {name: list.name})[0].index = $index' ng-class="{onshow: $index == _.where(query, {name: list.name})[0].index}">
+        <a ng-click='_.where(queryLists, {name: list.name})[0].index = $index' ng-class="{onshow: $index == _.where(queryLists, {name: list.name})[0].index}">
           <img src={{item.item.image.sizes.Medium.url}}>
         </a>
       </span>

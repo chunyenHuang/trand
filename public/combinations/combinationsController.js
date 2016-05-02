@@ -1,8 +1,8 @@
 var app = angular.module('trand');
 app.controller('combinationsController', combinations);
-app.$inject = ['$http', '$scope', '$location', 'userService', '$sce', 'collectionsService'];
+app.$inject = ['$http', '$scope', '$location', 'userService', '$sce', 'collectionsService', '$timeout'];
 
-function combinations($http, $scope, $location, userService, $sce, $rootScope, collectionsService) {
+function combinations($http, $scope, $location, userService, $sce, $rootScope, collectionsService, $timeout) {
   var vm = this;
   $scope._ = _;
 
@@ -26,61 +26,27 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     $scope.posY = 410;
   };
 
-  $scope.last = function (array, index, location) {
-    if (index === 0 ) {
-      var target = array.length - 1;
+  $scope.last = function (name) {
+    var theOne = _.where($rootScope.queryLists, {name: name});
+    if ((theOne[0].index)===0) {
+      theOne[0].index = theOne[0].data.length - 1 ;
     } else {
-      var target = index - 1;
-    }
-    if (location === 'fullbody') {
-      $rootScope.query.fullbody = target;
-    }
-    if (location === 'head') {
-      $rootScope.query.head = target;
-    }
-    if (location === 'eye') {
-      $rootScope.query.eye = target;
-    }
-    if (location === 'top') {
-      $rootScope.query.top = target;
-    }
-    if (location === 'bot') {
-      $rootScope.query.bot = target;
-    }
-    if (location === 'foot') {
-      $rootScope.query.foot = target;
-    }
-    if (location === 'bags') {
-      $rootScope.query.bags = target;
+      theOne[0].index -- ;
     }
   }
-  $scope.next = function (array, index, location) {
-    if ((index + 1) === array.length) {
-      var target = 0;
+
+  $scope.next = function (name) {
+    var theOne = _.where($rootScope.queryLists, {name: name});
+    if ((theOne[0].index + 1) === theOne[0].data.length) {
+      theOne[0].index = 0;
     } else {
-      var target = index + 1;
+      theOne[0].index ++ ;
     }
-    if (location === 'fullbody') {
-      $rootScope.query.fullbody = target;
-    }
-    if (location === 'head') {
-      $rootScope.query.head = target;
-    }
-    if (location === 'eye') {
-      $rootScope.query.eye = target;
-    }
-    if (location === 'top') {
-      $rootScope.query.top = target;
-    }
-    if (location === 'bot') {
-      $rootScope.query.bot = target;
-    }
-    if (location === 'foot') {
-      $rootScope.query.foot = target;
-    }
-    if (location === 'bags') {
-      $rootScope.query.bags = target;
-    }
+  }
+
+  $scope.showInBox = function (name) {
+    var theOne = _.where($rootScope.queryLists, {name: name});
+    theOne[0].show = !theOne[0].show;
   }
 
   vm.newComb = function () {
@@ -89,70 +55,28 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
         fullbody: vm.fullbody[$rootScope.query.fullbody].item
       }
     }
-    console.log(json);
     var newComb = $http.post('/combinations/new', json);
     newComb.then(function (response) {
       getCombinations();
     })
   }
-  vm.getCollectionsOf = function (sort) {
+  vm.getCollectionsOf = function (sort, index) {
     var collections = collectionsService.getCollections(sort);
     collections.then(function (res) {
-      $rootScope.queryLists.push({
-        name: sort,
-        data: res.data,
-      })
-      console.log($rootScope.queryLists);
-      var edited = _.where($rootScope.query, {name: sort});
-      if (edited.length==0){
-        $rootScope.query.push({
+      var added = _.where($rootScope.queryLists, {name: sort});
+      if (added.length == 0) {
+        var object = {
+          order: index,
           name: sort,
+          data: res.data,
           index: 0,
-        })
+          show: true,
+        }
+        if (sort === 'fullbody' || sort === 'neck') {
+          object.show = false;
+        }
+        $rootScope.queryLists.push(object);
       }
-
-      // if (sort === 'top') {
-      //   vm.top = res.data;
-      //   if (!$rootScope.query.top) {
-      //     $rootScope.query.top=0;
-      //   }
-      // }
-      // if (sort === 'bot') {
-      //   vm.bot = res.data;
-      //   if (!$rootScope.query.bot) {
-      //     $rootScope.query.bot=0;
-      //   }
-      // }
-      // if (sort === 'foot') {
-      //   vm.foot = res.data;
-      //   if (!$rootScope.query.foot) {
-      //     $rootScope.query.foot=0;
-      //   }
-      // }
-      // if (sort === 'fullbody') {
-      //   vm.fullbody = res.data;
-      //   if (!$rootScope.query.fullbody) {
-      //     $rootScope.query.fullbody=0;
-      //   }
-      // }
-      // if (sort === 'head') {
-      //   vm.head = res.data;
-      //   if (!$rootScope.query.head) {
-      //     $rootScope.query.head=0;
-      //   }
-      // }
-      // if (sort === 'eye') {
-      //   vm.eye = res.data;
-      //   if (!$rootScope.query.eye) {
-      //     $rootScope.query.eye=0;
-      //   }
-      // }
-      // if (sort === 'bags') {
-      //   vm.bags = res.data;
-      //   if (!$rootScope.query.bags) {
-      //     $rootScope.query.bags=0;
-      //   }
-      // }
     })
   }
 
@@ -176,13 +100,16 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       vm.combs = res.data;
     })
   }
-  function activate() {
+
+  vm.maker = function () {
+    $scope.maker = true;
+    $scope.ready = false;
     getCombinations();
 
-    var bodyParts = ['top', 'bot', 'foot', 'fullbody',
-                 'head', 'eye', 'neck', 'bags'];
+    var bodyParts = ['top', 'bot', 'fullbody', 'foot',
+                 'neck', 'head', 'eye', 'bags'];
     for (var i = 0; i < bodyParts.length; i++) {
-      vm.getCollectionsOf(bodyParts[i]);
+      vm.getCollectionsOf(bodyParts[i], i);
     }
     $scope.posX = 0;
     $scope.posY = 0;
@@ -190,6 +117,22 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     $scope.$broadcast('content.changed');
     $scope.$broadcast('content.reload');
 
+    $timeout(function(){
+      $( ".combox-top-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( ".combox-bot-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( ".combox-fullbody-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( ".combox-foot-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( ".combox-eye-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( ".combox-head-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( ".combox-neck-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $( ".combox-bags-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      $scope.ready = true;
+      $( ".combox-top-img" ).resizable();
+      console.log($scope.queryLists);
+
+    }, 2500);
+  }
+  function activate() {
   }
   activate();
 }

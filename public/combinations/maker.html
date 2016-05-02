@@ -1,93 +1,16 @@
 <div ng-controller="combinationsController as combinations">
-  <div class="container" id='comb-canvas'>
+  <div class="container combinations">
     <div class="row">
-      <div class="col-md-8 combinations">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="row">
-              <div class="col-md-12">
-                <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 180px;">
-                  <div ng-repeat="item in (_.where(queryLists, {name:'head'})[0].data)">
-                    <div ng-show="$index == _.where(query, {name:'head'})[0].index">
-                      <div class="comb-head">
-                        <img src={{item.item.image.sizes.Best.url}} >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 180px;">
-                  <div ng-repeat="item in (_.where(queryLists, {name:'eye'})[0].data)">
-                    <div ng-show="$index == _.where(query, {name:'eye'})[0].index">
-                      <div class="comb-head">
-                        <img src={{item.item.image.sizes.Best.url}} >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 180px;">
-                  <div ng-repeat="item in (_.where(queryLists, {name:'bags'})[0].data)">
-                    <div ng-show="$index == _.where(query, {name:'bags'})[0].index">
-                      <div class="comb-head">
-                        <img src={{item.item.image.sizes.Best.url}} >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="row">
-              <div class="col-md-12">
-                <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 300px;">
-                  <div ng-repeat="item in (_.where(queryLists, {name:'top'})[0].data)">
-                    <div ng-show="$index == _.where(query, {name:'top'})[0].index">
-                      <div class="comb-head">
-                        <img src={{item.item.image.sizes.Best.url}} >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 350px;">
-                  <div ng-repeat="item in (_.where(queryLists, {name:'bot'})[0].data)">
-                    <div ng-show="$index == _.where(query, {name:'bot'})[0].index">
-                      <div class="comb-head">
-                        <img src={{item.item.image.sizes.Best.url}} >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="row">
-              <div class="col-md-12">
-                <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 450px;">
-                  <div ng-repeat="item in (_.where(queryLists, {name:'fullbody'})[0].data)">
-                    <div ng-show="$index == _.where(query, {name:'fullbody'})[0].index">
-                      <div class="comb-head">
-                        <img src={{item.item.image.sizes.Best.url}} >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div ng-scrollable="{scrollX:'none',scrollY:'right'}" style="width: 200px; height: 300px;">
-                  <div ng-repeat="item in (_.where(queryLists, {name:'foot'})[0].data)">
-                    <div ng-show="$index == _.where(query, {name:'foot'})[0].index">
-                      <div class="comb-head">
-                        <img src={{item.item.image.sizes.Best.url}} >
-                      </div>
-                    </div>
-                  </div>
+      <div class="col-md-8" id='combox-wrapper'>
+        <h5 ng-show='!ready'>
+          Loading...
+        </h5>
+        <div>
+          <div ng-show='ready' ng-repeat="query in queryLists | orderBy:'order'" ng-init='showname=!query.name'>
+            <div class="combox combox-{{query.name}}-draggable">
+              <div ng-repeat="item in query.data" class='combox-{{query.name}}' ng-show='query.show'>
+                <div ng-show="$index == _.where(queryLists, {name: query.name})[0].index">
+                  <img src={{item.item.image.sizes.Best.url}} id='combox-{{query.name}}-img'>
                 </div>
               </div>
             </div>
