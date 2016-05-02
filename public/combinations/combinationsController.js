@@ -33,6 +33,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     } else {
       theOne[0].index -- ;
     }
+    theOne[0].imgUrl = theOne[0].data[theOne[0].index].item.image.sizes.Best.url;
   }
 
   $scope.next = function (name) {
@@ -42,6 +43,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     } else {
       theOne[0].index ++ ;
     }
+    theOne[0].imgUrl = theOne[0].data[theOne[0].index].item.image.sizes.Best.url;
   }
 
   $scope.showInBox = function (name) {
@@ -56,10 +58,10 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     console.log(theOne[0].position);
   }
 
-  $scope.select = function (name, index, url) {
+  $scope.select = function (name, index) {
     var theOne = _.where($rootScope.queryLists, {name: name});
     theOne[0].index = index;
-    theOne[0].imgUrl = url;
+    theOne[0].imgUrl = theOne[0].data[theOne[0].index].item.image.sizes.Best.url;
   }
   vm.newComb = function () {
     var json ={
@@ -155,18 +157,12 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     $scope.$broadcast('content.reload');
 
     $timeout(function(){
-      $( "#combox-top-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( "#combox-bot-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( "#combox-fullbody-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( "#combox-foot-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( "#combox-eye-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( "#combox-head-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( "#combox-neck-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( "#combox-bags-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      var array = ['top', 'bot', 'fullbody', 'foot', 'eye', 'head', 'neck', 'bags'];
+      for (var i = 0; i < array.length; i++) {
+        $( "#combox-" + array[i] + "-draggable").draggable({ containment: "#combox-wrapper", scroll: false });
+        $( "#combox-" + array[i] + "-draggable" ).resizable({containment: "#combox-wrapper", autoHide: true});
+      }
       $scope.ready = true;
-      $( ".combox-top-img" ).resizable();
-      console.log($scope.queryLists);
-
     }, 2000);
   }
   function activate() {

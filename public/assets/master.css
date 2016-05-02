@@ -195,55 +195,28 @@ div[ng-click]{
 #combox-wrapper {
   height: 900px;
   padding: 15px;
+  border: 1px solid rgb(194, 194, 194);
 }
 
 .combox {
   display: inline-block;
   position: absolute;
+  padding: 15px;
 }
-/*
-.combox-top-draggable {
-  position: absolute;
-  /*left: 350px;*/
-/*}
-.combox-bot-draggable {
-  position: absolute;
-  left: 350px;
-  top: 350px;
+.combox:hover{
+  background-color: rgb(252, 252, 252);
+  border: 1px solid rgb(236, 236, 236);
+  z-index: 999;
 }
-.combox-fullbody-draggable {
-  position: absolute;
-  right: 15px;
-  top: 15px;
+.combox:active{
+  background-color: rgb(252, 252, 252);
+  border: 1px solid rgb(236, 236, 236);
+  z-index: 999;
 }
-.combox-foot-draggable {
-  position: absolute;
-  right: 15px;
-  bottom: 15px;
-}
-.combox-head-draggable {
-  position: absolute;
-  left: 15px;
-  top: 15px;
-}
-.combox-eye-draggable {
-  position: absolute;
-  left: 15px;
-  top: 200px;
-}
-.combox-neck-draggable {
-  position: absolute;
-  left: 15px;
-  top: 300px;
-}
-.combox-bags-draggable {
-  position: absolute;
-  left: 15px;
-  bottom: 15px;
-}*/
 .combox img{
-  width: 100%;
-  z-index: 9999;
+  max-width:100%;
+  max-height:100%;
+  z-index: 666;
 }
 .combox-top {
   width: 200px;

@@ -7,12 +7,8 @@
         </h5>
         <div>
           <div ng-show='ready' ng-repeat="query in queryLists | orderBy:'order'" ng-init='showname=!query.name;'>
-            <div class="combox" id='combox-{{query.name}}-draggable' style='{{query.position}}' ng-mouseleave='setPosition(query.name)'>
-              <div ng-repeat="item in query.data" class='combox-{{query.name}}' ng-show='query.show'>
-                <div ng-show="$index == _.where(queryLists, {name: query.name})[0].index">
-                  <img src={{query.imgUrl}} id='combox-{{query.name}}-img'>
-                </div>
-              </div>
+            <div ng-show='query.show' class="combox combox-{{query.name}}" id='combox-{{query.name}}-draggable' style='{{query.position}}' ng-mouseleave='setPosition(query.name)'>
+              <img src={{query.imgUrl}} id='combox-{{query.name}}-img'>
             </div>
           </div>
         </div>
