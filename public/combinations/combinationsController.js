@@ -60,7 +60,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     var theOne = _.where($rootScope.queryLists, {name: name});
     var current = document.getElementById('combox-'+ name + '-draggable');
     theOne[0].position = current.getAttribute('style');
-    console.log(theOne[0].position);
   }
 
   $scope.select = function (name, index) {
@@ -74,7 +73,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     $rootScope.currentCombination.title = $scope.title;
     $rootScope.currentCombination.eventType = $scope.eventType;
     $rootScope.currentCombination.descrition = $scope.descrition;
-    console.log($rootScope.currentCombination.author);
   }
 
   vm.newComb = function () {
@@ -209,7 +207,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
         $( "#combox-" + array[i] + "-draggable" ).resizable({containment: "#combox-wrapper", autoHide: true});
       }
       $scope.ready = true;
-      console.log($rootScope.queryLists);
     }, 2000);
   }
   function activate() {

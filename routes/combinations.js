@@ -15,7 +15,6 @@ router.use(bodyParser.json());
 router.use(cookieParser());
 
 router.get('/', function (req, res) {
-  console.log(req.currentUser.email);
   dbClient.connect(dbUrl, function (err, db) {
     if (!err) {
       var combinations = db.collection('combinations');
@@ -45,13 +44,11 @@ router.post('/new', function (req, res) {
     if (!err) {
       var combinations = db.collection('combinations');
       if (typeof(req.body.information._id)==='undefined') {
-        console.log('create');
         combinations.insert(newComb, function (err, results) {
           res.status(201).send(results.ops[0]._id);
           db.close();
         })
       } else {
-        console.log('update');
         combinations.update({_id: ObjectId(req.body.information._id)}, {
           $set: {
             information: req.body.information,
