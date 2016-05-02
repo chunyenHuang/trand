@@ -8,6 +8,8 @@ function getLastFifteen(array) {
 }
 app.run(function ($rootScope, $http) {
   $rootScope.logged = false;
+  $rootScope.home = true;
+
   $rootScope.loadedCollections = [];
   $rootScope.recentCollections = [];
   var collections = $http.get('/collections?sort=date');

@@ -1,16 +1,16 @@
 body {
   margin-top: 70px;
-  background: rgb(230, 230, 230);
+  /*background: rgb(230, 230, 230);*/
   font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
 }
 form input[type='text'] {
-  border: 0px;
+  border: 1px solid rgb(224, 224, 224);
 }
 form input[type='text']:hover {
-  box-shadow: 0 0 0 0;
+  box-shadow: 0 0 0 0 rgb(217, 217, 217);
 }
 form input[type='text']:active {
-  box-shadow: 0 0 0 0;
+  box-shadow: 0 0 0 0 rgb(217, 217, 217);
 }
 form .input-group-addon {
   border: 0px;
@@ -50,6 +50,31 @@ div[ng-click]{
 }
 
 /*individual*/
+#greeting-mainbox-1 {
+  margin-top: -70px;
+  background-image: url('../images/cover1.png');
+  background-position: 50%;
+  background-size: cover;
+  height:80vh;
+}
+#greeting-mainbox-2 {
+  margin-top: 15vh;
+  margin-bottom: 35vh;
+  background-image: url('../images/cover2.png');
+  background-position: 50%;
+  background-size: cover;
+  height:50vh;
+}
+#greeting-box {
+  position: relative;
+  top: 30%;
+  left: 20%;
+  max-height: 40vh;
+  min-width: 20vh;
+  max-width: 300px;
+}
+
+
 .show-box {
   margin-left: -10px;
   margin-right: -10px;
@@ -60,6 +85,7 @@ div[ng-click]{
   background-color: rgb(255, 255, 255);
   box-shadow: 0.5 0.5 0.5 0.5 black;
   height: 350px;
+  border: 1px solid rgb(232, 232, 232);
 }
 .show-box p {
   height: 15px;
@@ -110,8 +136,9 @@ div[ng-click]{
 }
 
 .greeting-logo-box {
-  margin-top: 30px;
-  padding: 20px;
+  margin-top: 35px;
+  margin-bottom: 35px;
+  height: 20vh;
   background-color: rgb(255, 255, 255)
 }
 
@@ -123,7 +150,7 @@ div[ng-click]{
 }
 
 .greeting-logo-box img{
-  width: 150%;
+  width: 100%;
   margin-right: 30px;
 }
 
@@ -259,4 +286,13 @@ div[ng-click]{
 }
 
 div[ng-scrollable]{
+}
+
+.navbar-default {
+  background-color: rgb(250, 250, 250);
+}
+
+.retailers-box {
+  background-color: rgb(250, 250, 250);
+  padding: 15px;
 }

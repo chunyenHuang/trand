@@ -3,12 +3,12 @@ app.controller('userController', user);
 app.$inject = ['$http', '$scope', '$location', 'userService', '$sce', 'collectionsService'];
 function user($http, $scope, $location, userService, $sce, $rootScope, collectionsService) {
   var vm = this;
-  $scope.loginEmail = 'business@gmail.com';
-  $scope.loginPassword = '123';
-  $scope.newFirstName = 'Incrediboy';
-  $scope.newLastName = 'Ming';
-  $scope.newEmail = ' ';
-  $scope.newPassword = '123';
+  $scope.loginEmail = '';
+  $scope.loginPassword = '';
+  $scope.newFirstName = '';
+  $scope.newLastName = '';
+  $scope.newEmail = '';
+  $scope.newPassword = '';
 
   vm.register = function () {
     var newUser = {
@@ -20,7 +20,7 @@ function user($http, $scope, $location, userService, $sce, $rootScope, collectio
     var register = userService.register(newUser);
     register.then(function (res) {
       $rootScope.logged = true;
-      $location.path('/user');
+      $location.path('/home');
     })
   }
   vm.logout = function (email) {
@@ -38,7 +38,7 @@ function user($http, $scope, $location, userService, $sce, $rootScope, collectio
     var login = userService.login(loginUser);
     login.then(function (res) {
       $rootScope.logged = true;
-      $location.path('/user');
+      $location.path('/home');
     })
   }
   vm.update = function () {

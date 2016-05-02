@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/assets/ng-scrollable.css">
   </head>
   <body ng-app='trand'>
-    <div ng-controller="navController as nav">
+    <div ng-show='logged' ng-controller="navController as nav">
       <trand></trand>
     </div>
     <div ng-view></div>

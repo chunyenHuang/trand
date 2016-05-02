@@ -7,19 +7,19 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#/home">Trand</a>
+      <a class="navbar-brand" href="#/home" ng-click="home=true">Trand</a>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li ng-class="{ 'active': isActive('/search')}"><a href="#/search">Search <i class="fa fa-search" aria-hidden="true"></i> </a></li>
+        <li ng-class="{ 'active': isActive('/search')}"><a href="#/search" ng-click="home=false">Search <i class="fa fa-search" aria-hidden="true"></i> </a></li>
         <li ng-show='logged' ng-class="{ 'active': isActive('/combinations')}">
-          <a href="#/combinations">
+          <a href="#/combinations" ng-click="home=false">
             My Combinations
             <i class="fa fa-child" aria-hidden="true"></i>
           </a>
         </li>
         <li ng-show='logged' ng-class="{ 'active': isActive('/collections')}">
-          <a href="#/collections">
+          <a href="#/collections" ng-click="home=false">
             My Collections
             <i class="fa fa-heart" aria-hidden="true"></i>
           </a>
@@ -38,7 +38,7 @@
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href='#/user'>My Profile</a></li>
-            <li><a href='#/combinations'>My Collections</a></li>
+            <li><a href='#/combinations'>My Combinations</a></li>
             <li><a href='#/collections'>My Collections</a></li>
             <li role="separator" class="divider"></li>
             <li>
