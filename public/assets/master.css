@@ -204,14 +204,17 @@ div[ng-click]{
   padding: 15px;
 }
 .combox:hover{
-  background-color: rgb(252, 252, 252);
+  background-color: rgba(252, 252, 252, 0.8);
   border: 1px solid rgb(236, 236, 236);
   z-index: 999;
 }
 .combox:active{
-  background-color: rgb(252, 252, 252);
+  background-color: rgba(252, 252, 252, 0.8);
   border: 1px solid rgb(236, 236, 236);
   z-index: 999;
+}
+.combox:active:hover img{
+  opacity: 0.8;
 }
 .combox img{
   max-width:100%;
