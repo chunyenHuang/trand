@@ -34,6 +34,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       theOne[0].index -- ;
     }
   }
+
   $scope.next = function (name) {
     var theOne = _.where($rootScope.queryLists, {name: name});
     if ((theOne[0].index + 1) === theOne[0].data.length) {
@@ -41,6 +42,11 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     } else {
       theOne[0].index ++ ;
     }
+  }
+
+  $scope.showInBox = function (name) {
+    var theOne = _.where($rootScope.queryLists, {name: name});
+    theOne[0].show = !theOne[0].show;
   }
 
   vm.newComb = function () {
@@ -54,16 +60,22 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       getCombinations();
     })
   }
-  vm.getCollectionsOf = function (sort) {
+  vm.getCollectionsOf = function (sort, index) {
     var collections = collectionsService.getCollections(sort);
     collections.then(function (res) {
       var added = _.where($rootScope.queryLists, {name: sort});
       if (added.length == 0) {
-        $rootScope.queryLists.push({
+        var object = {
+          order: index,
           name: sort,
           data: res.data,
           index: 0,
-        })
+          show: true,
+        }
+        if (sort === 'fullbody' || sort === 'neck') {
+          object.show = false;
+        }
+        $rootScope.queryLists.push(object);
       }
     })
   }
@@ -94,10 +106,10 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     $scope.ready = false;
     getCombinations();
 
-    var bodyParts = ['top', 'bot', 'foot', 'fullbody',
-                 'head', 'eye', 'neck', 'bags'];
+    var bodyParts = ['top', 'bot', 'fullbody', 'foot',
+                 'neck', 'head', 'eye', 'bags'];
     for (var i = 0; i < bodyParts.length; i++) {
-      vm.getCollectionsOf(bodyParts[i]);
+      vm.getCollectionsOf(bodyParts[i], i);
     }
     $scope.posX = 0;
     $scope.posY = 0;
