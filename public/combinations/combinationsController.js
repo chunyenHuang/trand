@@ -132,31 +132,31 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
           imgUrl: res.data[0].item.image.sizes.Best.url,
         }
         if (sort === 'top') {
-          object.position = 'left: 350px';
+          object.position = 'left: 280px; top: 40px;';
         }
         if (sort === 'bot') {
-          object.position = 'left: 350px; top: 350px';
+          object.position = 'left: 280px; bottom: 40px';
         }
         if (sort === 'fullbody') {
           object.show = false;
-          object.position = 'right: 15px; top:15px;'
+          object.position = 'right: 80px; top: 40px;'
         }
         if (sort === 'foot') {
-          object.position = 'right: 15px; bottom: 15px;';
+          object.position = 'right: 80px; bottom: 40px;';
         }
         if (sort === 'head') {
           object.show = false;
-          object.position = 'left: 15px; top: 15px;';
+          object.position = 'left: 40px; top: 40px;';
         }
         if (sort === 'eye') {
-          object.position = 'left: 15px; top: 200px;';
+          object.position = 'left: 40px; top: 200px;';
         }
         if (sort === 'neck') {
           object.show = false;
-          object.position = 'left:15px; top:300px;'
+          object.position = 'left:40px; top:300px;'
         }
         if (sort === 'bags') {
-          object.position = 'left: 15px; bottom: 15px;';
+          object.position = 'left: 40px; bottom: 40px;';
         }
         $rootScope.queryLists.push(object);
       }
@@ -164,17 +164,39 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
   }
 
   vm.savePic = function () {
-    html2canvas($("#comb-canvas"), {
-      allowTaint: true,
-      logging:true,
-      onrendered: function(canvas) {
-        // document.body.appendChild(canvas);
-        // $("#img-out").append(canvas);
-        canvas.toBlob(function(blob) {
-            saveAs(blob, "comb-canvas.png");
-        });
-      }
-    });
+    var bodyParts = ['top', 'bot', 'fullbody', 'foot',
+                 'neck', 'head', 'eye', 'bags'];
+
+    var canvasTest = document.createElement('canvas');
+    canvasTest.setAttribute('id', 'canvasTest');
+    var context = canvasTest.getContext('2d');
+    canvasTest.width = 700;
+    canvasTest.height = 800;
+    canvasTest.setAttribute('style', 'border: 1px solid black;');
+
+    var canvasThumb = document.createElement('canvas');
+    canvasThumb.setAttribute('id', 'canvasThumb');
+    var contextThumb = canvasThumb.getContext('2d');
+    canvasThumb.width = canvasTest.width/8;
+    canvasThumb.height = canvasTest.height/8;
+    canvasThumb.setAttribute('style', 'border: 1px solid black;');
+
+    for (var i = 0; i < bodyParts.length; i++) {
+      var pos = $("#combox-" + bodyParts[i] + "-draggable").position();
+      var theImg = document.getElementById('combox-' + bodyParts[i] + '-img');
+      var width = theImg.clientWidth;
+      var height = theImg.clientHeight;
+
+      var posLeftThumb = pos.left/8;
+      var posTopThumb = pos.top/8;
+      var widthThumb = theImg.clientWidth/8;
+      var heightThumb = theImg.clientHeight/8;
+
+      context.drawImage(theImg, pos.left, pos.top, width, height);
+      contextThumb.drawImage(theImg, posLeftThumb, posTopThumb, widthThumb, heightThumb);
+    }
+
+    $("#img-out").append(canvasThumb);
   }
 
   function getCombinations() {
@@ -203,7 +225,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     $timeout(function(){
       var array = ['top', 'bot', 'fullbody', 'foot', 'eye', 'head', 'neck', 'bags'];
       for (var i = 0; i < array.length; i++) {
-        $( "#combox-" + array[i] + "-draggable").draggable({ containment: "#combox-wrapper", scroll: false });
+        $( "#combox-" + array[i] + "-draggable").draggable({containment: "#combox-wrapper", scroll: false });
         $( "#combox-" + array[i] + "-draggable" ).resizable({containment: "#combox-wrapper", autoHide: true});
       }
       $scope.ready = true;

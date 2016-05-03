@@ -1,14 +1,16 @@
 <div ng-controller="combinationsController as combinations">
   <div class="container combinations">
     <div class="row">
-      <div class="col-md-8" id='combox-wrapper'>
-        <h5 ng-show='!ready'>
-          Loading...
-        </h5>
-        <div>
-          <div ng-show='ready' ng-repeat="query in queryLists | orderBy:'order'" ng-init='showname=!query.name;'>
-            <div ng-show='query.show' class="combox combox-{{query.name}}" id='combox-{{query.name}}-draggable' style='{{query.position}}' ng-mouseleave='setPosition(query.name)'>
-              <img src={{query.imgUrl}} id='combox-{{query.name}}-img'>
+      <div class="col-md-8">
+        <div ng-canvas id='combox-wrapper'>
+          <h5 ng-show='!ready'>
+            Loading...
+          </h5>
+          <div>
+            <div ng-show='ready' ng-repeat="query in queryLists | orderBy:'order'" ng-init='showname=!query.name;'>
+              <div ng-show='query.show' class="combox combox-{{query.name}}" id='combox-{{query.name}}-draggable' style='{{query.position}}' ng-mouseleave='setPosition(query.name)'>
+                <img src={{query.imgUrl}} id='combox-{{query.name}}-img'>
+              </div>
             </div>
           </div>
         </div>
@@ -18,4 +20,8 @@
       </div>
     </div>
   </div>
+</div>
+
+<div id="img-out">
+
 </div>
