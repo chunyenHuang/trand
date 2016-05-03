@@ -1,19 +1,19 @@
 <form class="form" ng-submit="user.register()" ng-show='newUser'>
   <div class="form-group">
     <label for="newFirstName"></label>
-    <input type="text" class="form-control" ng-model="newFirstName" name='newFirstName' placeholder='firstname'>
+    <input type="text" class="form-control" ng-model="newFirstName" name='newFirstName' placeholder='firstname' required="required">
   </div>
   <div class="form-group">
     <label for="newLastName"></label>
-    <input type="text" class="form-control" ng-model="newLastName" name='newLastName' placeholder='lastname'>
+    <input type="text" class="form-control" ng-model="newLastName" name='newLastName' placeholder='lastname' required="required">
   </div>
   <div class="form-group">
     <label for="newEmail"></label>
-    <input type="email" class="form-control" ng-model="newEmail" name='newEmail' placeholder='email'>
+    <input type="email" class="form-control" ng-model="newEmail" name='newEmail' placeholder='email' required="required">
   </div>
   <div class="form-group">
     <label for="newPassword"></label>
-    <input type="password" class="form-control" ng-model="newPassword" name='newPassword' placeholder='password'>
+    <input type="password" class="form-control" ng-model="newPassword" name='newPassword' placeholder='password' required="required">
   </div>
   <button type="submit" name="button" class='btn btn-default'>Register</button>
   <button type="button" class='btn btn-default' ng-click='newUser = false'>User Login</button>

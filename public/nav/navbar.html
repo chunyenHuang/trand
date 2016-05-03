@@ -12,6 +12,12 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li ng-class="{ 'active': isActive('/search')}"><a href="#/search" ng-click="home=false">Search <i class="fa fa-search" aria-hidden="true"></i> </a></li>
+        <li ng-show='logged' ng-class="{ 'active': isActive('/ideas')}">
+          <a href="#/ideas" ng-click="home=false">
+            Ideas
+            <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+          </a>
+        </li>
         <li ng-show='logged' ng-class="{ 'active': isActive('/combinations')}">
           <a href="#/combinations" ng-click="home=false">
             My Combinations

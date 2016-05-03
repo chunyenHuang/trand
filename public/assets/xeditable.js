@@ -1,17 +1,17 @@
 /*!
 angular-xeditable - 0.1.12
 Edit-in-place for angular.js
-Build date: 2016-04-14 
+Build date: 2016-04-14
 */
 /**
- * Angular-xeditable module 
+ * Angular-xeditable module
  *
  */
 angular.module('xeditable', [])
 
 
 /**
- * Default options. 
+ * Default options.
  *
  * @namespace editable-options
  */
@@ -19,38 +19,38 @@ angular.module('xeditable', [])
 .value('editableOptions', {
   /**
    * Theme. Possible values `bs3`, `bs2`, `default`.
-   * 
+   *
    * @var {string} theme
    * @memberOf editable-options
-   */  
+   */
   theme: 'default',
   /**
    * Icon Set. Possible values `font-awesome`, `default`.
-   * 
+   *
    * @var {string} icon set
    * @memberOf editable-options
-   */  
+   */
   icon_set: 'default',
   /**
-   * Whether to show buttons for single editalbe element.  
+   * Whether to show buttons for single editalbe element.
    * Possible values `right` (default), `no`.
-   * 
+   *
    * @var {string} buttons
    * @memberOf editable-options
-   */    
+   */
   buttons: 'right',
   /**
-   * Default value for `blur` attribute of single editable element.  
+   * Default value for `blur` attribute of single editable element.
    * Can be `cancel|submit|ignore`.
-   * 
+   *
    * @var {string} blurElem
    * @memberOf editable-options
    */
   blurElem: 'cancel',
   /**
-   * Default value for `blur` attribute of editable form.  
+   * Default value for `blur` attribute of editable form.
    * Can be `cancel|submit|ignore`.
-   * 
+   *
    * @var {string} blurForm
    * @memberOf editable-options
    */
@@ -69,9 +69,9 @@ angular.module('xeditable', [])
    * @memberOf editable-options
    */
    isDisabled: false,
-  
+
   /**
-   * Event, on which the edit mode gets activated. 
+   * Event, on which the edit mode gets activated.
    * Can be any event.
    *
    * @var {string} activationEvent
@@ -272,7 +272,7 @@ Input types: text|email|tel|number|url|search|color|date|datetime|time|month|wee
   var types = 'text|password|email|tel|number|url|search|color|date|datetime|time|month|week|file'.split('|');
 
   //todo: datalist
-  
+
   // generate directives
   angular.forEach(types, function(type) {
     var directiveName = 'editable'+type.charAt(0).toUpperCase() + type.slice(1);
@@ -294,7 +294,7 @@ Input types: text|email|tel|number|url|search|color|date|datetime|time|month|wee
         render: function() {
           this.parent.render.call(this);
           this.inputEl.after('<output>{{$data}}</output>');
-        }        
+        }
       });
   }]);
 
@@ -424,7 +424,7 @@ angular.module('xeditable').directive('editableUiSelect',['editableDirectiveFact
         return dir;
     }]);
 /**
- * EditableController class. 
+ * EditableController class.
  * Attached to element with `editable-xxx` directive.
  *
  * @namespace editable-element
@@ -432,7 +432,7 @@ angular.module('xeditable').directive('editableUiSelect',['editableDirectiveFact
 /*
 TODO: this file should be refactored to work more clear without closures!
 */
-angular.module('xeditable').factory('editableController', 
+angular.module('xeditable').factory('editableController',
   ['$q', 'editableUtils',
   function($q, editableUtils) {
 
@@ -473,32 +473,32 @@ angular.module('xeditable').factory('editableController',
 
     /**
      * Attributes defined with `e-*` prefix automatically transfered from original element to
-     * control.  
+     * control.
      * For example, if you set `<span editable-text="user.name" e-style="width: 100px"`>
-     * then input will appear as `<input style="width: 100px">`.  
+     * then input will appear as `<input style="width: 100px">`.
      * See [demo](#text-customize).
-     * 
+     *
      * @var {any|attribute} e-*
      * @memberOf editable-element
-     */ 
+     */
 
     /**
      * Whether to show ok/cancel buttons. Values: `right|no`.
-     * If set to `no` control automatically submitted when value changed.  
-     * If control is part of form buttons will never be shown. 
-     * 
+     * If set to `no` control automatically submitted when value changed.
+     * If control is part of form buttons will never be shown.
+     *
      * @var {string|attribute} buttons
      * @memberOf editable-element
-     */    
-    self.buttons = 'right'; 
+     */
+    self.buttons = 'right';
     /**
      * Action when control losses focus. Values: `cancel|submit|ignore`.
      * Has sense only for single editable element.
      * Otherwise, if control is part of form - you should set `blur` of form, not of individual element.
-     * 
+     *
      * @var {string|attribute} blur
      * @memberOf editable-element
-     */     
+     */
     // no real `blur` property as it is transfered to editable form
 
     //init
@@ -533,9 +533,9 @@ angular.module('xeditable').factory('editableController',
       }
 
       /**
-       * Called when control is shown.  
+       * Called when control is shown.
        * See [demo](#select-remote).
-       * 
+       *
        * @var {method|attribute} onshow
        * @memberOf editable-element
        */
@@ -546,8 +546,8 @@ angular.module('xeditable').factory('editableController',
       }
 
       /**
-       * Called when control is hidden after both save or cancel.  
-       * 
+       * Called when control is hidden after both save or cancel.
+       *
        * @var {method|attribute} onhide
        * @memberOf editable-element
        */
@@ -558,8 +558,8 @@ angular.module('xeditable').factory('editableController',
       }
 
       /**
-       * Called when control is cancelled.  
-       * 
+       * Called when control is cancelled.
+       *
        * @var {method|attribute} oncancel
        * @memberOf editable-element
        */
@@ -567,12 +567,12 @@ angular.module('xeditable').factory('editableController',
         self.oncancel = function() {
           return $parse($attrs.oncancel)($scope);
         };
-      }          
+      }
 
       /**
-       * Called during submit before value is saved to model.  
+       * Called during submit before value is saved to model.
        * See [demo](#onbeforesave).
-       * 
+       *
        * @var {method|attribute} onbeforesave
        * @memberOf editable-element
        */
@@ -583,9 +583,9 @@ angular.module('xeditable').factory('editableController',
       }
 
       /**
-       * Called during submit after value is saved to model.  
+       * Called during submit after value is saved to model.
        * See [demo](#onaftersave).
-       * 
+       *
        * @var {method|attribute} onaftersave
        * @memberOf editable-element
        */
@@ -626,7 +626,7 @@ angular.module('xeditable').factory('editableController',
         }
         self.buttonsEl.append(self.submitEl).append(self.cancelEl);
         self.controlsEl.append(self.buttonsEl);
-        
+
         self.inputEl.addClass('editable-has-buttons');
       }
 
@@ -652,14 +652,14 @@ angular.module('xeditable').factory('editableController',
         } else {
           continue;
         }
-        
-        // exclude `form` and `ng-submit`, 
+
+        // exclude `form` and `ng-submit`,
         if(transferAttr === 'Form' || transferAttr === 'NgSubmit') {
           continue;
         }
 
         // convert back to lowercase style
-        transferAttr = transferAttr.substring(0, 1).toLowerCase() + editableUtils.camelToDash(transferAttr.substring(1));  
+        transferAttr = transferAttr.substring(0, 1).toLowerCase() + editableUtils.camelToDash(transferAttr.substring(1));
 
         // workaround for attributes without value (e.g. `multiple = "multiple"`)
         // except for 'e-value'
@@ -692,8 +692,8 @@ angular.module('xeditable').factory('editableController',
     // copy MUST NOT be used for `select-multiple` with objects as items
     // copy MUST be used for `checklist`
     self.setLocalValue = function() {
-      self.scope.$data = self.useCopy ? 
-        angular.copy(valueGetter($scope.$parent)) : 
+      self.scope.$data = self.useCopy ?
+        angular.copy(valueGetter($scope.$parent)) :
         valueGetter($scope.$parent);
     };
 
@@ -727,7 +727,7 @@ angular.module('xeditable').factory('editableController',
 
     //hide
     self.hide = function() {
-      
+
       self.editorEl.remove();
       $element.removeClass('editable-hide');
 
@@ -872,7 +872,7 @@ angular.module('xeditable').factory('editableController',
     */
     self.handleEmpty = function() {
       var val = valueGetter($scope.$parent);
-      var isEmpty = val === null || val === undefined || val === "" || (angular.isArray(val) && val.length === 0); 
+      var isEmpty = val === null || val === undefined || val === "" || (angular.isArray(val) && val.length === 0);
       $element.toggleClass('editable-empty', isEmpty);
     };
 
@@ -921,11 +921,11 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
         // form controller
         var eFormCtrl;
 
-        // this variable indicates is element is bound to some existing form, 
+        // this variable indicates is element is bound to some existing form,
         // or it's single element who's form will be generated automatically
         // By default consider single element without any linked form.ß
         var hasForm = false;
-     
+
         // element wrapped by form
         if(ctrl[1]) {
           eFormCtrl = ctrl[1];
@@ -978,7 +978,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
         if (disabled) {
           return;
         }
-        
+
         // init editable ctrl
         eCtrl.init(!hasForm);
 
@@ -1036,7 +1036,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
 /*
 Returns editableForm controller
 */
-angular.module('xeditable').factory('editableFormController', 
+angular.module('xeditable').factory('editableFormController',
   ['$parse', '$document', '$rootScope', 'editablePromiseCollection', 'editableUtils',
   function($parse, $document, $rootScope, editablePromiseCollection, editableUtils) {
 
@@ -1058,7 +1058,7 @@ angular.module('xeditable').factory('editableFormController',
     }
     return false;
   };
-  
+
   //Check if it is a real blur : if the click event appear on a shown editable elem, this is not a blur.
   var isBlur = function(shown, event) {
     var isBlur = true;
@@ -1068,11 +1068,11 @@ angular.module('xeditable').factory('editableFormController',
       var element = v.editorEl[0];
       if (isSelfOrDescendant(element, event.target))
         isBlur = false;
-      
+
     });
     return isBlur;
   };
-  
+
   // bind click to body: cancel|submit|ignore forms
   $document.bind('click', function(e) {
     // ignore right/middle button click
@@ -1111,22 +1111,21 @@ angular.module('xeditable').factory('editableFormController',
       });
     }
   });
- 
+
   $rootScope.$on('closeEdit', function() {
     for(var i=0; i < shown.length; i++) {
       shown[i].$hide();
     }
-  }); 
+  });
 
   var base = {
     $addEditable: function(editable) {
-      //console.log('add editable', editable.elem, editable.elem.bind);
       this.$editables.push(editable);
 
       //'on' is not supported in angular 1.0.8
       editable.elem.bind('$destroy', angular.bind(this, this.$removeEditable, editable));
 
-      //bind editable's local $form to self (if not bound yet, below form) 
+      //bind editable's local $form to self (if not bound yet, below form)
       if (!editable.scope.$form) {
         editable.scope.$form = this;
       }
@@ -1150,7 +1149,7 @@ angular.module('xeditable').factory('editableFormController',
 
     /**
      * Shows form with editable controls.
-     * 
+     *
      * @method $show()
      * @memberOf editable-form
      */
@@ -1176,9 +1175,9 @@ angular.module('xeditable').factory('editableFormController',
 
       //wait promises and activate
       pc.then({
-        onWait: angular.bind(this, this.$setWaiting), 
-        onTrue: angular.bind(this, this.$activate), 
-        onFalse: angular.bind(this, this.$activate), 
+        onWait: angular.bind(this, this.$setWaiting),
+        onTrue: angular.bind(this, this.$activate),
+        onFalse: angular.bind(this, this.$activate),
         onString: angular.bind(this, this.$activate)
       });
 
@@ -1190,12 +1189,12 @@ angular.module('xeditable').factory('editableFormController',
         if(editableUtils.indexOf(shown, this) === -1) {
           shown.push(this);
         }
-      }), 0);      
+      }), 0);
     },
 
     /**
      * Sets focus on form field specified by `name`.
-     * 
+     *
      * @method $activate(name)
      * @param {string} name name of field
      * @memberOf editable-form
@@ -1228,14 +1227,14 @@ angular.module('xeditable').factory('editableFormController',
 
     /**
      * Hides form with editable controls without saving.
-     * 
+     *
      * @method $hide()
      * @memberOf editable-form
      */
     $hide: function() {
       if (!this.$visible) {
         return;
-      }      
+      }
       this.$visible = false;
       // self hide
       this.$onhide();
@@ -1250,23 +1249,23 @@ angular.module('xeditable').factory('editableFormController',
 
     /**
      * Triggers `oncancel` event and calls `$hide()`.
-     * 
+     *
      * @method $cancel()
      * @memberOf editable-form
      */
     $cancel: function() {
       if (!this.$visible) {
         return;
-      }      
+      }
       // self cancel
       this.$oncancel();
-      // children's cancel      
+      // children's cancel
       angular.forEach(this.$editables, function(editable) {
         editable.cancel();
       });
       // self hide
       this.$hide();
-    },    
+    },
 
     $setWaiting: function(value) {
       this.$waiting = !!value;
@@ -1279,7 +1278,7 @@ angular.module('xeditable').factory('editableFormController',
 
     /**
      * Shows error message for particular field.
-     * 
+     *
      * @method $setError(name, msg)
      * @param {string} name name of field
      * @param {string} msg error message
@@ -1296,7 +1295,7 @@ angular.module('xeditable').factory('editableFormController',
     $submit: function() {
       if (this.$waiting) {
         return;
-      } 
+      }
 
       //clear errors
       this.$setError(null, '');
@@ -1314,9 +1313,9 @@ angular.module('xeditable').factory('editableFormController',
       - string: keep form open and show error
       */
       pc.then({
-        onWait: angular.bind(this, this.$setWaiting), 
-        onTrue: angular.bind(this, checkSelf, true), 
-        onFalse: angular.bind(this, checkSelf, false), 
+        onWait: angular.bind(this, this.$setWaiting),
+        onTrue: angular.bind(this, checkSelf, true),
+        onFalse: angular.bind(this, checkSelf, false),
         onString: angular.bind(this, this.$activate)
       });
 
@@ -1325,9 +1324,9 @@ angular.module('xeditable').factory('editableFormController',
         var pc = editablePromiseCollection();
         pc.when(this.$onbeforesave());
         pc.then({
-          onWait: angular.bind(this, this.$setWaiting), 
-          onTrue: childrenTrue ? angular.bind(this, this.$save) : angular.bind(this, this.$hide), 
-          onFalse: angular.bind(this, this.$hide), 
+          onWait: angular.bind(this, this.$setWaiting),
+          onTrue: childrenTrue ? angular.bind(this, this.$save) : angular.bind(this, this.$hide),
+          onFalse: angular.bind(this, this.$hide),
           onString: angular.bind(this, this.$activate)
         });
       }
@@ -1352,9 +1351,9 @@ angular.module('xeditable').factory('editableFormController',
       - string: keep form open and show error
       */
       pc.then({
-        onWait: angular.bind(this, this.$setWaiting), 
-        onTrue: angular.bind(this, this.$hide), 
-        onFalse: angular.bind(this, this.$hide), 
+        onWait: angular.bind(this, this.$setWaiting),
+        onTrue: angular.bind(this, this.$hide),
+        onFalse: angular.bind(this, this.$hide),
         onString: angular.bind(this, this.$activate)
       });
     },
@@ -1371,14 +1370,14 @@ angular.module('xeditable').factory('editableFormController',
       $editables: [],
       /**
        * Form visibility flag.
-       * 
+       *
        * @var {bool} $visible
        * @memberOf editable-form
        */
       $visible: false,
       /**
        * Form waiting flag. It becomes `true` when form is loading or saving data.
-       * 
+       *
        * @var {bool} $waiting
        * @memberOf editable-form
        */
@@ -1391,7 +1390,7 @@ angular.module('xeditable').factory('editableFormController',
 }]);
 
 /**
- * EditableForm directive. Should be defined in <form> containing editable controls.  
+ * EditableForm directive. Should be defined in <form> containing editable controls.
  * It add some usefull methods to form variable exposed to scope by `name="myform"` attribute.
  *
  * @namespace editable-form
@@ -1447,8 +1446,8 @@ angular.module('xeditable').directive('editableForm',
 
             /**
              * Called when form is shown.
-             * 
-             * @var {method|attribute} onshow 
+             *
+             * @var {method|attribute} onshow
              * @memberOf editable-form
              */
             if(attrs.onshow) {
@@ -1457,8 +1456,8 @@ angular.module('xeditable').directive('editableForm',
 
             /**
              * Called when form hides after both save or cancel.
-             * 
-             * @var {method|attribute} onhide 
+             *
+             * @var {method|attribute} onhide
              * @memberOf editable-form
              */
             if(attrs.onhide) {
@@ -1467,7 +1466,7 @@ angular.module('xeditable').directive('editableForm',
 
             /**
              * Called when form is cancelled.
-             * 
+             *
              * @var {method|attribute} oncancel
              * @memberOf editable-form
              */
@@ -1488,7 +1487,7 @@ angular.module('xeditable').directive('editableForm',
             /**
              * Action when form losses focus. Values: `cancel|submit|ignore`.
              * Default is `ignore`.
-             * 
+             *
              * @var {string|attribute} blur
              * @memberOf editable-form
              */
@@ -1498,13 +1497,13 @@ angular.module('xeditable').directive('editableForm',
             if(!attrs.ngSubmit && !attrs.submit) {
               /**
                * Called after all children `onbeforesave` callbacks but before saving form values
-               * to model.  
-               * If at least one children callback returns `non-string` - it will not not be called.  
+               * to model.
+               * If at least one children callback returns `non-string` - it will not not be called.
                * See [editable-form demo](#editable-form) for details.
-               * 
+               *
                * @var {method|attribute} onbeforesave
                * @memberOf editable-form
-               * 
+               *
                */
               if(attrs.onbeforesave) {
                 eForm.$onbeforesave = function() {
@@ -1513,12 +1512,12 @@ angular.module('xeditable').directive('editableForm',
               }
 
               /**
-               * Called when form values are saved to model.  
+               * Called when form values are saved to model.
                * See [editable-form demo](#editable-form) for details.
-               * 
-               * @var {method|attribute} onaftersave 
+               *
+               * @var {method|attribute} onaftersave
                * @memberOf editable-form
-               * 
+               *
                */
               if(attrs.onaftersave) {
                 eForm.$onaftersave = function() {
@@ -1545,7 +1544,7 @@ angular.module('xeditable').directive('editableForm',
               if (eForm.$visible) {
                 eForm._clicked = true;
               }
-            });   
+            });
 
           }
         };
@@ -1554,15 +1553,15 @@ angular.module('xeditable').directive('editableForm',
 }]);
 /**
  * editablePromiseCollection
- *  
- * Collect results of function calls. Shows waiting if there are promises. 
+ *
+ * Collect results of function calls. Shows waiting if there are promises.
  * Finally, applies callbacks if:
  * - onTrue(): all results are true and all promises resolved to true
  * - onFalse(): at least one result is false or promise resolved to false
  * - onString(): at least one result is string or promise rejected or promise resolved to string
  */
 
-angular.module('xeditable').factory('editablePromiseCollection', ['$q', function($q) { 
+angular.module('xeditable').factory('editablePromiseCollection', ['$q', function($q) {
 
   function promiseCollection() {
     return {
@@ -1593,17 +1592,17 @@ angular.module('xeditable').factory('editablePromiseCollection', ['$q', function
         if (this.promises.length) {
           onWait(true);
           $q.all(this.promises).then(
-            //all resolved       
+            //all resolved
             function(results) {
               onWait(false);
               //check all results via same `when` method (without checking promises)
               angular.forEach(results, function(result) {
-                self.when(result, true);  
+                self.when(result, true);
               });
               applyCallback();
             },
             //some rejected
-            function(error) { 
+            function(error) {
               onWait(false);
               onString();
             }
@@ -1688,7 +1687,7 @@ angular.module('xeditable').factory('editablePromiseCollection', ['$q', function
       throw 'ng-options parse error';
     }
 
-    var 
+    var
     displayFn = match[2] || match[1],
     valueName = match[4] || match[6],
     keyName = match[5],
@@ -1707,7 +1706,7 @@ angular.module('xeditable').factory('editablePromiseCollection', ['$q', function
     } else { // object
       ngRepeat = '('+keyName+', '+valueName+') in '+valuesFn;
     }
-    
+
     // group not supported yet
     return {
       ngRepeat: ngRepeat,
@@ -1765,19 +1764,19 @@ angular.module('xeditable').factory('editableCombodate', [function() {
     init: function () {
       this.map = {
         //key   regexp    moment.method
-        day:    ['D',    'date'], 
-        month:  ['M',    'month'], 
-        year:   ['Y',    'year'], 
+        day:    ['D',    'date'],
+        month:  ['M',    'month'],
+        year:   ['Y',    'year'],
         hour:   ['[Hh]', 'hours'],
-        minute: ['m',    'minutes'], 
+        minute: ['m',    'minutes'],
         second: ['s',    'seconds'],
-        ampm:   ['[Aa]', ''] 
+        ampm:   ['[Aa]', '']
       };
-      
+
       this.$widget = angular.element('<span class="combodate"></span>').html(this.getTemplate());
-      
+
       this.initCombos();
-      
+
       if (this.options.smartDays) {
         var combo = this;
         this.$widget.find('select').bind('change', function(e) {
@@ -1785,31 +1784,31 @@ angular.module('xeditable').factory('editableCombodate', [function() {
           if (angular.element(e.target).hasClass('month') || angular.element(e.target).hasClass('year')) {
             combo.fillCombo('day');
           }
-        });        
+        });
       }
 
       this.$widget.find('select').css('width', 'auto');
 
-      // hide original input and insert widget                                       
+      // hide original input and insert widget
       this.$element.css('display', 'none').after(this.$widget);
-      
+
       // set initial value
       this.setValue(this.$element.val() || this.options.value);
     },
-    
+
     /*
-     Replace tokens in template with <select> elements 
-     */         
+     Replace tokens in template with <select> elements
+     */
      getTemplate: function() {
       var tpl = this.options.template;
       var customClass = this.options.customClass;
 
       //first pass
       angular.forEach(this.map, function(v, k) {
-        v = v[0]; 
+        v = v[0];
         var r = new RegExp(v+'+');
         var token = v.length > 1 ? v.substring(1, 2) : v;
-        
+
         tpl = tpl.replace(r, '{'+token+'}');
       });
 
@@ -1822,14 +1821,14 @@ angular.module('xeditable').factory('editableCombodate', [function() {
         var token = v.length > 1 ? v.substring(1, 2) : v;
 
         tpl = tpl.replace('{'+token+'}', '<select class="'+k+' '+customClass+'"></select>');
-      });   
+      });
 
       return tpl;
     },
-    
+
     /*
-     Initialize combos that presents in template 
-     */        
+     Initialize combos that presents in template
+     */
      initCombos: function() {
       for (var k in this.map) {
         var c = this.$widget[0].querySelectorAll('.'+k);
@@ -1841,8 +1840,8 @@ angular.module('xeditable').factory('editableCombodate', [function() {
     },
 
     /*
-     Fill combo with items 
-     */        
+     Fill combo with items
+     */
      fillCombo: function(k) {
       var $combo = this['$'+k];
       if (!$combo) {
@@ -1850,7 +1849,7 @@ angular.module('xeditable').factory('editableCombodate', [function() {
       }
 
       // define method name to fill items, e.g `fillDays`
-      var f = 'fill' + k.charAt(0).toUpperCase() + k.slice(1); 
+      var f = 'fill' + k.charAt(0).toUpperCase() + k.slice(1);
       var items = this[f]();
       var value = $combo.val();
 
@@ -1863,23 +1862,23 @@ angular.module('xeditable').factory('editableCombodate', [function() {
     },
 
     /*
-     Initialize items of combos. Handles `firstItem` option 
+     Initialize items of combos. Handles `firstItem` option
      */
      fillCommon: function(key) {
       var values = [], relTime;
 
       if(this.options.firstItem === 'name') {
         //need both to support moment ver < 2 and  >= 2
-        relTime = moment.relativeTime || moment.langData()._relativeTime; 
+        relTime = moment.relativeTime || moment.langData()._relativeTime;
         var header = typeof relTime[key] === 'function' ? relTime[key](1, true, key, false) : relTime[key];
-        //take last entry (see momentjs lang files structure) 
-        header = header.split(' ').reverse()[0];                
+        //take last entry (see momentjs lang files structure)
+        header = header.split(' ').reverse()[0];
         values.push(['', header]);
       } else if(this.options.firstItem === 'empty') {
         values.push(['', '']);
       }
       return values;
-    },  
+    },
 
 
     /*
@@ -1907,12 +1906,12 @@ angular.module('xeditable').factory('editableCombodate', [function() {
       }
       return items;
     },
-    
+
     /*
     fill month
     */
     fillMonth: function() {
-      var items = this.fillCommon('M'), name, i, 
+      var items = this.fillCommon('M'), name, i,
       longNames = this.options.template.indexOf('MMMM') !== -1,
       shortNames = this.options.template.indexOf('MMM') !== -1,
       twoDigit = this.options.template.indexOf('MM') !== -1;
@@ -1929,27 +1928,27 @@ angular.module('xeditable').factory('editableCombodate', [function() {
           name = i+1;
         }
         items.push([i, name]);
-      } 
+      }
       return items;
     },
-    
+
     /*
     fill year
     */
     fillYear: function() {
-      var items = [], name, i, 
+      var items = [], name, i,
       longNames = this.options.template.indexOf('YYYY') !== -1;
 
       for(i=this.options.maxYear; i>=this.options.minYear; i--) {
         name = longNames ? i : (i+'').substring(2);
         items[this.options.yearDescending ? 'push' : 'unshift']([i, name]);
       }
-      
+
       items = this.fillCommon('y').concat(items);
-      
+
       return items;
     },
-    
+
     /*
     fill hour
     */
@@ -1958,13 +1957,13 @@ angular.module('xeditable').factory('editableCombodate', [function() {
       h12 = this.options.template.indexOf('h') !== -1,
       h24 = this.options.template.indexOf('H') !== -1,
       twoDigit = this.options.template.toLowerCase().indexOf('hh') !== -1,
-      min = h12 ? 1 : 0, 
+      min = h12 ? 1 : 0,
       max = h12 ? 12 : 23;
 
       for(i=min; i<=max; i++) {
         name = twoDigit ? this.leadZero(i) : i;
         items.push([i, name]);
-      } 
+      }
       return items;
     },
 
@@ -1981,7 +1980,7 @@ angular.module('xeditable').factory('editableCombodate', [function() {
       }
       return items;
     },
-    
+
     /*
     fill second
     */
@@ -1992,16 +1991,16 @@ angular.module('xeditable').factory('editableCombodate', [function() {
       for(i=0; i<=59; i+= this.options.secondStep) {
         name = twoDigit ? this.leadZero(i) : i;
         items.push([i, name]);
-      }    
+      }
       return items;
     },
-    
+
     /*
     fill ampm
     */
     fillAmpm: function() {
       var ampmL = this.options.template.indexOf('a') !== -1,
-      ampmU = this.options.template.indexOf('A') !== -1,            
+      ampmU = this.options.template.indexOf('A') !== -1,
       items = [
       ['am', ampmL ? 'am' : 'AM'],
       ['pm', ampmL ? 'pm' : 'PM']
@@ -2010,55 +2009,55 @@ angular.module('xeditable').factory('editableCombodate', [function() {
     },
 
     /*
-     Returns current date value from combos. 
+     Returns current date value from combos.
      If format not specified - `options.format` used.
      If format = `null` - Moment object returned.
      */
      getValue: function(format) {
-      var dt, values = {}, 
+      var dt, values = {},
       that = this,
       notSelected = false;
 
-      //getting selected values    
+      //getting selected values
       angular.forEach(this.map, function(v, k) {
         if(k === 'ampm') {
           return;
         }
         var def = k === 'day' ? 1 : 0;
 
-        values[k] = that['$'+k] ? parseInt(that['$'+k].val(), 10) : def; 
-        
+        values[k] = that['$'+k] ? parseInt(that['$'+k].val(), 10) : def;
+
         if(isNaN(values[k])) {
          notSelected = true;
-         return false; 
+         return false;
        }
      });
-      
+
       //if at least one visible combo not selected - return empty string
       if(notSelected) {
        return '';
      }
 
-      //convert hours 12h --> 24h 
+      //convert hours 12h --> 24h
       if(this.$ampm) {
         //12:00 pm --> 12:00 (24-h format, midday), 12:00 am --> 00:00 (24-h format, midnight, start of day)
         if(values.hour === 12) {
-          values.hour = this.$ampm.val() === 'am' ? 0 : 12;                    
+          values.hour = this.$ampm.val() === 'am' ? 0 : 12;
         } else {
           values.hour = this.$ampm.val() === 'am' ? values.hour : values.hour+12;
         }
       }
-      
+
       dt = moment([values.year, values.month, values.day, values.hour, values.minute, values.second]);
-      
+
       //highlight invalid date
       this.highlight(dt);
 
       format = format === undefined ? this.options.format : format;
       if(format === null) {
-       return dt.isValid() ? dt : null; 
+       return dt.isValid() ? dt : null;
      } else {
-       return dt.isValid() ? dt.format(format) : ''; 
+       return dt.isValid() ? dt.format(format) : '';
      }
    },
 
@@ -2071,7 +2070,7 @@ angular.module('xeditable').factory('editableCombodate', [function() {
       var dt = typeof value === 'string' ? moment(value, this.options.format, true) : moment(value),
       that = this,
       values = {};
-      
+
       //function to find nearest value in select options
       function getNearest($select, value) {
         var delta = {};
@@ -2079,19 +2078,19 @@ angular.module('xeditable').factory('editableCombodate', [function() {
           var optValue = angular.element(opt).attr('value');
 
           if(optValue === '') return;
-          var distance = Math.abs(optValue - value); 
+          var distance = Math.abs(optValue - value);
           if(typeof delta.distance === 'undefined' || distance < delta.distance) {
             delta = {value: optValue, distance: distance};
-          } 
-        }); 
+          }
+        });
         return delta.value;
       }
-      
+
       if(dt.isValid()) {
         //read values from date object
         angular.forEach(this.map, function(v, k) {
           if(k === 'ampm') {
-            return; 
+            return;
           }
           values[k] = dt[v[1]]();
         });
@@ -2118,11 +2117,11 @@ angular.module('xeditable').factory('editableCombodate', [function() {
             if(k === 'minute' && that.options.minuteStep > 1 && that.options.roundTime) {
              v = getNearest(that['$'+k], v);
            }
-           
+
            if(k === 'second' && that.options.secondStep > 1 && that.options.roundTime) {
              v = getNearest(that['$'+k], v);
-           }                       
-           
+           }
+
            that['$'+k].val(v);
          }
        });
@@ -2135,7 +2134,7 @@ angular.module('xeditable').factory('editableCombodate', [function() {
         this.$element.val(dt.format(this.options.format)).triggerHandler('change');
       }
     },
-    
+
     /*
      highlight combos if date is invalid
      */
@@ -2146,7 +2145,7 @@ angular.module('xeditable').factory('editableCombodate', [function() {
         } else {
           //store original border color
           if(!this.borderColor) {
-            this.borderColor = this.$widget.find('select').css('border-color'); 
+            this.borderColor = this.$widget.find('select').css('border-color');
           }
           this.$widget.find('select').css('border-color', 'red');
         }
@@ -2155,14 +2154,14 @@ angular.module('xeditable').factory('editableCombodate', [function() {
           this.$widget.removeClass(this.options.errorClass);
         } else {
           this.$widget.find('select').css('border-color', this.borderColor);
-        }  
+        }
       }
     },
-    
+
     leadZero: function(v) {
-      return v <= 9 ? '0' + v : v; 
+      return v <= 9 ? '0' + v : v;
     },
-    
+
     destroy: function() {
       this.$widget.remove();
       this.$element.removeData('combodate').show();
@@ -2302,7 +2301,7 @@ angular.module('xeditable').factory('editableThemes', function() {
         }
       }
     },
-    
+
     //semantic-ui
     'semantic': {
       formTpl:     '<form class="editable-wrap ui form" ng-class="{\'error\': $error}" role="form"></form>',

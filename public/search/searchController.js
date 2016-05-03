@@ -79,7 +79,6 @@ function search($http, $scope, $location, listService, $sce, collectionsService,
     item.then(function(res) {
       $('#item-modal').modal('show');
       vm.item = res.data;
-      console.log(res.data);
       vm.coverImgUrl = res.data.image.sizes.Best.url;
     })
   }

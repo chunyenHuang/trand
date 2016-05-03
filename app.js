@@ -14,6 +14,7 @@ var api = require('./routes/api');
 var userRoute = require('./routes/user');
 var collections = require('./routes/collections');
 var combinations = require('./routes/combinations');
+var ideas = require('./routes/ideas');
 
 // Module Tools
 var request = require('request');
@@ -37,6 +38,7 @@ app.use('/api', api);
 app.use('/user', userRoute);
 app.use('/collections', collections);
 app.use('/combinations', combinations);
+app.use('/ideas', ideas);
 
 app.use(express.static('./public/'));
 

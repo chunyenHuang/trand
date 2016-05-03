@@ -5,7 +5,12 @@ app.$inject = ['$http', '$scope', '$location', 'userService', '$sce', 'collectio
 function combinations($http, $scope, $location, userService, $sce, $rootScope, collectionsService, $timeout) {
   var vm = this;
   $scope._ = _;
-
+  if ($rootScope.currentCombination.title) {
+    $scope.author = $rootScope.currentCombination.author;
+    $scope.title = $rootScope.currentCombination.title;
+    $scope.eventType = $rootScope.currentCombination.eventType;
+    $scope.descrition = $rootScope.currentCombination.descrition;
+  }
   // 'use strict';
 
   $scope.posX = 0;
@@ -33,6 +38,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     } else {
       theOne[0].index -- ;
     }
+    theOne[0].imgUrl = theOne[0].data[theOne[0].index].item.image.sizes.Best.url;
   }
 
   $scope.next = function (name) {
@@ -42,6 +48,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     } else {
       theOne[0].index ++ ;
     }
+    theOne[0].imgUrl = theOne[0].data[theOne[0].index].item.image.sizes.Best.url;
   }
 
   $scope.showInBox = function (name) {
@@ -53,25 +60,64 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     var theOne = _.where($rootScope.queryLists, {name: name});
     var current = document.getElementById('combox-'+ name + '-draggable');
     theOne[0].position = current.getAttribute('style');
-    console.log(theOne[0].position);
   }
 
-  $scope.select = function (name, index, url) {
+  $scope.select = function (name, index) {
     var theOne = _.where($rootScope.queryLists, {name: name});
     theOne[0].index = index;
-    theOne[0].imgUrl = url;
+    theOne[0].imgUrl = theOne[0].data[theOne[0].index].item.image.sizes.Best.url;
   }
+
+  $scope.save = function () {
+    $rootScope.currentCombination.author = $scope.author;
+    $rootScope.currentCombination.title = $scope.title;
+    $rootScope.currentCombination.eventType = $scope.eventType;
+    $rootScope.currentCombination.descrition = $scope.descrition;
+  }
+
   vm.newComb = function () {
-    var json ={
-      combinations: {
-        fullbody: vm.fullbody[$rootScope.query.fullbody].item
+    $scope.thumbShow = 'save';
+    $scope.saveMsg = 'Saving...';
+    var rootArray = $rootScope.queryLists;
+    var saveComb = [];
+    for (var i = 0; i < rootArray.length; i++) {
+      var theOne = rootArray[i].data[rootArray[i].index];
+      var object = {
+        imgUrl: rootArray[i].imgUrl,
+        index: rootArray[i].index,
+        name: rootArray[i].name,
+        order: rootArray[i].order,
+        position: rootArray[i].position,
+        show: rootArray[i].show,
+        item: {},
       }
+      saveComb.push(object);
+      saveComb[i].item.id = theOne.item.id;
+      saveComb[i].item.clickUrl = theOne.item.clickUrl;
+      saveComb[i].item.name = theOne.item.name;
+      if (theOne.item.brand) {
+        saveComb[i].item.brandName = theOne.item.brand.name;
+      }
+      saveComb[i].item.price = theOne.item.price;
+      saveComb[i].item.retailerName = theOne.item.retailer.name;
+      saveComb[i].item.categories = theOne.item.categories;
+    }
+    var json = {
+      information: $rootScope.currentCombination,
+      combinations: saveComb,
     }
     var newComb = $http.post('/combinations/new', json);
     newComb.then(function (response) {
-      getCombinations();
+      if (response.status == '201') {
+        $rootScope.currentCombination._id = response.data;
+      }
+      // getCombinations();
+      $timeout(function () {
+        $scope.saveMsg = 'Saved successfully!';
+      }, 2000);
     })
   }
+
   vm.getCollectionsOf = function (sort, index) {
     var collections = collectionsService.getCollections(sort);
     collections.then(function (res) {
@@ -155,18 +201,12 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     $scope.$broadcast('content.reload');
 
     $timeout(function(){
-      $( "#combox-top-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( "#combox-bot-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( "#combox-fullbody-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( "#combox-foot-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( "#combox-eye-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( "#combox-head-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( "#combox-neck-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
-      $( "#combox-bags-draggable" ).draggable({ containment: "#combox-wrapper", scroll: false });
+      var array = ['top', 'bot', 'fullbody', 'foot', 'eye', 'head', 'neck', 'bags'];
+      for (var i = 0; i < array.length; i++) {
+        $( "#combox-" + array[i] + "-draggable").draggable({ containment: "#combox-wrapper", scroll: false });
+        $( "#combox-" + array[i] + "-draggable" ).resizable({containment: "#combox-wrapper", autoHide: true});
+      }
       $scope.ready = true;
-      $( ".combox-top-img" ).resizable();
-      console.log($scope.queryLists);
-
     }, 2000);
   }
   function activate() {

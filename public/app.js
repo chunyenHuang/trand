@@ -23,9 +23,7 @@ app.run(function ($rootScope, $http) {
     }
   })
   $rootScope.currentCombination = {};
-  // $rootScope.query = [];
   $rootScope.queryLists = [];
-
 })
 
 app.run(function(editableOptions) {
@@ -63,6 +61,11 @@ app.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'combinations/combinations.html',
       controller: 'combinationsController',
       controllerAs: 'combinations',
+    })
+    .when('/ideas', {
+      templateUrl: 'ideas/ideas.html',
+      controller: 'ideasController',
+      controllerAs: 'ideas',
     })
 }]);
 
