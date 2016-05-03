@@ -190,11 +190,12 @@ div[ng-click]{
 
 .combinations {
   background-color: rgb(255, 255, 255);
+  min-width: 800px;
 }
 
 #combox-wrapper {
-  min-height: 650px;
-  height: 60vh;
+  height: 800px;
+  width: 700px;
   padding: 15px;
   border: 1px solid rgb(194, 194, 194);
 }
@@ -208,12 +209,12 @@ div[ng-click]{
 .combox:hover{
   background-color: rgba(252, 252, 252, 0.8);
   border: 1px solid rgb(236, 236, 236);
-  z-index: 999;
+  z-index: 100;
 }
 .combox:active{
   background-color: rgba(252, 252, 252, 0.8);
   border: 1px solid rgb(236, 236, 236);
-  z-index: 999;
+  z-index: 100;
 }
 .combox:active:hover img{
   opacity: 0.8;
@@ -221,7 +222,6 @@ div[ng-click]{
 .combox img{
   max-width:100%;
   max-height:100%;
-  z-index: 666;
 }
 .combox-top {
   width: 200px;
