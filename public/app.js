@@ -120,30 +120,23 @@ function userService($http) {
 app.factory('awsService', awsService);
 awsService.$inject=['$http'];
 function awsService($http, $rootScope) {
-  function signIn(file){
-    var req = {
-      method: 'get',
-      url: "/aws/sign_s3?file_name="+file.name+"&file_type="+file.type,
-    }
-    req.then(function (res) {
-      console.log(res.data);
-    })
+  function signIn(json){
+    return $http.post('/aws/sign_s3', json);
   }
-
-  function upload(file, signed_request, url) {
-    var req = {
-     method: 'put',
-     url: signed_request,
-     headers: {
-       'x-amz-acl': 'public-read',
-     },
-     data: file,
-    }
+  function upload(file, signed_request) {
+    var req = $http({
+      method: 'put',
+      data: file,
+      url: signed_request,
+      headers: {
+        'x-amz-acl': 'public-read',
+        'content-type': 'image/png',
+      },
+    });
     req.then(function (res) {
       console.log(res.status);
     })
   }
-
   function saveInTmp(json) {
     return $http.post('/aws/tmp', json);
   }

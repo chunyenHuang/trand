@@ -267,9 +267,9 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
         file_name: 'thumb-' + fileName,
         file_type: blob.type,
       }
-      var getSignEdRequest = $http.post('/aws/sign_s3', json);
+      var getSignEdRequest = awsService.signIn(json);
       getSignEdRequest.then(function(res) {
-        upload_file(blob, res.data.signed_request, res.data.url)
+        awsService.upload(blob, res.data.signed_request);
         vm.linkThumb = res.data.url;
       })
     });
@@ -278,29 +278,12 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
         file_name: fileName,
         file_type: blob.type,
       }
-      var getSignEdRequest = $http.post('/aws/sign_s3', json);
+      var getSignEdRequest = awsService.signIn(json);
       getSignEdRequest.then(function(res) {
-        upload_file(blob, res.data.signed_request);
+        awsService.upload(blob, res.data.signed_request);
         vm.linkLarge = res.data.url;
       })
     });
-  }
-
-  function upload_file(file, signed_request){
-    var upload = $http({
-      method: 'PUT',
-      url: signed_request,
-      data: file,
-      headers: {
-        'x-amz-acl': 'public-read',
-        'content-type': 'image/png',
-      },
-    });
-    upload.then(function (res) {
-      console.log(res);
-    }, function (err) {
-      console.log(err);
-    })
   }
 
   vm.savePic = function () {
