@@ -15,7 +15,7 @@ var mkdirp = require('mkdirp');
 router.use(cookieParser());
 
 router.use(bodyParser.json());
-router.use(bodyParser.urlencoded())
+// router.use(bodyParser.urlencoded())
 
 var AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID;
 var AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;
@@ -112,6 +112,41 @@ router.get('/download-test/:name', function (req, res) {
         // res.end();
       }
     });
+  })
+})
+
+router.post('/tmp', function (req, res) {
+  var origin = req.body;
+  var dir = './public/tmp/' + req.currentUser.email + '/';
+  mkdirp(dir, function(err) {
+    getAndSaveRecursive(origin, 0);
+    function getAndSaveRecursive(array, i) {
+      if (i<array.length) {
+        var name = array[i].name;
+        var url = array[i].src
+        var p1 = new Promise(function(resolve, reject) {
+          request(url, {encoding: 'binary'}, function(error, response, body) {
+            fs.writeFile(dir + name + '.jpg', body, 'binary', function () {
+              fs.readFile(dir + name + '.jpg', function(err, data) {
+                resolve();
+              })
+            });
+          });
+        });
+        p1.then(function () {
+          console.log(name + '.jpg is saved to ' + dir);
+          i++;
+          getAndSaveRecursive(array, i);
+        })
+      } else {
+        console.log('all done');
+        var saved = origin;
+        for (var i = 0; i < saved.length; i++) {
+          saved[i].src = 'tmp/' + req.currentUser.email + '/' + origin[i].name + '.jpg';
+        }
+        res.json(saved);
+      }
+    }
   })
 })
 

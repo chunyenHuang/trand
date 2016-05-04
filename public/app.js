@@ -30,6 +30,11 @@ app.run(function(editableOptions) {
   editableOptions.theme = 'bs3';
 });
 
+app.config(['$compileProvider', function($compileProvider) {
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|blob|file|chrome-extension):|data:image\//);
+  }
+]);
+
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
     .when('/', {
@@ -112,7 +117,9 @@ function userService($http) {
   }
 }
 
-app.factorye('awsService', awsService) {
+app.factory('awsService', awsService);
+awsService.$inject=['$http'];
+function awsService($http, $rootScope) {
   function signIn(file){
     var req = {
       method: 'get',
@@ -123,7 +130,7 @@ app.factorye('awsService', awsService) {
     })
   }
 
-  function upload(file, signed_request, url){
+  function upload(file, signed_request, url) {
     var req = {
      method: 'put',
      url: signed_request,
@@ -137,9 +144,14 @@ app.factorye('awsService', awsService) {
     })
   }
 
+  function saveInTmp(json) {
+    return $http.post('/aws/tmp', json);
+  }
+
   return {
     signIn: signIn,
     upload: upload,
+    saveInTmp: saveInTmp,
   }
 }
 

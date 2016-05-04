@@ -9,7 +9,7 @@
           <div>
             <div ng-show='ready' ng-repeat="query in queryLists | orderBy:'order'" ng-init='showname=!query.name;'>
               <div ng-show='query.show' class="combox combox-{{query.name}}" id='combox-{{query.name}}-draggable' style='{{query.position}}' ng-mouseleave='setPosition(query.name)'>
-                <img src={{query.imgUrl}} id='combox-{{query.name}}-img'>
+                <img src={{query.imgUrl}} id='combox-{{query.name}}-img' name={{query.name}}>
               </div>
             </div>
           </div>
