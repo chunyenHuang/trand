@@ -9,6 +9,8 @@ var http = require('http');
 var path = require('path');
 var aws = require('aws-sdk');
 var fs = require('fs');
+var rimraf = require('rimraf');
+var mkdirp = require('mkdirp');
 
 router.use(cookieParser());
 
@@ -67,49 +69,57 @@ function stream() {
   })
 }
 
-router.get('/download-test', function (req, res) {
-  var url = "https://resources.shopstyle.com/pim/da/95/da9553ccc96eb3356f14b3b223428191_best.jpg";
-  aws.config.update({accessKeyId: AWS_ACCESS_KEY_ID, secretAccessKey: AWS_SECRET_ACCESS_KEY});
-  var s3 = new aws.S3();
-  var s3_params = {
-    Bucket: S3_BUCKET,
-    Key: '111',
-    Expires: 60,
-    ContentType: 'image/jpeg',
-    ACL: 'public-read'
-  };
-  console.log(s3_params);
-  s3.getSignedUrl('putObject', s3_params, function(err, data){
-    if(err){
-      console.log(err);
-    }
-    else{
-      var return_data = {
-        signed_request: data,
-        url: 'https://s3.amazonaws.com/'+ S3_BUCKET + '/' + 'XXXXX'
-      };
-      var p1 = new Promise(function(resolve, reject) {
-        request(url, {encoding: 'binary'}, function(error, response, body) {
-          fs.writeFile('downloaded.jpg', body, 'binary', function () {
-            fs.readFile('downloaded.jpg', function(err, data) {
-              resolve(data);
-            })
+router.get('/download-test/:name', function (req, res) {
+  mkdirp('./tmp', function(err) {
+    var url = "https://resources.shopstyle.com/pim/da/95/da9553ccc96eb3356f14b3b223428191_best.jpg";
+    aws.config.update({accessKeyId: AWS_ACCESS_KEY_ID, secretAccessKey: AWS_SECRET_ACCESS_KEY});
+    var s3 = new aws.S3();
+    var s3_params = {
+      Bucket: S3_BUCKET,
+      Key: '111',
+      Expires: 60,
+      ContentType: 'image/jpeg',
+      ACL: 'public-read'
+    };
+    console.log(s3_params);
+    s3.getSignedUrl('putObject', s3_params, function(err, data){
+      if(err){
+        console.log(err);
+      }
+      else{
+        var return_data = {
+          signed_request: data,
+          url: 'https://s3.amazonaws.com/'+ S3_BUCKET + '/' + 'XXXXX'
+        };
+        var p1 = new Promise(function(resolve, reject) {
+          request(url, {encoding: 'binary'}, function(error, response, body) {
+            fs.writeFile('./tmp/'+ req.params.name + '.jpg', body, 'binary', function () {
+              fs.readFile('./tmp/'+ req.params.name + '.jpg', function(err, data) {
+                resolve(data);
+              })
+            });
           });
         });
-      });
-      p1.then(function (body) {
-        console.log(body);
-        console.log(typeof(body));
-        upload_file(body, return_data.signed_request, return_data.url);
-        // res.sendStatus(200);
-        res.header('Content-type', 'image/jpeg');
-        res.send(body);
-      })
-      // res.json(return_data);
-      // res.end();
-    }
-  });
+        p1.then(function (body) {
+          console.log(body);
+          console.log(typeof(body));
+          upload_file(body, return_data.signed_request, return_data.url);
+          // res.sendStatus(200);
+          res.header('Content-type', 'image/jpeg');
+          res.send(body);
+        })
+        // res.json(return_data);
+        // res.end();
+      }
+    });
+  })
+})
 
+router.get('/tmp', function (req, res) {
+  rimraf('./tmp', function () {
+    console.log('remove tmp');
+  })
+  res.sendStatus(200);
 })
 
 function upload_file(file, signed_request, url){
