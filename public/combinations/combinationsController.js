@@ -163,42 +163,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     })
   }
 
-  vm.savePic = function () {
-    var bodyParts = ['top', 'bot', 'fullbody', 'foot',
-                 'neck', 'head', 'eye', 'bags'];
-
-    var canvasTest = document.createElement('canvas');
-    canvasTest.setAttribute('id', 'canvasTest');
-    var context = canvasTest.getContext('2d');
-    canvasTest.width = 700;
-    canvasTest.height = 800;
-    canvasTest.setAttribute('style', 'border: 1px solid black;');
-
-    var canvasThumb = document.createElement('canvas');
-    canvasThumb.setAttribute('id', 'canvasThumb');
-    var contextThumb = canvasThumb.getContext('2d');
-    canvasThumb.width = canvasTest.width/8;
-    canvasThumb.height = canvasTest.height/8;
-    canvasThumb.setAttribute('style', 'border: 1px solid black;');
-
-    for (var i = 0; i < bodyParts.length; i++) {
-      var pos = $("#combox-" + bodyParts[i] + "-draggable").position();
-      var theImg = document.getElementById('combox-' + bodyParts[i] + '-img');
-      var width = theImg.clientWidth;
-      var height = theImg.clientHeight;
-
-      var posLeftThumb = pos.left/8;
-      var posTopThumb = pos.top/8;
-      var widthThumb = theImg.clientWidth/8;
-      var heightThumb = theImg.clientHeight/8;
-
-      context.drawImage(theImg, pos.left, pos.top, width, height);
-      contextThumb.drawImage(theImg, posLeftThumb, posTopThumb, widthThumb, heightThumb);
-    }
-
-    $("#img-out").append(canvasThumb);
-  }
-
   function getCombinations() {
     var getComb = $http.get('/combinations');
     getComb.then(function (res) {
