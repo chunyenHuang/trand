@@ -15,6 +15,7 @@ var userRoute = require('./routes/user');
 var collections = require('./routes/collections');
 var combinations = require('./routes/combinations');
 var ideas = require('./routes/ideas');
+var aws = require('./routes/aws');
 
 // Module Tools
 var request = require('request');
@@ -39,6 +40,7 @@ app.use('/user', userRoute);
 app.use('/collections', collections);
 app.use('/combinations', combinations);
 app.use('/ideas', ideas);
+app.use('/aws', aws);
 
 app.use(express.static('./public/'));
 

@@ -112,6 +112,37 @@ function userService($http) {
   }
 }
 
+app.factorye('awsService', awsService) {
+  function signIn(file){
+    var req = {
+      method: 'get',
+      url: "/aws/sign_s3?file_name="+file.name+"&file_type="+file.type,
+    }
+    req.then(function (res) {
+      console.log(res.data);
+    })
+  }
+
+  function upload(file, signed_request, url){
+    var req = {
+     method: 'put',
+     url: signed_request,
+     headers: {
+       'x-amz-acl': 'public-read',
+     },
+     data: file,
+    }
+    req.then(function (res) {
+      console.log(res.status);
+    })
+  }
+
+  return {
+    signIn: signIn,
+    upload: upload,
+  }
+}
+
 app.factory('collectionsService', collectionsService);
 collectionsService.$inject=['$http'];
 function collectionsService($http, $rootScope) {
