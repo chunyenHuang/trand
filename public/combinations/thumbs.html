@@ -56,11 +56,11 @@
     <div class="col-md-12">
       <div class="form-group">
         <label for="">Your Name</label>
-        <input class='form-control' type="text" ng-keyup='save()' ng-model="author">
+        <input class='form-control' type="text" ng-keyup='save()' ng-model="author" required="required">
       </div>
       <div class="form-group">
         <label for="">Title</label>
-        <input class='form-control' type="text" ng-keyup='save()' ng-model="title">
+        <input class='form-control' type="text" ng-keyup='save()' ng-model="title" required="required">
       </div>
       <div class="form-group">
         <label for="">Event</label>
@@ -109,7 +109,10 @@
       <a target="_self" href={{combinations.downloadUrl}} download={{combinations.downloadName}}>
         Download
       </a>
+
       <div id="img-out"></div>
+      link: {{combinations.linkLarge}}
+      link: {{combinations.linkThumb}}
     </div>
   </div>
 </div>

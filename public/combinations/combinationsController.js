@@ -5,6 +5,8 @@ app.$inject = ['$http', '$scope', '$location', 'userService', '$sce', 'collectio
 function combinations($http, $scope, $location, userService, $sce, $rootScope, collectionsService, $timeout, awsService) {
   var vm = this;
   $scope._ = _;
+  $scope.author = 'John Huang';
+  $scope.title = 'Summer Time';
   if ($rootScope.currentCombination.title) {
     $scope.author = $rootScope.currentCombination.author;
     $scope.title = $rootScope.currentCombination.title;
@@ -157,8 +159,14 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     Promise.all([pSaveImgsToTmp, pSaveFilesToDB]).then(function(values) {
       $timeout(function () {
         vm.saveResult = true;
-        drawIdeas($rootScope.newImgUrls);
+        drawAndUpload($rootScope.newImgUrls);
         $scope.saveMsg = 'Saved successfully!';
+        $timeout(function () {
+          var rmTmp = awsService.removeUserTmp();
+          rmTmp.then(function () {
+            console.log('User tmp dir is removed.');
+          })
+        }, 1000);
       }, 2500);
     })
   }
@@ -208,7 +216,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     })
   }
 
-  function drawIdeas(newImages) {
+  function drawAndUpload(newImages) {
     var canvasTest = document.createElement('canvas');
     canvasTest.setAttribute('id', 'canvasTest');
     var context = canvasTest.getContext('2d');
@@ -247,13 +255,53 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     }
     $("#tmp-save" ).remove();
     vm.downloadUrl = canvasTest.toDataURL();
-    if ($rootScope.currentCombination.author){
-      vm.downloadName = $rootScope.currentCombination.author + '-' + $rootScope.currentCombination.title + '.png';
-    } else {
-      vm.downloadName = 'untitled.png';
-    }
+
+
+    var fileName = $scope.author + '-' + $scope.title + '.png';
+    fileName = fileName.toLowerCase().replace(/ /g, '-');
+    console.log(fileName);
+
+    vm.downloadName = fileName;
+    canvasThumb.toBlob(function(blob) {
+      var json = {
+        file_name: 'thumb-' + fileName,
+        file_type: blob.type,
+      }
+      var getSignEdRequest = $http.post('/aws/sign_s3', json);
+      getSignEdRequest.then(function(res) {
+        upload_file(blob, res.data.signed_request, res.data.url)
+        vm.linkThumb = res.data.url;
+      })
+    });
+    canvasTest.toBlob(function(blob) {
+      var json = {
+        file_name: fileName,
+        file_type: blob.type,
+      }
+      var getSignEdRequest = $http.post('/aws/sign_s3', json);
+      getSignEdRequest.then(function(res) {
+        upload_file(blob, res.data.signed_request);
+        vm.linkLarge = res.data.url;
+      })
+    });
   }
 
+  function upload_file(file, signed_request){
+    var upload = $http({
+      method: 'PUT',
+      url: signed_request,
+      data: file,
+      headers: {
+        'x-amz-acl': 'public-read',
+        'content-type': 'image/png',
+      },
+    });
+    upload.then(function (res) {
+      console.log(res);
+    }, function (err) {
+      console.log(err);
+    })
+  }
 
   vm.savePic = function () {
     html2canvas($("#img-out"), {
@@ -263,7 +311,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
         document.body.appendChild(canvas);
         console.log();
         canvas.toBlob(function(blob) {
-            saveAs(blob, "comb-canvas.jpg");
+          saveAs(blob, "comb-canvas.jpg");
         });
       }
     });

@@ -147,11 +147,15 @@ function awsService($http, $rootScope) {
   function saveInTmp(json) {
     return $http.post('/aws/tmp', json);
   }
+  function removeUserTmp() {
+    return $http.delete('/aws/tmp');
+  }
 
   return {
     signIn: signIn,
     upload: upload,
     saveInTmp: saveInTmp,
+    removeUserTmp: removeUserTmp,
   }
 }
 
