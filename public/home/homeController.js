@@ -11,6 +11,20 @@ function home($http, listService, collectionsService, $rootScope) {
     })
   }
   function activate() {
+    $rootScope.loadedCollections = [];
+    $rootScope.recentCollections = [];
+    var collections = $http.get('/collections?sort=date');
+    collections.then(function (res) {
+      if (res.data.length > 0) {
+        for (var i = 0; i < res.data.length; i++) {
+          $rootScope.loadedCollections.push(res.data[i].item);
+        }
+        var reversed = res.data.reverse();
+        for (var i = 1; i <= 15; i++) {
+          $rootScope.recentCollections.push(reversed[i].item);
+        }
+      }
+    })
   }
   activate();
 }

@@ -80,7 +80,12 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       var json = [];
       for (var i = 0; i < bodyParts.length; i++) {
         var theOne = document.getElementById('combox-' + bodyParts[i] + '-img');
-        var src = theOne.getAttribute('src');
+        console.log(theOne);
+        if (theOne != null) {
+          var src = theOne.getAttribute('src');
+        } else {
+          var src = 'n/a'
+        }
         json.push({name: bodyParts[i], src: src});
       }
       var tmp = awsService.saveInTmp(json);
@@ -168,44 +173,47 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
   vm.getCollectionsOf = function (sort, index) {
     var collections = collectionsService.getCollections(sort);
     collections.then(function (res) {
-      var added = _.where($rootScope.queryLists, {name: sort});
-      if (added.length == 0) {
-        var object = {
-          order: index,
-          name: sort,
-          data: res.data,
-          index: 0,
-          show: true,
-          imgUrl: res.data[0].item.image.sizes.Best.url,
+      if (res.data.length>0) {
+        var added = _.where($rootScope.queryLists, {name: sort});
+        if (added.length == 0) {
+          var object = {
+            order: index,
+            name: sort,
+            data: res.data,
+            index: 0,
+            show: true,
+            imgUrl: res.data[0].item.image.sizes.Best.url,
+          }
+          console.log($rootScope.queryLists);
+          if (sort === 'top') {
+            object.position = 'left: 280px; top: 40px;';
+          }
+          if (sort === 'bot') {
+            object.position = 'left: 280px; bottom: 40px';
+          }
+          if (sort === 'fullbody') {
+            object.show = false;
+            object.position = 'right: 80px; top: 40px;'
+          }
+          if (sort === 'foot') {
+            object.position = 'right: 80px; bottom: 40px;';
+          }
+          if (sort === 'head') {
+            object.show = false;
+            object.position = 'left: 40px; top: 40px;';
+          }
+          if (sort === 'eye') {
+            object.position = 'left: 40px; top: 200px;';
+          }
+          if (sort === 'neck') {
+            object.show = false;
+            object.position = 'left:40px; top:300px;'
+          }
+          if (sort === 'bags') {
+            object.position = 'left: 40px; bottom: 40px;';
+          }
+          $rootScope.queryLists.push(object);
         }
-        if (sort === 'top') {
-          object.position = 'left: 280px; top: 40px;';
-        }
-        if (sort === 'bot') {
-          object.position = 'left: 280px; bottom: 40px';
-        }
-        if (sort === 'fullbody') {
-          object.show = false;
-          object.position = 'right: 80px; top: 40px;'
-        }
-        if (sort === 'foot') {
-          object.position = 'right: 80px; bottom: 40px;';
-        }
-        if (sort === 'head') {
-          object.show = false;
-          object.position = 'left: 40px; top: 40px;';
-        }
-        if (sort === 'eye') {
-          object.position = 'left: 40px; top: 200px;';
-        }
-        if (sort === 'neck') {
-          object.show = false;
-          object.position = 'left:40px; top:300px;'
-        }
-        if (sort === 'bags') {
-          object.position = 'left: 40px; bottom: 40px;';
-        }
-        $rootScope.queryLists.push(object);
       }
     })
   }
@@ -226,22 +234,24 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     canvasThumb.setAttribute('style', 'border: 1px solid black;');
 
     for (var i = 0; i < newImages.length; i++) {
-      var pos = $("#combox-" + newImages[i].name + "-draggable").position();
       var originImg = document.getElementById('combox-' + newImages[i].name + '-img');
-      var newImg = document.getElementById('newImg-'+$rootScope.newImgUrls[i].name);
+      if (originImg != null) {
+        var pos = $("#combox-" + newImages[i].name + "-draggable").position();
+        var newImg = document.getElementById('newImg-'+$rootScope.newImgUrls[i].name);
 
-      var posLeft = pos.left;
-      var posTop = pos.top;
-      var width = originImg.clientWidth;
-      var height = originImg.clientHeight;
+        var posLeft = pos.left;
+        var posTop = pos.top;
+        var width = originImg.clientWidth;
+        var height = originImg.clientHeight;
 
-      var posLeftThumb = pos.left/4;
-      var posTopThumb = pos.top/4;
-      var widthThumb = originImg.clientWidth/4;
-      var heightThumb = originImg.clientHeight/4;
+        var posLeftThumb = pos.left/4;
+        var posTopThumb = pos.top/4;
+        var widthThumb = originImg.clientWidth/4;
+        var heightThumb = originImg.clientHeight/4;
 
-      context.drawImage(newImg, posLeft, posTop, width, height);
-      contextThumb.drawImage(newImg, posLeftThumb, posTopThumb, widthThumb, heightThumb);
+        context.drawImage(newImg, posLeft, posTop, width, height);
+        contextThumb.drawImage(newImg, posLeftThumb, posTopThumb, widthThumb, heightThumb);
+      }
     }
     $("#img-out").append(canvasThumb);
     for (var i = 0; i < $rootScope.newImgUrls.length; i++) {
@@ -337,7 +347,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
         $( "#combox-" + array[i] + "-draggable" ).resizable({containment: "#combox-wrapper", autoHide: true});
       }
       $scope.ready = true;
-    }, 2000);
+    }, 5000);
   }
 
   function refresh() {

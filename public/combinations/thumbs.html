@@ -5,14 +5,14 @@
         Collection
       </span>
     </button>
+    <button type="button" name="button" class='btn btn-default' ng-click="thumbShow='preview'">
+      <span ng-class='{"text-muted":thumbShow!="preview"}'>
+        lists
+      </span>
+    </button>
     <button type="button" name="button" class='btn btn-default' ng-click="thumbShow='description'">
       <span ng-class='{"text-muted":thumbShow!="description"}'>
         Description
-      </span>
-    </button>
-    <button type="button" name="button" class='btn btn-default' ng-click="thumbShow='preview'">
-      <span ng-class='{"text-muted":thumbShow!="preview"}'>
-        Preview
       </span>
     </button>
      <button ng-show='!combinations.saveResult' type="button" name="button" class='btn btn-default disabled'>
@@ -20,7 +20,7 @@
          Saving
        </span>
      </button>
-    <button ng-show='combinations.saveResult' type="button" name="button" class='btn btn-default' ng-click="combinations.newComb();">
+    <button ng-show='combinations.saveResult && ready' type="button" name="button" class='btn btn-default' ng-click="combinations.newComb();">
       <span ng-class='{"text-muted":thumbShow!="save"}'>
         Save
       </span>

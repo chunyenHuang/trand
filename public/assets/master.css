@@ -294,6 +294,8 @@ div[ng-scrollable]{
 .ideas-box {
   border: 1px solid rgb(242, 242, 242);
   padding: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .ideas-box:hover {
   border: 1px solid rgb(133, 133, 133);
@@ -303,7 +305,7 @@ div[ng-scrollable]{
   position: absolute;
   height: 30px;
   width: 100%;
-  bottom: 0px;
+  bottom: 12px;
   margin-left: -16px;
   margin-right: 15px;
   padding: 15px;
@@ -319,7 +321,6 @@ div[ng-scrollable]{
   text-align: center;
   line-height: 700px;
 }
-
 
 .item-modal-imgbox img {
   display: inline-block;

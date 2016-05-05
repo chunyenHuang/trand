@@ -28,6 +28,11 @@ function user($http, $scope, $location, userService, $sce, $rootScope, collectio
     logout.then(function (res) {
       $rootScope.logged=false;
       $location.path('/home');
+
+      $rootScope.loadedCollections = [];
+      $rootScope.recentCollections = [];
+      $rootScope.currentCombination = {};
+      $rootScope.queryLists = [];
     })
   }
   vm.login = function () {
@@ -39,6 +44,20 @@ function user($http, $scope, $location, userService, $sce, $rootScope, collectio
     login.then(function (res) {
       $rootScope.logged = true;
       $location.path('/home');
+      $rootScope.loadedCollections = [];
+      $rootScope.recentCollections = [];
+      var collections = $http.get('/collections?sort=date');
+      collections.then(function (res) {
+        if (res.data.length > 0) {
+          for (var i = 0; i < res.data.length; i++) {
+            $rootScope.loadedCollections.push(res.data[i].item);
+          }
+          var reversed = res.data.reverse();
+          for (var i = 1; i <= 15; i++) {
+            $rootScope.recentCollections.push(reversed[i].item);
+          }
+        }
+      })
     })
   }
   vm.update = function () {
@@ -49,7 +68,7 @@ function user($http, $scope, $location, userService, $sce, $rootScope, collectio
   }
 
   function getUser() {
-    var currentUser =userService.getUser();
+    var currentUser = userService.getUser();
     currentUser.then(function (res) {
       if (res.data.firstName != 'guest') {
         $rootScope.logged = true;

@@ -1,27 +1,13 @@
 var app = angular.module('trand', ['ngRoute', 'infinite-scroll', 'ngSanitize', 'xeditable', 'ui.bootstrap', 'ngAnimate', 'ngScrollable', 'ngclipboard']);
 app.$inject = ['$http'];
-function getLastFifteen(array) {
-  array = array.reverse();
-  var fifteen = _.first(array, 15);
-  array = array.reverse();
-  return  fifteen;
-}
+
 app.run(function ($rootScope, $http) {
   $rootScope.logged = false;
   $rootScope.home = true;
 
   $rootScope.loadedCollections = [];
   $rootScope.recentCollections = [];
-  var collections = $http.get('/collections?sort=date');
-  collections.then(function (res) {
-    for (var i = 0; i < res.data.length; i++) {
-      $rootScope.loadedCollections.push(res.data[i].item);
-    }
-    var reversed = res.data.reverse();
-    for (var i = 1; i <= 15; i++) {
-      $rootScope.recentCollections.push(reversed[i].item);
-    }
-  })
+
   $rootScope.currentCombination = {};
   $rootScope.queryLists = [];
 })
@@ -196,4 +182,11 @@ function collectionsService($http, $rootScope) {
     remove: remove,
     getItem: getItem,
   }
+}
+
+function getLastFifteen(array) {
+  array = array.reverse();
+  var fifteen = _.first(array, 15);
+  array = array.reverse();
+  return  fifteen;
 }
