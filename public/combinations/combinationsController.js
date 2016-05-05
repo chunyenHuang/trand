@@ -156,15 +156,18 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
 
     Promise.all([pSaveImgsToTmp, pSaveFilesToDB]).then(function(values) {
       $timeout(function () {
-        vm.saveResult = true;
-        drawAndUpload($rootScope.newImgUrls);
-        $scope.saveMsg = 'Saved successfully!';
+        $scope.saveMsg = 'Generating Links...';
         $timeout(function () {
-          var rmTmp = awsService.removeUserTmp();
-          rmTmp.then(function () {
-            console.log('User tmp dir is removed.');
-          })
-        }, 1000);
+          vm.saveResult = true;
+          $scope.saveMsg = 'Saved successfully!';
+          drawAndUpload($rootScope.newImgUrls);
+          $timeout(function () {
+            var rmTmp = awsService.removeUserTmp();
+            rmTmp.then(function () {
+              console.log('User tmp dir is removed.');
+            })
+          }, 1000);
+        }, 3000);
       }, 2500);
     })
   }
@@ -253,7 +256,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     }
     $("#tmp-save" ).remove();
     vm.downloadUrl = canvasTest.toDataURL();
-
 
     var fileName = $scope.author + '-' + $scope.title + '.png';
     fileName = fileName.toLowerCase().replace(/ /g, '-');
