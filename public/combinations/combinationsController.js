@@ -327,7 +327,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     refresh();
     $scope.maker = true;
     $scope.ready = false;
-    var p1 = new new Promise(function(resolve, reject) {
+    var p1 = new Promise(function(resolve, reject) {
       getCombinations();
 
       var bodyParts = ['top', 'bot', 'fullbody', 'foot',
