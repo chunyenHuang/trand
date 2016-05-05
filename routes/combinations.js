@@ -90,6 +90,34 @@ router.post('/update', function (req, res) {
     }
   })
 })
+
+router.post('/update-img', function (req, res) {
+  var updateComb = {
+    date: new Date(),
+  }
+  if (req.body.type === 'large') {
+    updateComb.largeUrl = req.body.largeUrl;
+  }
+  if (req.body.type === 'thumb') {
+    updateComb.thumbUrl = req.body.thumbUrl;
+  }
+
+  dbClient.connect(dbUrl, function (err, db) {
+    if (!err) {
+      var combinations = db.collection('combinations');
+      combinations.update({_id: {id: req.body.id }}, {
+        $set: updateComb }, {
+          upsert: true,
+        }, function (err, results) {
+        res.sendStatus(200);
+        db.close();
+      })
+    } else {
+      res.sendStatus(404);
+    }
+  })
+})
+
 router.delete('/remove/:id', function (req, res) {
   dbClient.connect(dbUrl, function (err, db) {
     if (!err) {

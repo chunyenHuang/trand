@@ -143,7 +143,6 @@ function awsService($http, $rootScope) {
   function removeUserTmp() {
     return $http.delete('/aws/tmp');
   }
-
   return {
     signIn: signIn,
     upload: upload,

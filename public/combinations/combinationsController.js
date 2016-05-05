@@ -4,6 +4,7 @@ app.$inject = ['$http', '$scope', '$location', 'userService', '$sce', 'collectio
 
 function combinations($http, $scope, $location, userService, $sce, $rootScope, collectionsService, $timeout, awsService) {
   var vm = this;
+  vm.saveResult = true;
   $scope._ = _;
   $scope.author = 'John Huang';
   $scope.title = 'Summer Time';
@@ -89,7 +90,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
         var src = theOne.getAttribute('src');
         json.push({name: bodyParts[i], src: src});
       }
-      console.log(json);
       var tmp = awsService.saveInTmp(json);
       tmp.then(function (res) {
         var p1 = new Promise(function(resolve, reject) {
@@ -109,8 +109,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
           resolve();
         });
         p1.then(function(){
-          console.log(res.status);
-          console.log(res.data);
           resolve();
         })
       });
@@ -259,7 +257,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
 
     var fileName = $scope.author + '-' + $scope.title + '.png';
     fileName = fileName.toLowerCase().replace(/ /g, '-');
-    console.log(fileName);
 
     vm.downloadName = fileName;
     canvasThumb.toBlob(function(blob) {
@@ -270,7 +267,8 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       var getSignEdRequest = awsService.signIn(json);
       getSignEdRequest.then(function(res) {
         awsService.upload(blob, res.data.signed_request);
-        vm.linkThumb = res.data.url;
+        vm.linkLarge = res.data.url;
+        updateImgUrl('large', res.data.url);
       })
     });
     canvasTest.toBlob(function(blob) {
@@ -281,9 +279,23 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       var getSignEdRequest = awsService.signIn(json);
       getSignEdRequest.then(function(res) {
         awsService.upload(blob, res.data.signed_request);
-        vm.linkLarge = res.data.url;
+        vm.linkThumb = res.data.url;
+        updateImgUrl('thumb', res.data.url);
       })
     });
+  }
+
+  function updateImgUrl(type, url) {
+    var json = {
+      type: type,
+      _id: $rootScope.currentCombination._id,
+      largeUrl: url,
+      thumbUrl: url,
+    }
+    var update = $http.post('/combinations/update-img', json);
+    update.then(function () {
+      console.log('ImgUrls updated');
+    })
   }
 
   vm.savePic = function () {
@@ -292,7 +304,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       logging:true,
       onrendered: function(canvas) {
         document.body.appendChild(canvas);
-        console.log();
         canvas.toBlob(function(blob) {
           saveAs(blob, "comb-canvas.jpg");
         });

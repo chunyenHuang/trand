@@ -19,23 +19,18 @@ router.use(bodyParser.json());
 
 var AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID;
 var AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;
-var S3_BUCKET = process.env.S3_BUCKET_NAME;
-console.log(AWS_ACCESS_KEY_ID);
-console.log(AWS_SECRET_ACCESS_KEY);
-console.log(S3_BUCKET);
+var S3_BUCKET = process.env.S3_BUCKET_NAME + '/ideas';
 
 router.post('/sign_s3', function (req, res) {
   aws.config.update({accessKeyId: AWS_ACCESS_KEY_ID, secretAccessKey: AWS_SECRET_ACCESS_KEY});
   var s3 = new aws.S3();
   var s3_params = {
-      Bucket: S3_BUCKET + '/ideas',
+      Bucket: S3_BUCKET,
       Key: req.body.file_name,
       Expires: 600,
       ContentType: req.body.file_type,
       ACL: 'public-read',
   };
-  console.log(s3);
-  console.log(s3_params);
   s3.getSignedUrl('putObject', s3_params, function(err, data){
     if(err){
         console.log(err);
@@ -74,12 +69,10 @@ router.post('/tmp', function (req, res) {
           });
         });
         p1.then(function () {
-          console.log(name + '.jpg is saved to ' + dir);
           i++;
           getAndSaveRecursive(array, i);
         })
       } else {
-        console.log('all done');
         var saved = origin;
         for (var i = 0; i < saved.length; i++) {
           saved[i].src = 'tmp/' + req.currentUser.email + '/' + origin[i].name + '.jpg';
@@ -92,7 +85,6 @@ router.post('/tmp', function (req, res) {
 
 router.delete('/tmp', function (req, res) {
   rimraf('./public/tmp/' + req.currentUser.email, function () {
-    console.log('remove ./public/tmp/'+req.currentUser.email);
   })
   res.sendStatus(200);
 })
@@ -113,9 +105,7 @@ function upload_file(signed_request, url){
     })
   });
   p1.then(function (res) {
-    console.log(res);
   }, function (err) {
-    console.log(err);
   })
 }
 
