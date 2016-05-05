@@ -313,7 +313,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     })
   }
 
-  vm.maker = function () {
+  vm.newMaker = function () {
     refresh();
     $scope.maker = true;
     $scope.ready = false;
@@ -346,6 +346,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     $rootScope.currentCombination.author = $scope.author;
     $rootScope.currentCombination.title = $scope.title;
     delete $rootScope.currentCombination._id;
+    $rootScope.queryLists = [];
   }
 
   function activate() {
