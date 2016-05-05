@@ -341,7 +341,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       $scope.$broadcast('content.changed');
       $scope.$broadcast('content.reload');
 
-      resolve()
+      resolve();
     });
     p1.then(function () {
       $timeout(function(){
@@ -353,6 +353,15 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
         $scope.ready = true;
       }, 5000);
     })
+  }
+
+  vm.refresh = function () {
+    var array = ['top', 'bot', 'fullbody', 'foot', 'eye', 'head', 'neck', 'bags'];
+    for (var i = 0; i < array.length; i++) {
+      $( "#combox-" + array[i] + "-draggable").draggable({containment: "#combox-wrapper", scroll: false });
+      $( "#combox-" + array[i] + "-draggable" ).resizable({containment: "#combox-wrapper", autoHide: true});
+    }
+    $scope.ready = true;
   }
 
   function refresh() {
