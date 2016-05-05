@@ -89,24 +89,4 @@ router.delete('/tmp', function (req, res) {
   res.sendStatus(200);
 })
 
-function upload_file(signed_request, url){
-  var p1 = new Promise(function(resolve, reject) {
-    request({
-      method: 'PUT',
-      url: signed_request,
-      data: 'TTTTTT',
-      headers: {
-        'x-amz-acl': 'public-read',
-        'content-type': 'image/png',
-      },
-    }, function (err, body, res) {
-      resolve(res);
-      reject(err);
-    })
-  });
-  p1.then(function (res) {
-  }, function (err) {
-  })
-}
-
 module.exports = router;

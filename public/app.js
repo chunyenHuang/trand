@@ -1,4 +1,4 @@
-var app = angular.module('trand', ['ngRoute', 'infinite-scroll', 'ngSanitize', 'xeditable', 'ui.bootstrap', 'ngAnimate', 'ngScrollable']);
+var app = angular.module('trand', ['ngRoute', 'infinite-scroll', 'ngSanitize', 'xeditable', 'ui.bootstrap', 'ngAnimate', 'ngScrollable', 'ngclipboard']);
 app.$inject = ['$http'];
 function getLastFifteen(array) {
   array = array.reverse();
@@ -35,7 +35,7 @@ app.config(['$compileProvider', function($compileProvider) {
   }
 ]);
 
-app.config(['$routeProvider', function($routeProvider) {
+app.config(['$routeProvider', function($routeProvider, $routeParams) {
   $routeProvider
     .when('/', {
       templateUrl: 'home/greeting.html',
@@ -69,6 +69,11 @@ app.config(['$routeProvider', function($routeProvider) {
     })
     .when('/ideas', {
       templateUrl: 'ideas/ideas.html',
+      controller: 'ideasController',
+      controllerAs: 'ideas',
+    })
+    .when('/ideas/:id', {
+      templateUrl: 'ideas/display.html',
       controller: 'ideasController',
       controllerAs: 'ideas',
     })

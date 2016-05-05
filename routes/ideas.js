@@ -33,4 +33,23 @@ router.get('/', function (req, res) {
   });
 })
 
+router.get('/detail/:id', function (req, res) {
+  dbClient.connect(dbUrl, function (err, db) {
+    if (!err) {
+      var combinations = db.collection('combinations');
+      combinations.find({_id: ObjectId(req.params.id)}).toArray(function (err, results) {
+        if (results.length>0) {
+          res.json(results[0]);
+          db.close();
+        } else {
+          res.sendStatus(404);
+          db.close();
+        }
+      })
+    } else {
+      res.sendStatus(404);
+    }
+  });
+})
+
 module.exports = router;

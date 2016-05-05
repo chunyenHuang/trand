@@ -6,14 +6,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
   var vm = this;
   vm.saveResult = true;
   $scope._ = _;
-  $scope.author = 'John Huang';
-  $scope.title = 'Summer Time';
-  if ($rootScope.currentCombination.title) {
-    $scope.author = $rootScope.currentCombination.author;
-    $scope.title = $rootScope.currentCombination.title;
-    $scope.eventType = $rootScope.currentCombination.eventType;
-    $scope.descrition = $rootScope.currentCombination.descrition;
-  }
+
   // 'use strict';
 
   $scope.posX = 0;
@@ -156,15 +149,18 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
 
     Promise.all([pSaveImgsToTmp, pSaveFilesToDB]).then(function(values) {
       $timeout(function () {
-        vm.saveResult = true;
-        drawAndUpload($rootScope.newImgUrls);
-        $scope.saveMsg = 'Saved successfully!';
+        $scope.saveMsg = 'Generating Links...';
         $timeout(function () {
-          var rmTmp = awsService.removeUserTmp();
-          rmTmp.then(function () {
-            console.log('User tmp dir is removed.');
-          })
-        }, 1000);
+          vm.saveResult = true;
+          $scope.saveMsg = 'Saved successfully!';
+          drawAndUpload($rootScope.newImgUrls);
+          $timeout(function () {
+            var rmTmp = awsService.removeUserTmp();
+            rmTmp.then(function () {
+              console.log('User tmp dir is removed.');
+            })
+          }, 1000);
+        }, 3000);
       }, 2500);
     })
   }
@@ -225,8 +221,8 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     var canvasThumb = document.createElement('canvas');
     canvasThumb.setAttribute('id', 'canvasThumb');
     var contextThumb = canvasThumb.getContext('2d');
-    canvasThumb.width = canvasTest.width/6;
-    canvasThumb.height = canvasTest.height/6;
+    canvasThumb.width = canvasTest.width/4;
+    canvasThumb.height = canvasTest.height/4;
     canvasThumb.setAttribute('style', 'border: 1px solid black;');
 
     for (var i = 0; i < newImages.length; i++) {
@@ -239,10 +235,10 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       var width = originImg.clientWidth;
       var height = originImg.clientHeight;
 
-      var posLeftThumb = pos.left/6;
-      var posTopThumb = pos.top/6;
-      var widthThumb = originImg.clientWidth/6;
-      var heightThumb = originImg.clientHeight/6;
+      var posLeftThumb = pos.left/4;
+      var posTopThumb = pos.top/4;
+      var widthThumb = originImg.clientWidth/4;
+      var heightThumb = originImg.clientHeight/4;
 
       context.drawImage(newImg, posLeft, posTop, width, height);
       contextThumb.drawImage(newImg, posLeftThumb, posTopThumb, widthThumb, heightThumb);
@@ -254,9 +250,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     $("#tmp-save" ).remove();
     vm.downloadUrl = canvasTest.toDataURL();
 
-
-    var fileName = $scope.author + '-' + $scope.title + '.png';
-    fileName = fileName.toLowerCase().replace(/ /g, '-');
+    var fileName = $rootScope.currentCombination._id + '.png';
 
     vm.downloadName = fileName;
     canvasThumb.toBlob(function(blob) {
@@ -268,7 +262,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       getSignEdRequest.then(function(res) {
         awsService.upload(blob, res.data.signed_request);
         vm.linkLarge = res.data.url;
-        updateImgUrl('large', res.data.url);
+        updateImgUrl('thumb', res.data.url);
       })
     });
     canvasTest.toBlob(function(blob) {
@@ -280,12 +274,13 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       getSignEdRequest.then(function(res) {
         awsService.upload(blob, res.data.signed_request);
         vm.linkThumb = res.data.url;
-        updateImgUrl('thumb', res.data.url);
+        updateImgUrl('large', res.data.url);
       })
     });
   }
 
   function updateImgUrl(type, url) {
+    console.log($rootScope.currentCombination);
     var json = {
       type: type,
       _id: $rootScope.currentCombination._id,
@@ -318,7 +313,8 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     })
   }
 
-  vm.maker = function () {
+  vm.newMaker = function () {
+    refresh();
     $scope.maker = true;
     $scope.ready = false;
     getCombinations();
@@ -343,7 +339,27 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       $scope.ready = true;
     }, 2000);
   }
+
+  function refresh() {
+    $scope.author = 'Anonymous';
+    $scope.title = 'Untitled';
+    $rootScope.currentCombination.author = $scope.author;
+    $rootScope.currentCombination.title = $scope.title;
+    delete $rootScope.currentCombination._id;
+    $rootScope.queryLists = [];
+  }
+
   function activate() {
+    if ($rootScope.currentCombination.title) {
+      $scope.author = $rootScope.currentCombination.author;
+      $scope.title = $rootScope.currentCombination.title;
+      $scope.eventType = $rootScope.currentCombination.eventType;
+      $scope.descrition = $rootScope.currentCombination.descrition;
+    }
+    $scope.author = 'Anonymous';
+    $scope.title = 'Untitled';
+    $rootScope.currentCombination.author = $scope.author;
+    $rootScope.currentCombination.title = $scope.title;
   }
   activate();
 }
