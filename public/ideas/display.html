@@ -1,0 +1,54 @@
+<div class="container" ng-init='ideas.display()'>
+  <div class="row">
+    <div class="col-md-7">
+      <div class="item-modal-imgbox">
+        <span>
+          <img src={{ideas.detail.largeUrl}} ng-hide='ideas.hoverImg'>
+        </span>
+        <span>
+          <img src={{ideas.showHoverImg}} ng-show='ideas.hoverImg'>
+        </span>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div ng-scrollable="{scrollX:'bottom',scrollY:'right'}" style="width: 100%; height: 100%;">
+        <h3>
+          {{ideas.detail.information.title}}
+        </h3>
+        <h4>
+          <small>
+            {{ideas.detail.information.author}} | {{ideas.detail.date | date:'yyyy-mm-dd'}}
+          </small>
+        </h4>
+        <h4>
+          {{ideas.detail.price | currency}}
+        </h4>
+
+        <div ng-repeat="obj in ideas.detail.combinations">
+          <div class="comb-thumbs-preview-box" >
+            <div class="row" >
+              <div class="col-md-6 text-center">
+                <img src={{obj.imgUrl}} ng-mouseenter="ideas.showHoverImg=obj.imgUrl; ideas.hoverImg=true" ng-mouseleave="ideas.hoverImg=false">
+              </div>
+              <div class="col-md-6">
+                <p>
+                  {{obj.item.brandName}}
+                </p>
+                <p>
+                  {{obj.item.price | currency }}
+                </p>
+                <p>
+                  <small>
+                    <a href='{{obj.item.clickUrl }}' target="_blank">
+                      buy at {{obj.item.retailerName}}
+                    </a>
+                  </small>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

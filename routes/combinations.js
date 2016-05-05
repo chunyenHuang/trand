@@ -155,6 +155,7 @@ router.delete('/remove/:id', function (req, res) {
     }
   })
 });
+
 router.delete('/remove-null/', function (req, res) {
   dbClient.connect(dbUrl, function (err, db) {
     if (!err) {
@@ -168,5 +169,6 @@ router.delete('/remove-null/', function (req, res) {
     }
   })
 });
+
 
 module.exports = router;
