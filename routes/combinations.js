@@ -34,12 +34,6 @@ router.get('/', function (req, res) {
 })
 
 router.post('/new', function (req, res) {
-  var newComb = {
-    email: req.currentUser.email,
-    information: req.body.information,
-    combinations: req.body.combinations,
-    date: new Date(),
-  }
   var items = req.body.combinations;
   var totalPrice = 0;
   var showed = _.where(items, {show: true});
@@ -47,6 +41,15 @@ router.post('/new', function (req, res) {
 
   for (var i = 0; i < items.length; i++) {
     totalPrice = totalPrice + items[i].item.price;
+  }
+
+  var newComb = {
+    email: req.currentUser.email,
+    information: req.body.information,
+    combinations: req.body.combinations,
+    price: totalPrice,
+    pieces: totalPieces,
+    date: new Date(),
   }
 
   dbClient.connect(dbUrl, function (err, db) {
@@ -82,11 +85,21 @@ router.post('/update', function (req, res) {
     _id: req.body.id,
     combinations: req.body.combinations,
   }
+  var items = req.body.combinations;
+  var totalPrice = 0;
+  var showed = _.where(items, {show: true});
+  var totalPieces = showed.length;
+
+  for (var i = 0; i < items.length; i++) {
+    totalPrice = totalPrice + items[i].item.price;
+  }
   dbClient.connect(dbUrl, function (err, db) {
     if (!err) {
       var combinations = db.collection('combinations');
       combinations.update({_id: {id: req.body.id }}, {
         $set: {
+          price: totalPrice,
+          pieces: totalPieces,
           combinations: req.body.combinations,
           date: new Date(),
         }
@@ -116,7 +129,7 @@ router.post('/update-img', function (req, res) {
   dbClient.connect(dbUrl, function (err, db) {
     if (!err) {
       var combinations = db.collection('combinations');
-      combinations.update({_id: {id: req.body.id }}, {
+      combinations.update({_id: ObjectId(req.body._id)}, {
         $set: updateComb }, {
           upsert: true,
         }, function (err, results) {

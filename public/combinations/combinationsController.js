@@ -6,14 +6,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
   var vm = this;
   vm.saveResult = true;
   $scope._ = _;
-  $scope.author = 'John Huang';
-  $scope.title = 'Summer Time';
-  if ($rootScope.currentCombination.title) {
-    $scope.author = $rootScope.currentCombination.author;
-    $scope.title = $rootScope.currentCombination.title;
-    $scope.eventType = $rootScope.currentCombination.eventType;
-    $scope.descrition = $rootScope.currentCombination.descrition;
-  }
+
   // 'use strict';
 
   $scope.posX = 0;
@@ -257,8 +250,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     $("#tmp-save" ).remove();
     vm.downloadUrl = canvasTest.toDataURL();
 
-    var fileName = $scope.author + '-' + $scope.title + '.png';
-    fileName = fileName.toLowerCase().replace(/ /g, '-');
+    var fileName = $rootScope.currentCombination._id + '.png';
 
     vm.downloadName = fileName;
     canvasThumb.toBlob(function(blob) {
@@ -270,7 +262,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       getSignEdRequest.then(function(res) {
         awsService.upload(blob, res.data.signed_request);
         vm.linkLarge = res.data.url;
-        updateImgUrl('large', res.data.url);
+        updateImgUrl('thumb', res.data.url);
       })
     });
     canvasTest.toBlob(function(blob) {
@@ -282,12 +274,13 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       getSignEdRequest.then(function(res) {
         awsService.upload(blob, res.data.signed_request);
         vm.linkThumb = res.data.url;
-        updateImgUrl('thumb', res.data.url);
+        updateImgUrl('large', res.data.url);
       })
     });
   }
 
   function updateImgUrl(type, url) {
+    console.log($rootScope.currentCombination);
     var json = {
       type: type,
       _id: $rootScope.currentCombination._id,
@@ -321,6 +314,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
   }
 
   vm.maker = function () {
+    refresh();
     $scope.maker = true;
     $scope.ready = false;
     getCombinations();
@@ -345,7 +339,26 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       $scope.ready = true;
     }, 2000);
   }
+
+  function refresh() {
+    $scope.author = 'Anonymous';
+    $scope.title = 'Untitled';
+    $rootScope.currentCombination.author = $scope.author;
+    $rootScope.currentCombination.title = $scope.title;
+    delete $rootScope.currentCombination._id;
+  }
+
   function activate() {
+    if ($rootScope.currentCombination.title) {
+      $scope.author = $rootScope.currentCombination.author;
+      $scope.title = $rootScope.currentCombination.title;
+      $scope.eventType = $rootScope.currentCombination.eventType;
+      $scope.descrition = $rootScope.currentCombination.descrition;
+    }
+    $scope.author = 'Anonymous';
+    $scope.title = 'Untitled';
+    $rootScope.currentCombination.author = $scope.author;
+    $rootScope.currentCombination.title = $scope.title;
   }
   activate();
 }

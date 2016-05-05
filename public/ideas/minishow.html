@@ -1,8 +1,8 @@
 <div ng-repeat="item in ideas.combs">
-  {{item.date | date: 'yyyy-mm-dd'}}
-  {{item.information.author | }}
+  <img src={{item.thumbUrl}}>
+  {{item.information.author}}
   {{item.information.title}}
-  {{item.information.eventType}}
-  {{item.information.description}}
-  {{item.information.description}}
+  {{item.pieces}}
+  {{item.price | currency}}
+  {{item.date | date:'yyyy-mm-dd'}}
 </div>
