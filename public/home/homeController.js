@@ -1,13 +1,22 @@
 var app = angular.module('trand');
 app.controller('homeController', home);
-app.$inject = ['$http', 'listService', 'collectionsService'];
-function home($http, listService, collectionsService, $rootScope) {
+app.$inject = ['$http', 'listService', 'collectionsService', '$location'];
+function home($http, listService, collectionsService, $rootScope, $location) {
   var vm = this;
   vm.showRetailers = function () {
     var retailers = listService.getRetailers();
     retailers.then(function (res) {
       vm.showed=true;
       vm.retailers = res.data;
+    })
+  }
+  vm.linkto = function () {
+    $location.path('/ideas');
+  }
+  function getRecentCombs () {
+    var combs = $http.get('/ideas/recent');
+    combs.then(function (response) {
+      vm.combs = response.data;
     })
   }
   function activate() {
@@ -25,6 +34,7 @@ function home($http, listService, collectionsService, $rootScope) {
         }
       }
     })
+    getRecentCombs();
   }
   activate();
 }

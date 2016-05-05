@@ -33,6 +33,30 @@ router.get('/', function (req, res) {
   });
 })
 
+router.get('/recent', function (req, res) {
+  dbClient.connect(dbUrl, function (err, db) {
+    if (!err) {
+      var combinations = db.collection('combinations');
+      combinations.find({}).toArray(function (err, results) {
+        if (results.length>0) {
+          var lastThree = [];
+          for (var i = results.length-1; results.length-10 < i; i--) {
+            lastThree.push(results[i]);
+          }
+          res.json(lastThree);
+          db.close();
+        } else {
+          res.sendStatus(404);
+          db.close();
+        }
+      })
+    } else {
+      res.sendStatus(404);
+    }
+  });
+})
+
+
 router.get('/detail/:id', function (req, res) {
   dbClient.connect(dbUrl, function (err, db) {
     if (!err) {

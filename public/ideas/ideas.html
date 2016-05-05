@@ -1,4 +1,12 @@
 <div class="container" ng-init='ideas.getAllCombs()'>
-  <h1>ideas</h1>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <h3 ng-hide='logged'>
+        <a href="#/home" ng-click="home=true">
+          Register at Trand and create your own!
+        </a>
+      </h3>
+    </div>
+  </div>
   <minishow></minishow>
 </div>

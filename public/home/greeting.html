@@ -45,21 +45,61 @@
 </div>
 
 <div id="greeting-mainbox-2">
-  <div class='container-fluid'>
-    <div class='row'>
-      <div class='col-md-4 col-md-offset-2'>
-        <h5>
-          <a ng-click='home.showRetailers();' ng-hide="home.showed">
-            see all our retailers
-          </a>
-        </h5>
-        <div class='retailers-box' ng-show="home.showed" ng-scrollable="{scrollX:'bottom',scrollY:'right'}" style="width: 100%; height: 50vh;">
-          <div class="row">
-            <div class='col-sm-5' ng-repeat='retailer in home.retailers'>
-              <a href='http://{{retailer.hostDomain}}' target="_blank">
-                {{retailer.name}}
-              </a>
+  <div class="container">
+    <h1>See what's hot </h1>
+    <div>
+      <div class="row">
+        <div class="col-sm-4" ng-repeat="item in home.combs track by $index">
+          <div class="ideas-box" ng-click='home.linkto();' ng-mouseenter="showBrands=true" ng-mouseleave="showBrands=false">
+            <div class="brands-hoverbox" ng-show='showBrands'>
+              <span ng-repeat="obj in item.combinations">
+                {{obj.item.brandName}},
+              </span>
             </div>
+            <div class="row">
+              <div class="col-md-6">
+                <img src={{item.thumbUrl}}>
+              </div>
+              <div class="col-md-6 padding-left">
+                <h3>
+                  {{item.information.title}}
+                  <small>
+                    {{item.information.author}}
+                  </small>
+                </h3>
+                <h4>
+                  {{item.price | currency}}
+                </h4>
+                <h4>
+                  <small>
+                    {{item.date | date:'yyyy-mm-dd'}}
+                  </small>
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-12 text-center'>
+      <h3>
+        <a ng-click='home.showRetailers();' ng-hide="home.showed">
+          see all our retailers
+        </a>
+      </h3>
+    </div>
+    <div class='col-md-12'>
+      <div class='retailers-box' ng-show="home.showed">
+        <div class="row">
+          <div class='col-sm-3' ng-repeat='retailer in home.retailers'>
+            <a href='http://{{retailer.hostDomain}}' target="_blank">
+              {{retailer.name}}
+            </a>
           </div>
         </div>
       </div>
