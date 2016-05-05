@@ -7,7 +7,7 @@ function ideas($http, $scope, $location, $routeParams) {
   $scope.show = function (item) {
     $('#show-ideas').modal('show');
     vm.detail = item;
-    console.log(vm.detail);
+    vm.directlink = $location.absUrl() + '/' + item._id;
   }
 
   vm.display = function () {

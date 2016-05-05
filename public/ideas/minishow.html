@@ -61,6 +61,10 @@
                 {{ideas.detail.price | currency}}
               </h4>
 
+              <button class="btn" ngclipboard data-clipboard-text={{ideas.directlink}}>
+                Copy Direct Link Url
+              </button>
+
               <div ng-repeat="obj in ideas.detail.combinations">
                 <div class="comb-thumbs-preview-box" >
                   <div class="row" >
