@@ -327,27 +327,32 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     refresh();
     $scope.maker = true;
     $scope.ready = false;
-    getCombinations();
+    var p1 = new new Promise(function(resolve, reject) {
+      getCombinations();
 
-    var bodyParts = ['top', 'bot', 'fullbody', 'foot',
-                 'neck', 'head', 'eye', 'bags'];
-    for (var i = 0; i < bodyParts.length; i++) {
-      vm.getCollectionsOf(bodyParts[i], i);
-    }
-    $scope.posX = 0;
-    $scope.posY = 0;
-
-    $scope.$broadcast('content.changed');
-    $scope.$broadcast('content.reload');
-
-    $timeout(function(){
-      var array = ['top', 'bot', 'fullbody', 'foot', 'eye', 'head', 'neck', 'bags'];
-      for (var i = 0; i < array.length; i++) {
-        $( "#combox-" + array[i] + "-draggable").draggable({containment: "#combox-wrapper", scroll: false });
-        $( "#combox-" + array[i] + "-draggable" ).resizable({containment: "#combox-wrapper", autoHide: true});
+      var bodyParts = ['top', 'bot', 'fullbody', 'foot',
+                   'neck', 'head', 'eye', 'bags'];
+      for (var i = 0; i < bodyParts.length; i++) {
+        vm.getCollectionsOf(bodyParts[i], i);
       }
-      $scope.ready = true;
-    }, 5000);
+      $scope.posX = 0;
+      $scope.posY = 0;
+
+      $scope.$broadcast('content.changed');
+      $scope.$broadcast('content.reload');
+
+      resolve()
+    });
+    p1.then(function () {
+      $timeout(function(){
+        var array = ['top', 'bot', 'fullbody', 'foot', 'eye', 'head', 'neck', 'bags'];
+        for (var i = 0; i < array.length; i++) {
+          $( "#combox-" + array[i] + "-draggable").draggable({containment: "#combox-wrapper", scroll: false });
+          $( "#combox-" + array[i] + "-draggable" ).resizable({containment: "#combox-wrapper", autoHide: true});
+        }
+        $scope.ready = true;
+      }, 5000);
+    })
   }
 
   function refresh() {
