@@ -1,8 +1,94 @@
-<div ng-repeat="item in ideas.combs">
-  <img src={{item.thumbUrl}}>
-  {{item.information.author}}
-  {{item.information.title}}
-  {{item.pieces}}
-  {{item.price | currency}}
-  {{item.date | date:'yyyy-mm-dd'}}
+<div class="row">
+  <div class="col-sm-4" ng-repeat="item in ideas.combs">
+    <div class="ideas-box" ng-click='show(item);' ng-mouseenter="showBrands=true" ng-mouseleave="showBrands=false">
+      <div class="brands-hoverbox" ng-show='showBrands'>
+        <span ng-repeat="obj in item.combinations">
+          {{obj.item.brandName}},
+        </span>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <img src={{item.thumbUrl}}>
+        </div>
+        <div class="col-md-6 padding-left">
+          <h3>
+            {{item.information.title}}
+            <small>
+              {{item.information.author}}
+            </small>
+          </h3>
+          <h4>
+            {{item.price | currency}}
+          </h4>
+          <h4>
+            <small>
+              {{item.date | date:'yyyy-mm-dd'}}
+            </small>
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="show-ideas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="row">
+          <div class="col-md-7">
+            <div class="item-modal-imgbox">
+              <span>
+                <img src={{ideas.detail.largeUrl}} ng-hide='ideas.hoverImg'>
+              </span>
+              <span>
+                <img src={{ideas.showHoverImg}} ng-show='ideas.hoverImg'>
+              </span>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div ng-scrollable="{scrollX:'bottom',scrollY:'right'}" style="width: 100%; height: 100%;">
+              <h3>
+                {{ideas.detail.information.title}}
+              </h3>
+              <h4>
+                <small>
+                  {{ideas.detail.information.author}} | {{ideas.detail.date | date:'yyyy-mm-dd'}}
+                </small>
+              </h4>
+              <h4>
+                {{ideas.detail.price | currency}}
+              </h4>
+
+              <div ng-repeat="obj in ideas.detail.combinations">
+                <div class="comb-thumbs-preview-box" >
+                  <div class="row" >
+                    <div class="col-md-6 text-center">
+                      <img src={{obj.imgUrl}} ng-mouseenter="ideas.showHoverImg=obj.imgUrl; ideas.hoverImg=true" ng-mouseleave="ideas.hoverImg=false">
+                    </div>
+                    <div class="col-md-6">
+                      <p>
+                        {{obj.item.brandName}}
+                      </p>
+                      <p>
+                        {{obj.item.price | currency }}
+                      </p>
+                      <p>
+                        <small>
+                          <a href='{{obj.item.clickUrl }}' target="_blank">
+                            buy at {{obj.item.retailerName}}
+                          </a>
+                        </small>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

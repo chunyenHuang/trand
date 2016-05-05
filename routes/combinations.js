@@ -46,7 +46,7 @@ router.post('/new', function (req, res) {
   var newComb = {
     email: req.currentUser.email,
     information: req.body.information,
-    combinations: req.body.combinations,
+    combinations: showed,
     price: totalPrice,
     pieces: totalPieces,
     date: new Date(),
@@ -66,7 +66,7 @@ router.post('/new', function (req, res) {
             price: totalPrice,
             pieces: totalPieces,
             information: req.body.information,
-            combinations: req.body.combinations,
+            combinations: showed,
             date: new Date(),
           }
         }, function (err, results) {
