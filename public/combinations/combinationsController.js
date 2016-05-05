@@ -228,8 +228,8 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     var canvasThumb = document.createElement('canvas');
     canvasThumb.setAttribute('id', 'canvasThumb');
     var contextThumb = canvasThumb.getContext('2d');
-    canvasThumb.width = canvasTest.width/6;
-    canvasThumb.height = canvasTest.height/6;
+    canvasThumb.width = canvasTest.width/4;
+    canvasThumb.height = canvasTest.height/4;
     canvasThumb.setAttribute('style', 'border: 1px solid black;');
 
     for (var i = 0; i < newImages.length; i++) {
@@ -242,10 +242,10 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       var width = originImg.clientWidth;
       var height = originImg.clientHeight;
 
-      var posLeftThumb = pos.left/6;
-      var posTopThumb = pos.top/6;
-      var widthThumb = originImg.clientWidth/6;
-      var heightThumb = originImg.clientHeight/6;
+      var posLeftThumb = pos.left/4;
+      var posTopThumb = pos.top/4;
+      var widthThumb = originImg.clientWidth/4;
+      var heightThumb = originImg.clientHeight/4;
 
       context.drawImage(newImg, posLeft, posTop, width, height);
       contextThumb.drawImage(newImg, posLeftThumb, posTopThumb, widthThumb, heightThumb);
