@@ -286,3 +286,11 @@ div[ng-scrollable]{
   background-color: rgb(250, 250, 250);
   padding: 15px;
 }
+
+#img-out {
+  padding: 20px;
+  background-color: white;
+  margin: auto;
+  width: 165px;
+  height: 175px;
+}

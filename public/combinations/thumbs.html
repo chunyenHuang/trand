@@ -15,7 +15,12 @@
         Preview
       </span>
     </button>
-    <button type="button" name="button" class='btn btn-default' ng-click="combinations.newComb()">
+     <button ng-show='!combinations.saveResult' type="button" name="button" class='btn btn-default disabled'>
+       <span ng-class='{"text-muted":thumbShow!="save"}'>
+         Saving
+       </span>
+     </button>
+    <button ng-show='combinations.saveResult' type="button" name="button" class='btn btn-default' ng-click="combinations.newComb();">
       <span ng-class='{"text-muted":thumbShow!="save"}'>
         Save
       </span>
@@ -56,11 +61,11 @@
     <div class="col-md-12">
       <div class="form-group">
         <label for="">Your Name</label>
-        <input class='form-control' type="text" ng-keyup='save()' ng-model="author">
+        <input class='form-control' type="text" ng-keyup='save()' ng-model="author" required="required">
       </div>
       <div class="form-group">
         <label for="">Title</label>
-        <input class='form-control' type="text" ng-keyup='save()' ng-model="title">
+        <input class='form-control' type="text" ng-keyup='save()' ng-model="title" required="required">
       </div>
       <div class="form-group">
         <label for="">Event</label>
@@ -105,9 +110,14 @@
     <div class="col-md-12">
       <h5>{{saveMsg}}</h5>
     </div>
-    <div class="col-md-12">
-      <a ng-click='combinations.savePic()'>Export as picture</a>
-      <img src="images/cover1.png" width='50px'>
+    <div class="col-md-12" ng-show='combinations.saveResult'>
+      <a target="_self" href={{combinations.downloadUrl}} download={{combinations.downloadName}}>
+        Download
+      </a>
+
+      <div id="img-out"></div>
+      link: {{combinations.linkLarge}}
+      link: {{combinations.linkThumb}}
     </div>
   </div>
 </div>

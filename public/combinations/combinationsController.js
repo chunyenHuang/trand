@@ -1,10 +1,13 @@
 var app = angular.module('trand');
 app.controller('combinationsController', combinations);
-app.$inject = ['$http', '$scope', '$location', 'userService', '$sce', 'collectionsService', '$timeout'];
+app.$inject = ['$http', '$scope', '$location', 'userService', '$sce', 'collectionsService', '$timeout', 'awsService'];
 
-function combinations($http, $scope, $location, userService, $sce, $rootScope, collectionsService, $timeout) {
+function combinations($http, $scope, $location, userService, $sce, $rootScope, collectionsService, $timeout, awsService) {
   var vm = this;
+  vm.saveResult = true;
   $scope._ = _;
+  $scope.author = 'John Huang';
+  $scope.title = 'Summer Time';
   if ($rootScope.currentCombination.title) {
     $scope.author = $rootScope.currentCombination.author;
     $scope.title = $rootScope.currentCombination.title;
@@ -76,45 +79,93 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
   }
 
   vm.newComb = function () {
-    $scope.thumbShow = 'save';
-    $scope.saveMsg = 'Saving...';
-    var rootArray = $rootScope.queryLists;
-    var saveComb = [];
-    for (var i = 0; i < rootArray.length; i++) {
-      var theOne = rootArray[i].data[rootArray[i].index];
-      var object = {
-        imgUrl: rootArray[i].imgUrl,
-        index: rootArray[i].index,
-        name: rootArray[i].name,
-        order: rootArray[i].order,
-        position: rootArray[i].position,
-        show: rootArray[i].show,
-        item: {},
+    vm.saveResult = false;
+    $( "#img-out" ).empty();
+    var pSaveImgsToTmp = new Promise(function(resolve, reject) {
+      var bodyParts = ['top', 'bot', 'fullbody', 'foot', 'neck', 'head', 'eye', 'bags'];
+
+      var json = [];
+      for (var i = 0; i < bodyParts.length; i++) {
+        var theOne = document.getElementById('combox-' + bodyParts[i] + '-img');
+        var src = theOne.getAttribute('src');
+        json.push({name: bodyParts[i], src: src});
       }
-      saveComb.push(object);
-      saveComb[i].item.id = theOne.item.id;
-      saveComb[i].item.clickUrl = theOne.item.clickUrl;
-      saveComb[i].item.name = theOne.item.name;
-      if (theOne.item.brand) {
-        saveComb[i].item.brandName = theOne.item.brand.name;
+      var tmp = awsService.saveInTmp(json);
+      tmp.then(function (res) {
+        var p1 = new Promise(function(resolve, reject) {
+          $rootScope.newImgUrls = res.data;
+          var tmp = document.createElement('div');
+          tmp.setAttribute('id', 'tmp-save');
+          tmp.className = 'hidden';
+          document.body.appendChild(tmp);
+
+          for (var i = 0; i < $rootScope.newImgUrls.length; i++) {
+            var img = document.createElement('img');
+            img.src = $rootScope.newImgUrls[i].src;
+            img.setAttribute('id', 'newImg-'+$rootScope.newImgUrls[i].name);
+            tmp.appendChild(img);
+          }
+
+          resolve();
+        });
+        p1.then(function(){
+          resolve();
+        })
+      });
+    });
+
+    var pSaveFilesToDB = new Promise(function(resolve, reject) {
+      $scope.thumbShow = 'save';
+      $scope.saveMsg = 'Saving...';
+      var rootArray = $rootScope.queryLists;
+      var saveComb = [];
+      for (var i = 0; i < rootArray.length; i++) {
+        var theOne = rootArray[i].data[rootArray[i].index];
+        var object = {
+          imgUrl: rootArray[i].imgUrl,
+          index: rootArray[i].index,
+          name: rootArray[i].name,
+          order: rootArray[i].order,
+          position: rootArray[i].position,
+          show: rootArray[i].show,
+          item: {},
+        }
+        saveComb.push(object);
+        saveComb[i].item.id = theOne.item.id;
+        saveComb[i].item.clickUrl = theOne.item.clickUrl;
+        saveComb[i].item.name = theOne.item.name;
+        if (theOne.item.brand) {
+          saveComb[i].item.brandName = theOne.item.brand.name;
+        }
+        saveComb[i].item.price = theOne.item.price;
+        saveComb[i].item.retailerName = theOne.item.retailer.name;
+        saveComb[i].item.categories = theOne.item.categories;
       }
-      saveComb[i].item.price = theOne.item.price;
-      saveComb[i].item.retailerName = theOne.item.retailer.name;
-      saveComb[i].item.categories = theOne.item.categories;
-    }
-    var json = {
-      information: $rootScope.currentCombination,
-      combinations: saveComb,
-    }
-    var newComb = $http.post('/combinations/new', json);
-    newComb.then(function (response) {
-      if (response.status == '201') {
-        $rootScope.currentCombination._id = response.data;
+      var json = {
+        information: $rootScope.currentCombination,
+        combinations: saveComb,
       }
-      // getCombinations();
+      var newComb = $http.post('/combinations/new', json);
+      newComb.then(function (response) {
+        if (response.status == '201') {
+          $rootScope.currentCombination._id = response.data;
+        }
+        resolve();
+      })
+    });
+
+    Promise.all([pSaveImgsToTmp, pSaveFilesToDB]).then(function(values) {
       $timeout(function () {
+        vm.saveResult = true;
+        drawAndUpload($rootScope.newImgUrls);
         $scope.saveMsg = 'Saved successfully!';
-      }, 2000);
+        $timeout(function () {
+          var rmTmp = awsService.removeUserTmp();
+          rmTmp.then(function () {
+            console.log('User tmp dir is removed.');
+          })
+        }, 1000);
+      }, 2500);
     })
   }
 
@@ -163,10 +214,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     })
   }
 
-  vm.savePic = function () {
-    var bodyParts = ['top', 'bot', 'fullbody', 'foot',
-                 'neck', 'head', 'eye', 'bags'];
-
+  function drawAndUpload(newImages) {
     var canvasTest = document.createElement('canvas');
     canvasTest.setAttribute('id', 'canvasTest');
     var context = canvasTest.getContext('2d');
@@ -177,26 +225,90 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     var canvasThumb = document.createElement('canvas');
     canvasThumb.setAttribute('id', 'canvasThumb');
     var contextThumb = canvasThumb.getContext('2d');
-    canvasThumb.width = canvasTest.width/8;
-    canvasThumb.height = canvasTest.height/8;
+    canvasThumb.width = canvasTest.width/6;
+    canvasThumb.height = canvasTest.height/6;
     canvasThumb.setAttribute('style', 'border: 1px solid black;');
 
-    for (var i = 0; i < bodyParts.length; i++) {
-      var pos = $("#combox-" + bodyParts[i] + "-draggable").position();
-      var theImg = document.getElementById('combox-' + bodyParts[i] + '-img');
-      var width = theImg.clientWidth;
-      var height = theImg.clientHeight;
+    for (var i = 0; i < newImages.length; i++) {
+      var pos = $("#combox-" + newImages[i].name + "-draggable").position();
+      var originImg = document.getElementById('combox-' + newImages[i].name + '-img');
+      var newImg = document.getElementById('newImg-'+$rootScope.newImgUrls[i].name);
 
-      var posLeftThumb = pos.left/8;
-      var posTopThumb = pos.top/8;
-      var widthThumb = theImg.clientWidth/8;
-      var heightThumb = theImg.clientHeight/8;
+      var posLeft = pos.left;
+      var posTop = pos.top;
+      var width = originImg.clientWidth;
+      var height = originImg.clientHeight;
 
-      context.drawImage(theImg, pos.left, pos.top, width, height);
-      contextThumb.drawImage(theImg, posLeftThumb, posTopThumb, widthThumb, heightThumb);
+      var posLeftThumb = pos.left/6;
+      var posTopThumb = pos.top/6;
+      var widthThumb = originImg.clientWidth/6;
+      var heightThumb = originImg.clientHeight/6;
+
+      context.drawImage(newImg, posLeft, posTop, width, height);
+      contextThumb.drawImage(newImg, posLeftThumb, posTopThumb, widthThumb, heightThumb);
     }
-
     $("#img-out").append(canvasThumb);
+    for (var i = 0; i < $rootScope.newImgUrls.length; i++) {
+      $("#newImg-"+$rootScope.newImgUrls[i].name).remove();
+    }
+    $("#tmp-save" ).remove();
+    vm.downloadUrl = canvasTest.toDataURL();
+
+
+    var fileName = $scope.author + '-' + $scope.title + '.png';
+    fileName = fileName.toLowerCase().replace(/ /g, '-');
+
+    vm.downloadName = fileName;
+    canvasThumb.toBlob(function(blob) {
+      var json = {
+        file_name: 'thumb-' + fileName,
+        file_type: blob.type,
+      }
+      var getSignEdRequest = awsService.signIn(json);
+      getSignEdRequest.then(function(res) {
+        awsService.upload(blob, res.data.signed_request);
+        vm.linkLarge = res.data.url;
+        updateImgUrl('large', res.data.url);
+      })
+    });
+    canvasTest.toBlob(function(blob) {
+      var json = {
+        file_name: fileName,
+        file_type: blob.type,
+      }
+      var getSignEdRequest = awsService.signIn(json);
+      getSignEdRequest.then(function(res) {
+        awsService.upload(blob, res.data.signed_request);
+        vm.linkThumb = res.data.url;
+        updateImgUrl('thumb', res.data.url);
+      })
+    });
+  }
+
+  function updateImgUrl(type, url) {
+    var json = {
+      type: type,
+      _id: $rootScope.currentCombination._id,
+      largeUrl: url,
+      thumbUrl: url,
+    }
+    var update = $http.post('/combinations/update-img', json);
+    update.then(function () {
+      console.log('ImgUrls updated');
+    })
+  }
+
+  vm.savePic = function () {
+    html2canvas($("#img-out"), {
+      allowTaint: true,
+      logging:true,
+      onrendered: function(canvas) {
+        document.body.appendChild(canvas);
+        canvas.toBlob(function(blob) {
+          saveAs(blob, "comb-canvas.jpg");
+        });
+      }
+    });
   }
 
   function getCombinations() {

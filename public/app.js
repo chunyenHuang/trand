@@ -30,6 +30,11 @@ app.run(function(editableOptions) {
   editableOptions.theme = 'bs3';
 });
 
+app.config(['$compileProvider', function($compileProvider) {
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|blob|file|chrome-extension):|data:image\//);
+  }
+]);
+
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
     .when('/', {
@@ -109,6 +114,40 @@ function userService($http) {
     logout: logout,
     resign: resign,
     update: update,
+  }
+}
+
+app.factory('awsService', awsService);
+awsService.$inject=['$http'];
+function awsService($http, $rootScope) {
+  function signIn(json){
+    return $http.post('/aws/sign_s3', json);
+  }
+  function upload(file, signed_request) {
+    var req = $http({
+      method: 'put',
+      data: file,
+      url: signed_request,
+      headers: {
+        'x-amz-acl': 'public-read',
+        'content-type': 'image/png',
+      },
+    });
+    req.then(function (res) {
+      console.log(res.status);
+    })
+  }
+  function saveInTmp(json) {
+    return $http.post('/aws/tmp', json);
+  }
+  function removeUserTmp() {
+    return $http.delete('/aws/tmp');
+  }
+  return {
+    signIn: signIn,
+    upload: upload,
+    saveInTmp: saveInTmp,
+    removeUserTmp: removeUserTmp,
   }
 }
 
