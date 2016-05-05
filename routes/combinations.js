@@ -40,6 +40,15 @@ router.post('/new', function (req, res) {
     combinations: req.body.combinations,
     date: new Date(),
   }
+  var items = req.body.combinations;
+  var totalPrice = 0;
+  var showed = _.where(items, {show: true});
+  var totalPieces = showed.length;
+
+  for (var i = 0; i < items.length; i++) {
+    totalPrice = totalPrice + items[i].item.price;
+  }
+
   dbClient.connect(dbUrl, function (err, db) {
     if (!err) {
       var combinations = db.collection('combinations');
@@ -51,6 +60,8 @@ router.post('/new', function (req, res) {
       } else {
         combinations.update({_id: ObjectId(req.body.information._id)}, {
           $set: {
+            price: totalPrice,
+            pieces: totalPieces,
             information: req.body.information,
             combinations: req.body.combinations,
             date: new Date(),
