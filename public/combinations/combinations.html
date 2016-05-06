@@ -6,7 +6,7 @@
   <div class="row">
     <div class="col-md-12">
       <a class='btn' ng-hide='maker' ng-click='combinations.newMaker()'>Add a new combination</a>
-      <a class='btn' ng-show='maker' ng-click='maker = !maker'>Back to My Combinations</a>
+      <a class='btn' ng-show='maker' ng-click='maker = !maker;combinations.getCombinations()'>Back to My Combinations</a>
     </div>
   </div>
 </div>

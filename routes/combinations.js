@@ -20,6 +20,7 @@ router.get('/', function (req, res) {
       var combinations = db.collection('combinations');
       combinations.find({email: req.currentUser.email}).toArray(function (err, results) {
         if (results.length>0) {
+          results = results.reverse();
           res.json(results);
           db.close();
         } else {
@@ -142,11 +143,11 @@ router.post('/update-img', function (req, res) {
   })
 })
 
-router.delete('/remove/:id', function (req, res) {
+router.delete('/remove/:_id', function (req, res) {
   dbClient.connect(dbUrl, function (err, db) {
     if (!err) {
       var combinations = db.collection('combinations');
-      combinations.remove({_id: req.params.id }, function (err, result) {
+      combinations.remove({_id: ObjectId(req.params._id)}, function (err, result) {
         res.sendStatus(200);
         db.close;
       });

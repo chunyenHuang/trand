@@ -394,6 +394,17 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     })
   }
 
+  vm.delete = function (item) {
+    var del = $http({
+      method: 'DELETE',
+      url: '/combinations/remove/' + item._id,
+    });
+    del.then(function (res) {
+      console.log(res.status);
+      vm.getCombinations();
+    });
+  }
+
   vm.refresh = function () {
     var array = ['top', 'bot', 'fullbody', 'foot', 'eye', 'head', 'neck', 'bags'];
     for (var i = 0; i < array.length; i++) {
