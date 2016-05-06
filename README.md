@@ -3,6 +3,7 @@
 Trand [(trand.herokuapp.com)](http://trand.herokuapp.com) is a website for people to share their fashion ideas with the world.  
 
 ![Trand-cover](https://github.com/chunyenHuang/trand/blob/master/screenshots/cover1.png)
+[(original img from Instyle Korea)](http://www.instylekorea.com/data/sbanner/2016042859F888.jpg)
 
 ## Outfit Combinations
 User can make outfit combination from our huge online database (SHOPSTYLE).
