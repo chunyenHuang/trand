@@ -40,8 +40,8 @@ router.post('/new', function (req, res) {
   var showed = _.where(items, {show: true});
   var totalPieces = showed.length;
 
-  for (var i = 0; i < items.length; i++) {
-    totalPrice = totalPrice + items[i].item.price;
+  for (var i = 0; i < showed.length; i++) {
+    totalPrice = totalPrice + showed[i].item.price;
   }
 
   var newComb = {
@@ -91,8 +91,8 @@ router.put('/update', function (req, res) {
   var showed = _.where(items, {show: true});
   var totalPieces = showed.length;
 
-  for (var i = 0; i < items.length; i++) {
-    totalPrice = totalPrice + items[i].item.price;
+  for (var i = 0; i < showed.length; i++) {
+    totalPrice = totalPrice + showed[i].item.price;
   }
   dbClient.connect(dbUrl, function (err, db) {
     if (!err) {
