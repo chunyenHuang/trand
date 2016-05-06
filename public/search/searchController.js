@@ -4,16 +4,16 @@ app.$inject = ['$http', '$scope', '$location', 'listService', '$sce', 'collectio
 function search($http, $scope, $location, listService, $sce, collectionsService, $rootScope) {
   var vm = this;
   $scope._ = _;
-  var found = 0;
+  vm.found = 0;
   vm.results =[];
   vm.busy = false;
   $scope._ = _;
 
   vm.search = function (option) {
-    found = 0;
+    vm.found = 0;
     vm.results =[];
-    var offset = found;
-    var limit = 36;
+    var offset = vm.found;
+    var limit = 18;
     if (option) {
       if ($scope.content) {
         var content = $scope.content;
@@ -27,10 +27,10 @@ function search($http, $scope, $location, listService, $sce, collectionsService,
       '/api/search?fts=' + content + '&cat=' + $scope.cat +'&offset=' + offset + '&limit=' + limit
     );
     search.then(function (res) {
+      vm.found = vm.found + res.data.length;
       for (var i = 0; i < res.data.length; i++) {
         vm.results.push(res.data[i]);
       }
-      found = found + parseInt(res.data.length);
       vm.searched = true;
       return searchObject = {
         content: content,
@@ -43,10 +43,10 @@ function search($http, $scope, $location, listService, $sce, collectionsService,
     this.busy = true;
     var limit = 12;
     var search = $http.get(
-      '/api/search?fts=' + searchObject.content + '&cat=' + searchObject.cat + '&offset=' + found + '&limit=' + limit
+      '/api/search?fts=' + searchObject.content + '&cat=' + searchObject.cat + '&offset=' + vm.found + '&limit=' + limit
     );
     search.then(function (res) {
-      found = found + res.data.length;
+      vm.found = vm.found + res.data.length;
       for (var i = 0; i < res.data.length; i++) {
         vm.results.push(res.data[i]);
       }
