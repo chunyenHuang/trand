@@ -267,10 +267,11 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       var json = {
         file_name: 'thumb-' + fileName,
         file_type: blob.type,
+        dir_name: 'ideas',
       }
       var getSignEdRequest = awsService.signIn(json);
       getSignEdRequest.then(function(res) {
-        awsService.upload(blob, res.data.signed_request);
+        awsService.upload(blob, res.data.signed_request, blob.type);
         vm.linkLarge = res.data.url;
         updateImgUrl('thumb', res.data.url);
       })
@@ -279,10 +280,11 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       var json = {
         file_name: fileName,
         file_type: blob.type,
+        dir_name: 'ideas',
       }
       var getSignEdRequest = awsService.signIn(json);
       getSignEdRequest.then(function(res) {
-        awsService.upload(blob, res.data.signed_request);
+        awsService.upload(blob, res.data.signed_request, blob.type);
         vm.linkThumb = res.data.url;
         updateImgUrl('large', res.data.url);
       })

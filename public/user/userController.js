@@ -1,7 +1,7 @@
 var app = angular.module('trand');
 app.controller('userController', user);
-app.$inject = ['$http', '$scope', '$location', 'userService', '$sce', 'collectionsService'];
-function user($http, $scope, $location, userService, $sce, $rootScope, collectionsService) {
+app.$inject = ['$http', '$scope', '$location', 'userService', '$sce', 'collectionsService', 'awsService'];
+function user($http, $scope, $location, userService, $sce, $rootScope, collectionsService, awsService) {
   var vm = this;
   $scope.loginEmail = '';
   $scope.loginPassword = '';
@@ -66,6 +66,36 @@ function user($http, $scope, $location, userService, $sce, $rootScope, collectio
       $location.path('/user');
     })
   }
+  vm.uploadImg = function (user) {
+    var files = document.getElementById("file_input").files;
+    var file = files[0];
+    if (file == null){
+        alert("No file selected.");
+    }
+    else{
+      var file_subname = file.name.split('.');
+      file_subname = file_subname.reverse();
+      file_subname = file_subname[0];
+      var json = {
+        file_name: vm.currentUser._id + '.' + file_subname,
+        file_type: file.type,
+        dir_name: 'users',
+      }
+      console.log(json);
+      var getSignEdRequest = awsService.signIn(json);
+      getSignEdRequest.then(function(res) {
+        var img = {
+          url: res.data.url,
+        }
+        var newImg = $http.put('/user/img', img);
+        var upload = awsService.upload(file, res.data.signed_request, file.type);
+        upload.then(function () {
+          $scope.newImg = false;
+          getUser();
+        })
+      })
+    }
+  }
 
   function getUser() {
     var currentUser = userService.getUser();
@@ -76,6 +106,7 @@ function user($http, $scope, $location, userService, $sce, $rootScope, collectio
         $rootScope.logged = false;
       }
       vm.currentUser = res.data;
+      console.log(vm.currentUser);
     })
   }
   function activate() {

@@ -19,33 +19,29 @@ router.use(bodyParser.json());
 
 var AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID;
 var AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;
-var S3_BUCKET = process.env.S3_BUCKET_NAME + '/ideas';
+var S3_BUCKET = process.env.S3_BUCKET_NAME;
 
 router.post('/sign_s3', function (req, res) {
   aws.config.update({accessKeyId: AWS_ACCESS_KEY_ID, secretAccessKey: AWS_SECRET_ACCESS_KEY});
   var s3 = new aws.S3();
   var s3_params = {
-      Bucket: S3_BUCKET,
-      Key: req.body.file_name,
-      Expires: 600,
-      ContentType: req.body.file_type,
-      ACL: 'public-read',
+    Bucket: S3_BUCKET + '/' + req.body.dir_name,
+    Key: req.body.file_name,
+    Expires: 600,
+    ContentType: req.body.file_type,
+    ACL: 'public-read',
   };
+  console.log(s3_params);
   s3.getSignedUrl('putObject', s3_params, function(err, data){
     if(err){
-        console.log(err);
+      console.log(err);
     }
     else{
-      var p1 = new Promise(function(resolve, reject) {
-        var return_data = {
-            signed_request: data,
-            url: 'https://s3.amazonaws.com/'+ S3_BUCKET + '/' + req.body.file_name,
-        };
-        resolve(return_data);
-      });
-      p1.then(function (body) {
-        res.json(body);
-      })
+      var return_data = {
+          signed_request: data,
+          url: 'https://s3.amazonaws.com/'+ S3_BUCKET + '/' + req.body.dir_name + '/' + req.body.file_name,
+      };
+      res.json(return_data);
     }
   });
 })

@@ -19,6 +19,9 @@ form .input-group-addon {
 a[ng-click]{
   cursor: pointer;
 }
+a[class^="btn"] {
+  color: rgb(0, 0, 0);
+}
 div[ng-click]{
   cursor: pointer;
 }

@@ -83,6 +83,24 @@ router.put('/update', function (req, res) {
   })
 })
 
+router.put('/img', function (req, res) {
+  console.log(req.body.url);
+  dbClient.connect(dbUrl, function (err, db) {
+    if (!err) {
+      var users = db.collection('users');
+      users.update({email: req.currentUser.email},
+        {$set: {img: req.body.url,}},
+        {upsert: true,},
+        function (err, results) {
+        res.sendStatus(200);
+        db.close();
+      })
+    } else {
+      res.sendStatus(404);
+    }
+  })
+})
+
 router.post('/register', function (req, res) {
   var token = sessionToken(50);
   var newUser = {
