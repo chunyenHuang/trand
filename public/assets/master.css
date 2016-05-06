@@ -317,8 +317,7 @@ div[ng-scrollable]{
 .item-modal-imgbox {
   display: inline-block;
   width: 100%;
-  min-height: 700px;
-  max-height: 950px;
+  height: 700px;
   text-align: center;
   line-height: 700px;
 }

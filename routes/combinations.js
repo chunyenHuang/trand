@@ -80,7 +80,7 @@ router.post('/new', function (req, res) {
   })
 })
 
-router.post('/update', function (req, res) {
+router.put('/update', function (req, res) {
   var updateComb = {
     _id: req.body.id,
     combinations: req.body.combinations,

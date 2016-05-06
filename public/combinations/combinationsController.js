@@ -6,9 +6,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
   var vm = this;
   vm.saveResult = true;
   $scope._ = _;
-
-  // 'use strict';
-
   $scope.posX = 0;
   $scope.posY = 0;
 
@@ -147,6 +144,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       newComb.then(function (response) {
         if (response.status == '201') {
           $rootScope.currentCombination._id = response.data;
+          vm.directlink = $location.absUrl() + '/' + response.data;
         }
         resolve();
       })
@@ -184,7 +182,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
             show: true,
             imgUrl: res.data[0].item.image.sizes.Best.url,
           }
-          console.log($rootScope.queryLists);
           if (sort === 'top') {
             object.position = 'left: 280px; top: 40px;';
           }
@@ -213,6 +210,9 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
             object.position = 'left: 40px; bottom: 40px;';
           }
           $rootScope.queryLists.push(object);
+        }
+        if (added.length > 0) {
+          added[0].data = res.data;
         }
       }
     })
@@ -316,7 +316,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     });
   }
 
-  function getCombinations() {
+  vm.getCombinations = function () {
     var getComb = $http.get('/combinations');
     getComb.then(function (res) {
       vm.combs = res.data;
@@ -328,8 +328,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     $scope.maker = true;
     $scope.ready = false;
     var p1 = new Promise(function(resolve, reject) {
-      getCombinations();
-
       var bodyParts = ['top', 'bot', 'fullbody', 'foot',
                    'neck', 'head', 'eye', 'bags'];
       for (var i = 0; i < bodyParts.length; i++) {
@@ -355,6 +353,47 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     })
   }
 
+  vm.edit = function (item) {
+    $rootScope.queryLists = [];
+    $rootScope.currentCombination = {};
+    $scope.maker = true;
+    $scope.ready = false;
+    $rootScope.queryLists = item.combinations
+    $scope.author = item.information.author;
+    $scope.title = item.information.title;
+    $rootScope.currentCombination = {
+      author: item.information.author,
+      title: item.information.title,
+      _id: item._id,
+    }
+
+    var p1 = new Promise(function(resolve, reject) {
+      var bodyParts = ['top', 'bot', 'fullbody', 'foot',
+                   'neck', 'head', 'eye', 'bags'];
+      for (var i = 0; i < bodyParts.length; i++) {
+        vm.getCollectionsOf(bodyParts[i], i);
+      }
+      $scope.posX = 0;
+      $scope.posY = 0;
+
+      $scope.$broadcast('content.changed');
+      $scope.$broadcast('content.reload');
+
+      resolve();
+    });
+    p1.then(function () {
+      $timeout(function(){
+        var array = ['top', 'bot', 'fullbody', 'foot', 'eye', 'head', 'neck', 'bags'];
+        for (var i = 0; i < array.length; i++) {
+          $( "#combox-" + array[i] + "-draggable").draggable({containment: "#combox-wrapper", scroll: false });
+          $( "#combox-" + array[i] + "-draggable" ).resizable({containment: "#combox-wrapper", autoHide: true});
+        }
+        $scope.ready = true;
+        console.log($rootScope.currentCombination);
+      }, 5000);
+    })
+  }
+
   vm.refresh = function () {
     var array = ['top', 'bot', 'fullbody', 'foot', 'eye', 'head', 'neck', 'bags'];
     for (var i = 0; i < array.length; i++) {
@@ -374,20 +413,16 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
   }
 
   function activate() {
-    if ($rootScope.currentCombination.title) {
-      $scope.author = $rootScope.currentCombination.author;
-      $scope.title = $rootScope.currentCombination.title;
-      $scope.eventType = $rootScope.currentCombination.eventType;
-      $scope.descrition = $rootScope.currentCombination.descrition;
-    }
-    $scope.author = 'Anonymous';
-    $scope.title = 'Untitled';
-    $rootScope.currentCombination.author = $scope.author;
-    $rootScope.currentCombination.title = $scope.title;
+    vm.getCombinations();
   }
+
   activate();
 }
-
+app.directive('myCombs', function () {
+  return {
+    templateUrl: 'combinations/myCombs.html'
+  }
+})
 app.directive('maker', function () {
   return {
     templateUrl: 'combinations/maker.html'
