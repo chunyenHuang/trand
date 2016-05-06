@@ -1,17 +1,22 @@
 # [Trand](http://trand.herokuapp.com) - Explore Fashion's Infinite Style.
 
-Trand [(trand.herokuapp.com)](http://trand.herokuapp.com) is a website for people toshare their fashion idea with the world.  
+Trand [(trand.herokuapp.com)](http://trand.herokuapp.com) is a website for people to share their fashion ideas with the world.  
 
-## Functionality:
-### User can search for fashions from our online database
+![Trand-cover](https://github.com/chunyenHuang/trand/blob/master/screenshots/cover1.png)
 
-### User can make combination and share with others  
+## Outfit Combinations
+User can make outfit combination from our huge online database (SHOPSTYLE).
 
-### User can manage own collections 
+![Trand-outfit](https://github.com/chunyenHuang/trand/blob/master/screenshots/combinations.jpeg)
 
-### User can view recommendation of:
-1. Weather  
-2. Trend  
-3. Fashion  
-4. Following  
-5. Random combination of closet  
+User can share ideas with others.
+
+![Trand-share](https://github.com/chunyenHuang/trand/blob/master/screenshots/cover2.jpeg)
+
+## Collections to Buy
+User can have own collections, an online closet or a dream list.
+
+![Trand-outfit](https://github.com/chunyenHuang/trand/blob/master/screenshots/collections.png)
+User can buy the item by redirecting to our retailers
+![Trand-outfit](https://github.com/chunyenHuang/trand/blob/master/screenshots/buy.png)
+
