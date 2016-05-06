@@ -15,7 +15,6 @@ var mkdirp = require('mkdirp');
 router.use(cookieParser());
 
 router.use(bodyParser.json());
-// router.use(bodyParser.urlencoded({ extended: true }));
 
 var AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID;
 var AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;
@@ -31,7 +30,6 @@ router.post('/sign_s3', function (req, res) {
     ContentType: req.body.file_type,
     ACL: 'public-read',
   };
-  console.log(s3_params);
   s3.getSignedUrl('putObject', s3_params, function(err, data){
     if(err){
       console.log(err);

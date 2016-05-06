@@ -12,6 +12,7 @@ describe('Test on Trand:', function () {
       })
     })
   })
+
   describe('User Routes', function () {
     it('POST: /user/register', function (done) {
       request({
@@ -67,7 +68,8 @@ describe('Test on Trand:', function () {
       })
     })
   })
-  describe('combinations', function () {
+
+  describe('Combinations', function () {
     it('GET: /combinations', function (done) {
       request(url + '/combinations', function (err, res, body) {
         assert.equal(res.statusCode, 200);
@@ -79,7 +81,15 @@ describe('Test on Trand:', function () {
         method: 'post',
         url: url + '/combinations/new',
         json: {
-          combinations: 'combination test'
+          information: [],
+          combinations: [
+            {
+              show: false,
+              item: {
+                price: 0,
+              }
+            },
+          ],
         }
       }, function (err, res, body) {
         assert.equal(res.statusCode, 200);
@@ -138,6 +148,23 @@ describe('Test on Trand:', function () {
       request(url+'/api/retailers', function (err, res, body) {
         assert.equal(res.statusCode, 200);
         done();
+      })
+    })
+  })
+
+  describe('AWS', function () {
+    it('POST: /aws/sign_s3', function(done) {
+      request({
+        method: 'post',
+        url: url+'/aws/sign_s3',
+        json: {
+          file_name: 'test',
+          file_type: 'test/test',
+          dir_name: 'test'
+        }
+      }, function (err, res, body) {
+      assert.equal(res.statusCode, 200);
+      done();
       })
     })
   })
