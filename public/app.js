@@ -114,19 +114,17 @@ function awsService($http, $rootScope) {
   function signIn(json){
     return $http.post('/aws/sign_s3', json);
   }
-  function upload(file, signed_request) {
-    var req = $http({
+  function upload(file, signed_request, type) {
+    console.log(signed_request);
+    return $http({
       method: 'put',
       data: file,
       url: signed_request,
       headers: {
         'x-amz-acl': 'public-read',
-        'content-type': 'image/png',
+        'content-type': type,
       },
     });
-    req.then(function (res) {
-      console.log(res.status);
-    })
   }
   function saveInTmp(json) {
     return $http.post('/aws/tmp', json);
