@@ -64,9 +64,6 @@ router.get('/login/facebook/return', passport.authenticate('facebook',
     authType: 'rerequest', scope: ['email'],
   }),
   function(req, res) {
-    console.log(req.user.displayName);
-    console.log(req.user.emails[0].value);
-    console.log(req.user.photos[0].value);
     var email = req.user.emails[0].value;
     var name = req.user.displayName;
     name = name.split(' ');
@@ -88,7 +85,7 @@ router.get('/login/facebook/return', passport.authenticate('facebook',
               }
             });
             res.cookie('trand2016', token);
-            res.redirect('/');
+            res.redirect(process.env.url);
             db.close();
           } else {
             users.insert({
@@ -102,7 +99,7 @@ router.get('/login/facebook/return', passport.authenticate('facebook',
               registerDate: new Date(),
             }, function (err ,results) {
               res.cookie('trand2016', token);
-              res.redirect('/');
+              res.redirect(process.env.url);
               db.close();
             })
           }

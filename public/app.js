@@ -28,6 +28,11 @@ app.config(['$routeProvider', function($routeProvider, $routeParams) {
       controller: 'homeController',
       controllerAs: 'home',
     })
+    .when('/_=_', {
+      templateUrl: 'home/greeting.html',
+      controller: 'homeController',
+      controllerAs: 'home',
+    })
     .when('/home', {
       templateUrl: 'home/greeting.html',
       controller: 'homeController',
