@@ -26,9 +26,8 @@ function user($http, $scope, $location, userService, $sce, $rootScope, collectio
   vm.logout = function (email) {
     var logout = userService.logout(email);
     logout.then(function (res) {
-      $rootScope.logged=false;
       $location.path('/home');
-
+      $rootScope.logged=false;
       $rootScope.loadedCollections = [];
       $rootScope.recentCollections = [];
       $rootScope.currentCombination = {};

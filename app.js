@@ -16,6 +16,7 @@ var collections = require('./routes/collections');
 var combinations = require('./routes/combinations');
 var ideas = require('./routes/ideas');
 var aws = require('./routes/aws');
+var fb = require('./routes/fb');
 
 // Module Tools
 var request = require('request');
@@ -35,6 +36,7 @@ function sessionToken(length){
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(checkCurrentUser);
+app.use('/fb', fb);
 app.use('/api', api);
 app.use('/user', userRoute);
 app.use('/collections', collections);
