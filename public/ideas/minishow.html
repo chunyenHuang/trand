@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-sm-4" ng-repeat="item in ideas.combs">
+  <div class="col-xs-6 col-sm-4" ng-repeat="item in ideas.combs">
     <div class="ideas-box" ng-click='show(item);' ng-mouseenter="showBrands=true" ng-mouseleave="showBrands=false">
       <div class="brands-hoverbox" ng-show='showBrands'>
         <span ng-repeat="obj in item.combinations">
@@ -37,7 +37,7 @@
       <div class="modal-body">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <div class="row">
-          <div class="col-md-7">
+          <div class="col-xs-6 col-md-7">
             <div class="item-modal-imgbox">
               <span>
                 <img src={{ideas.detail.largeUrl}} ng-hide='ideas.hoverImg'>
@@ -47,8 +47,8 @@
               </span>
             </div>
           </div>
-          <div class="col-md-5">
-            <div ng-scrollable="{scrollX:'bottom',scrollY:'right'}" style="width: 100%; height: 100%;">
+          <div class="col-xs-6 col-md-5">
+            <div>
               <h3>
                 {{ideas.detail.information.title}}
               </h3>
@@ -68,10 +68,10 @@
               <div ng-repeat="obj in ideas.detail.combinations">
                 <div class="comb-thumbs-preview-box" >
                   <div class="row" >
-                    <div class="col-md-6 text-center">
+                    <div class="col-xs-6 text-center">
                       <img src={{obj.imgUrl}} ng-mouseenter="ideas.showHoverImg=obj.imgUrl; ideas.hoverImg=true" ng-mouseleave="ideas.hoverImg=false">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-xs-6">
                       <p>
                         {{obj.item.brandName}}
                       </p>

@@ -1,8 +1,12 @@
 var app = angular.module('trand');
 app.controller('homeController', home);
-app.$inject = ['$http', 'listService', 'collectionsService', '$location'];
-function home($http, listService, collectionsService, $rootScope, $location) {
+app.$inject = ['$http', 'listService', 'collectionsService', '$location', '$anchorScroll'];
+function home($http, listService, collectionsService, $rootScope, $location, $anchorScroll) {
   var vm = this;
+  vm.scrollTo = function (id) {
+    $location.hash(id);
+    $anchorScroll();
+  }
   vm.showRetailers = function () {
     var retailers = listService.getRetailers();
     retailers.then(function (res) {

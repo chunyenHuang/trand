@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-4" ng-repeat="item in combinations.combs">
+    <div class="col-xs-6 col-sm-4" ng-repeat="item in combinations.combs">
       <div class="ideas-box" ng-click='combinations.edit(item); maker=false' ng-mouseenter="showBrands=true" ng-mouseleave="showBrands=false">
         <div class='ideas-favorite-remove-box close' ng-click='combinations.delete(item); maker=false; $event.stopPropagation()' ng-show='showBrands'>
           &times;

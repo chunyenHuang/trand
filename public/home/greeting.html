@@ -1,6 +1,10 @@
 <div id="greeting-mainbox-1">
   <div id="greeting-box">
-    <h1>TRAND</h1>
+    <h1>
+      <a ng-click='home.scrollTo("greeting-mainbox-2")'>
+        TRAND
+      </a>
+    </h1>
     <h3><small>Explore Fashion's Infinite Style.</small></h3>
     <div ng-show='!logged'>
       <div ng-controller="userController as user">
@@ -15,31 +19,37 @@
     </div>
   </div>
 </div>
-<div class="container-fluid greeting-logo-box">
+<div id="greeting-mainbox-1-ad" class="container">
   <div class="row text-center">
-    <div class="col-sm-1">
-      <img src="http://s3.amazonaws.com/trand-public/logo-neimanmarcus.jpeg" alt="" />
+    <div class="col-xs-2">
+      <div class="greeting-logo-box">
+        <img src="http://s3.amazonaws.com/trand-public/logo-neimanmarcus.jpeg" alt="" />
+      </div>
     </div>
-    <div class="col-sm-1">
-      <img src="http://s3.amazonaws.com/trand-public/logo-macys.jpg" alt="" />
+    <div class="col-xs-2">
+      <div class="greeting-logo-box">
+        <img src="http://s3.amazonaws.com/trand-public/logo-macys.jpg" alt="" />
+      </div>
     </div>
-    <div class="col-sm-1">
-      <img src="http://s3.amazonaws.com/trand-public/logo-nordstrom.jpg" alt="" />
+    <div class="col-xs-2">
+      <div class="greeting-logo-box">
+        <img src="http://s3.amazonaws.com/trand-public/logo-nordstrom.jpg" alt="" />
+      </div>
     </div>
-    <div class="col-sm-1">
-      <img src="http://s3.amazonaws.com/trand-public/logo-bloomingdales.jpeg" alt="" />
+    <div class="col-xs-2">
+      <div class="greeting-logo-box">
+        <img src="http://s3.amazonaws.com/trand-public/logo-bloomingdales.jpeg" alt="" />
+      </div>
     </div>
-    <div class="col-sm-1">
-      <img src="http://s3.amazonaws.com/trand-public/logo-anntaylor.png" alt="" />
+    <div class="col-xs-2">
+      <div class="greeting-logo-box">
+        <img src="http://s3.amazonaws.com/trand-public/logo-anntaylor.png" alt="" />
+      </div>
     </div>
-    <div class="col-sm-1">
-      <img src="http://s3.amazonaws.com/trand-public/logo-jcrew.jpeg" alt="" />
-    </div>
-    <div class="col-sm-1">
-      <img src="http://s3.amazonaws.com/trand-public/logo-saks.png" alt="" />
-    </div>
-    <div class="col-sm-1">
-      <img src="http://s3.amazonaws.com/trand-public/logo-target.jpg" alt="" />
+    <div class="col-xs-2">
+      <div class="greeting-logo-box">
+        <img src="http://s3.amazonaws.com/trand-public/logo-jcrew.jpeg" alt="" />
+      </div>
     </div>
   </div>
 </div>
@@ -49,7 +59,7 @@
     <h1>See what's hot </h1>
     <div>
       <div class="row">
-        <div class="col-sm-4" ng-repeat="item in home.combs track by $index">
+        <div class="col-xs-6 col-sm-4" ng-repeat="item in home.combs track by $index">
           <div class="ideas-box" ng-click='home.linkto();' ng-mouseenter="showBrands=true" ng-mouseleave="showBrands=false">
             <div class="brands-hoverbox" ng-show='showBrands'>
               <span ng-repeat="obj in item.combinations">
@@ -84,7 +94,7 @@
   </div>
 </div>
 
-<div class='container'>
+<div id="greeting-mainbox-3" class='container hidden-xs'>
   <div class='row'>
     <div class='col-md-12 text-center'>
       <h3>

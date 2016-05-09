@@ -30,13 +30,18 @@
             <i class="fa fa-heart" aria-hidden="true"></i>
           </a>
         </li>
-        <li ng-show='logged' class='nav-show-list'>
+        <li ng-show='logged' class='nav-show-list hidden-xs hidden-sm'>
           <span ng-repeat="item in recentCollections">
             <img src={{item.image.sizes.Small.url}}>
           </span>
         </li>
+        <li class='visible-xs'><a href='#/user'>My Profile</a></li>
+        <li class='visible-xs' ng-controller="userController as user">
+          <a ng-click='user.logout(user.currentUser.email)'>Logout</a>
+        </li>
+
       </ul>
-      <ul class="nav navbar-nav navbar-right" ng-controller="userController as user">
+      <ul class="nav navbar-nav navbar-right hidden-xs" ng-controller="userController as user">
         <li ng-show='!logged'>
           <a href='#/home'>Login</a>
         </li>
