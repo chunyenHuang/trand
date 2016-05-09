@@ -55,7 +55,7 @@ router.get('/logout/:email', function (req, res) {
       var users = db.collection('users');
       users.update({email: req.params.email}, {$set: {token: ' '}}, function (err, results) {
         res.clearCookie('trand2016');
-        res.sendStatus(200);
+        res.redirect('/fb/logout');
         db.close();
       })
     } else {
