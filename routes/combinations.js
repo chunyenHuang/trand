@@ -20,6 +20,7 @@ router.get('/', function (req, res) {
       var combinations = db.collection('combinations');
       combinations.find({email: req.currentUser.email}).toArray(function (err, results) {
         if (results.length>0) {
+          results = _.sortBy(results, 'date').reverse();
           res.json(results);
           db.close();
         } else {

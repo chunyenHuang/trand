@@ -20,6 +20,7 @@ router.get('/', function (req, res) {
       var combinations = db.collection('combinations');
       combinations.find({}).toArray(function (err, results) {
         if (results.length>0) {
+          results = _.sortBy(results, 'date').reverse();
           res.json(results);
           db.close();
         } else {
@@ -39,6 +40,7 @@ router.get('/recent', function (req, res) {
       var combinations = db.collection('combinations');
       combinations.find({}).toArray(function (err, results) {
         if (results.length>0) {
+          results = _.sortBy(results, 'date').reverse();
           var lastThree = [];
           for (var i = 0; i < 9; i++) {
             lastThree.push(results[i]);
