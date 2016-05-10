@@ -111,13 +111,31 @@
       <h5>{{saveMsg}}</h5>
     </div>
     <div class="col-md-12" ng-show='combinations.saveResult'>
-      <a type='button' class='btn' target="_self" href={{combinations.downloadUrl}} download={{combinations.downloadName}}>
-        Download Image
+
+      <a ng-click class="btn"
+        socialshare
+        socialshare-provider="facebook"
+        socialshare-url={{combinations.directlink}}
+        socialshare-media={{combinations.linkLarge}}
+        socialshare-via=process.env.FACEBOOK_APP_ID
+        socialshare-text="{{currentCombination.title}} | Fashion Ideas @ Trand"
+        socialshare-hashtags="trand, fashion, brand"
+        socialshare-type="feed"
+        socialshare-caption="Trand"
+        socialshare-description="Yo! I believe this gonna become the ultimate fashion trend."
+      >
+        <i class="fa fa-facebook-official" aria-hidden="true"></i>
+        Share on Facebook
       </a>
+      <br>
       <button class="btn" ngclipboard data-clipboard-text={{combinations.directlink}}>
         Copy Direct Link
       </button>
-
+      <br>
+      <a type='button' class='btn' target="_self" href={{combinations.downloadUrl}} download={{combinations.downloadName}}>
+        Download Image
+      </a>
+      <br>
       <div id="img-out"></div>
     </div>
   </div>

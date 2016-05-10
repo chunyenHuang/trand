@@ -77,7 +77,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       var json = [];
       for (var i = 0; i < bodyParts.length; i++) {
         var theOne = document.getElementById('combox-' + bodyParts[i] + '-img');
-        console.log(theOne);
         if (theOne != null) {
           var src = theOne.getAttribute('src');
         } else {
@@ -144,7 +143,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       newComb.then(function (response) {
         if (response.status == '201') {
           $rootScope.currentCombination._id = response.data;
-          vm.directlink = $location.absUrl() + '/' + response.data;
+          vm.directlink = $location.absUrl().replace(/combinations/, 'ideas') + '/' + response.data;
         }
         resolve();
       })
@@ -160,7 +159,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
           $timeout(function () {
             var rmTmp = awsService.removeUserTmp();
             rmTmp.then(function () {
-              console.log('User tmp dir is removed.');
             })
           }, 1000);
         }, 3000);
@@ -272,7 +270,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       var getSignEdRequest = awsService.signIn(json);
       getSignEdRequest.then(function(res) {
         awsService.upload(blob, res.data.signed_request, blob.type);
-        vm.linkLarge = res.data.url;
+        vm.linkThumb = res.data.url;
         updateImgUrl('thumb', res.data.url);
       })
     });
@@ -285,14 +283,13 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       var getSignEdRequest = awsService.signIn(json);
       getSignEdRequest.then(function(res) {
         awsService.upload(blob, res.data.signed_request, blob.type);
-        vm.linkThumb = res.data.url;
+        vm.linkLarge = res.data.url;
         updateImgUrl('large', res.data.url);
       })
     });
   }
 
   function updateImgUrl(type, url) {
-    console.log($rootScope.currentCombination);
     var json = {
       type: type,
       _id: $rootScope.currentCombination._id,
@@ -301,7 +298,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
     }
     var update = $http.post('/combinations/update-img', json);
     update.then(function () {
-      console.log('ImgUrls updated');
     })
   }
 
@@ -391,7 +387,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
           $( "#combox-" + array[i] + "-draggable" ).resizable({containment: "#combox-wrapper", autoHide: true});
         }
         $scope.ready = true;
-        console.log($rootScope.currentCombination);
       }, 5000);
     })
   }
@@ -402,7 +397,6 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       url: '/combinations/remove/' + item._id,
     });
     del.then(function (res) {
-      console.log(res.status);
       vm.getCombinations();
     });
   }

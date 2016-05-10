@@ -48,24 +48,41 @@
             </div>
           </div>
           <div class="col-xs-6 col-md-5">
-            <div>
-              <h3>
-                {{ideas.detail.information.title}}
-              </h3>
-              <h4>
-                <small>
-                  {{ideas.detail.information.author}} | {{ideas.detail.date | date:'yyyy-mm-dd'}}
-                </small>
-              </h4>
-              <h4>
-                {{ideas.detail.price | currency}}
-              </h4>
-
-              <button class="btn" ngclipboard data-clipboard-text={{ideas.directlink}}>
-                Copy Direct Link Url
-              </button>
-
-              <div ng-repeat="obj in ideas.detail.combinations">
+            <div class='row'>
+              <div class="col-md-12">
+                <h3>
+                  {{ideas.detail.information.title}}
+                </h3>
+                <h4>
+                  <small>
+                    {{ideas.detail.information.author}} | {{ideas.detail.date | date:'yyyy-mm-dd'}}
+                  </small>
+                </h4>
+                <h4>
+                  {{ideas.detail.price | currency}}
+                </h4>
+                <a ng-click class="btn"
+                  socialshare
+                  socialshare-provider="facebook"
+                  socialshare-url={{ideas.directlink}}
+                  socialshare-media={{ideas.detail.largeUrl}}
+                  socialshare-via=process.env.FACEBOOK_APP_ID
+                  socialshare-text="{{ideas.detail.information.title}} | Fashion Ideas @ Trand"
+                  socialshare-hashtags="trand, fashion, brand"
+                  socialshare-type="feed"
+                  socialshare-caption="Trand"
+                  socialshare-description="Yo! I believe this gonna become the ultimate fashion trend."
+                >
+                  <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                  Share on Facebook
+                </a>
+                <button class="btn" ngclipboard data-clipboard-text={{ideas.directlink}}>
+                  Copy Direct Link
+                </button>
+                <hr>
+              </div>
+            </div>
+            <div ng-repeat="obj in ideas.detail.combinations">
                 <div class="comb-thumbs-preview-box" >
                   <div class="row" >
                     <div class="col-xs-6 text-center">
@@ -80,8 +97,9 @@
                       </p>
                       <p>
                         <small>
+                          buy at
                           <a href='{{obj.item.clickUrl }}' target="_blank">
-                            buy at {{obj.item.retailerName}}
+                            {{obj.item.retailerName}}
                           </a>
                         </small>
                       </p>
@@ -89,7 +107,6 @@
                   </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-var app = angular.module('trand', ['ngRoute', 'infinite-scroll', 'ngSanitize', 'xeditable', 'ui.bootstrap', 'ngAnimate', 'ngScrollable', 'ngclipboard']);
+var app = angular.module('trand', ['ngRoute', 'infinite-scroll', 'ngSanitize', 'xeditable', 'ui.bootstrap', 'ngAnimate', 'ngScrollable', 'ngclipboard', '720kb.socialshare']);
 app.$inject = ['$http'];
 
 app.run(function ($rootScope, $http) {
