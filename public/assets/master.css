@@ -79,13 +79,12 @@ div[ng-click]{
 }
 #greeting-box {
   position: relative;
-  top: 30%;
+  top: 20%;
   left: 20%;
-  max-height: 40vh;
-  min-width: 20vh;
-  max-width: 300px;
+  height: 40vh;
+  min-width: 200px;
+  width: 20%;
 }
-
 
 .show-box {
   margin-left: -10px;

@@ -39,8 +39,11 @@
     "chai": "^3.5.0",
     "gulp": "^3.9.1",
     "gulp-casperjs": "0.0.5",
+    "gulp-csso": "^2.0.0",
+    "gulp-htmlmin": "^2.0.0",
     "gulp-mocha": "^2.2.0",
     "gulp-nodemon": "^2.0.6",
+    "gulp-s3-upload": "^1.6.0",
     "mocha": "^2.4.5",
     "phantomjs": "^2.1.7"
   }

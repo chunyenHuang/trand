@@ -11,21 +11,21 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li ng-class="{ 'active': isActive('/search')}"><a href="#/search" ng-click="home=false">Search <i class="fa fa-search" aria-hidden="true"></i> </a></li>
+        <li ng-class="{ 'active': isActive('/search')}"><a href="#/search" ng-click="home=false;hideNav()">Search <i class="fa fa-search" aria-hidden="true"></i> </a></li>
         <li ng-show='logged' ng-class="{ 'active': isActive('/ideas')}">
-          <a href="#/ideas" ng-click="home=false">
+          <a href="#/ideas" ng-click="home=false;hideNav()">
             Ideas
             <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
           </a>
         </li>
         <li ng-show='logged' ng-class="{ 'active': isActive('/combinations')}">
-          <a href="#/combinations" ng-click="home=false">
+          <a href="#/combinations" ng-click="home=false;hideNav()">
             My Combinations
             <i class="fa fa-child" aria-hidden="true"></i>
           </a>
         </li>
         <li ng-show='logged' ng-class="{ 'active': isActive('/collections')}">
-          <a href="#/collections" ng-click="home=false">
+          <a href="#/collections" ng-click="home=false;hideNav()">
             My Collections
             <i class="fa fa-heart" aria-hidden="true"></i>
           </a>
@@ -35,11 +35,10 @@
             <img src={{item.image.sizes.Small.url}}>
           </span>
         </li>
-        <li class='visible-xs'><a href='#/user'>My Profile</a></li>
+        <li class='visible-xs'><a href='#/user' ng-click="hideNav()">My Profile</a></li>
         <li class='visible-xs' ng-controller="userController as user">
-          <a ng-click='user.logout(user.currentUser.email)'>Logout</a>
+          <a ng-click='user.logout(user.currentUser.email);hideNav()'>Logout</a>
         </li>
-
       </ul>
       <ul class="nav navbar-nav navbar-right hidden-xs" ng-controller="userController as user">
         <li ng-show='!logged'>
