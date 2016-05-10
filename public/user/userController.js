@@ -41,6 +41,12 @@ function user($http, $scope, $location, userService, $sce, $rootScope, collectio
     }
     var login = userService.login(loginUser);
     login.then(function (res) {
+      $rootScope.logged=false;
+      $rootScope.loadedCollections = [];
+      $rootScope.recentCollections = [];
+      $rootScope.currentCombination = {};
+      $rootScope.queryLists = [];
+
       $rootScope.logged = true;
       $location.path('/home');
       $rootScope.loadedCollections = [];
@@ -52,8 +58,10 @@ function user($http, $scope, $location, userService, $sce, $rootScope, collectio
             $rootScope.loadedCollections.push(res.data[i].item);
           }
           var reversed = res.data.reverse();
-          for (var i = 1; i <= 15; i++) {
-            $rootScope.recentCollections.push(reversed[i].item);
+          if ($rootScope.recentCollections.length == 0) {
+            for (var i = 1; i <= 15; i++) {
+              $rootScope.recentCollections.push(reversed[i].item);
+            }
           }
         }
       })

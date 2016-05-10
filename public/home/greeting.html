@@ -1,9 +1,7 @@
 <div id="greeting-mainbox-1">
   <div id="greeting-box">
     <h1>
-      <a ng-click='home.scrollTo("greeting-mainbox-2")'>
-        TRAND
-      </a>
+      TRAND
     </h1>
     <h3><small>Explore Fashion's Infinite Style.</small></h3>
     <div ng-show='!logged'>
@@ -21,32 +19,32 @@
 </div>
 <div id="greeting-mainbox-1-ad" class="container">
   <div class="row text-center">
-    <div class="col-xs-2">
+    <div class="hidden-xs col-sm-2">
       <div class="greeting-logo-box">
         <img src="http://s3.amazonaws.com/trand-public/logo-neimanmarcus.jpeg" alt="" />
       </div>
     </div>
-    <div class="col-xs-2">
+    <div class="hidden-xs col-sm-2">
       <div class="greeting-logo-box">
         <img src="http://s3.amazonaws.com/trand-public/logo-macys.jpg" alt="" />
       </div>
     </div>
-    <div class="col-xs-2">
+    <div class="hidden-xs col-sm-2">
       <div class="greeting-logo-box">
         <img src="http://s3.amazonaws.com/trand-public/logo-nordstrom.jpg" alt="" />
       </div>
     </div>
-    <div class="col-xs-2">
+    <div class="hidden-xs col-sm-2">
       <div class="greeting-logo-box">
         <img src="http://s3.amazonaws.com/trand-public/logo-bloomingdales.jpeg" alt="" />
       </div>
     </div>
-    <div class="col-xs-2">
+    <div class="hidden-xs col-sm-2">
       <div class="greeting-logo-box">
         <img src="http://s3.amazonaws.com/trand-public/logo-anntaylor.png" alt="" />
       </div>
     </div>
-    <div class="col-xs-2">
+    <div class="hidden-xs col-sm-2">
       <div class="greeting-logo-box">
         <img src="http://s3.amazonaws.com/trand-public/logo-jcrew.jpeg" alt="" />
       </div>
@@ -59,7 +57,7 @@
     <h1>See what's hot </h1>
     <div>
       <div class="row">
-        <div class="col-xs-6 col-sm-4" ng-repeat="item in home.combs track by $index">
+        <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="item in home.combs track by $index">
           <div class="ideas-box" ng-click='home.linkto();' ng-mouseenter="showBrands=true" ng-mouseleave="showBrands=false">
             <div class="brands-hoverbox" ng-show='showBrands'>
               <span ng-repeat="obj in item.combinations">
