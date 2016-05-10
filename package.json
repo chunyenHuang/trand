@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/chunyenHuang/trand#readme",
   "dependencies": {
+    "angular-socialshare": "^2.1.5",
     "aws-sdk": "^2.3.7",
     "body-parser": "^1.15.0",
     "connect-ensure-login": "^0.1.1",
