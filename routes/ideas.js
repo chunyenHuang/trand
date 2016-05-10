@@ -20,7 +20,6 @@ router.get('/', function (req, res) {
       var combinations = db.collection('combinations');
       combinations.find({}).toArray(function (err, results) {
         if (results.length>0) {
-          results = results.reverse();
           res.json(results);
           db.close();
         } else {
@@ -41,7 +40,7 @@ router.get('/recent', function (req, res) {
       combinations.find({}).toArray(function (err, results) {
         if (results.length>0) {
           var lastThree = [];
-          for (var i = results.length-1; results.length-10 < i; i--) {
+          for (var i = 0; i < 9; i++) {
             lastThree.push(results[i]);
           }
           res.json(lastThree);
@@ -56,7 +55,6 @@ router.get('/recent', function (req, res) {
     }
   });
 })
-
 
 router.get('/detail/:id', function (req, res) {
   dbClient.connect(dbUrl, function (err, db) {

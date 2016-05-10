@@ -20,20 +20,23 @@
       </div>
     </div>
     <div class="col-xs-6 col-md-5">
-      <div>
-        <h3>
-          {{ideas.detail.information.title}}
-        </h3>
-        <h4>
-          <small>
-            {{ideas.detail.information.author}} | {{ideas.detail.date | date:'yyyy-mm-dd'}}
-          </small>
-        </h4>
-        <h4>
-          {{ideas.detail.price | currency}}
-        </h4>
-
-        <div ng-repeat="obj in ideas.detail.combinations">
+      <div class='row'>
+        <div class="col-xs-12 text-center">
+          <h3>
+            {{ideas.detail.information.title}}
+          </h3>
+          <h4>
+            <small>
+              {{ideas.detail.information.author}} | {{ideas.detail.date | date:'yyyy-mm-dd'}}
+            </small>
+          </h4>
+          <h4>
+            {{ideas.detail.price | currency}}
+          </h4>
+          <hr>
+        </div>
+      </div>
+      <div ng-repeat="obj in ideas.detail.combinations">
           <div class="comb-thumbs-preview-box" >
             <div class="row" >
               <div class="col-xs-6 text-center">
@@ -57,7 +60,6 @@
             </div>
           </div>
         </div>
-      </div>
     </div>
   </div>
 </div>
