@@ -33,8 +33,10 @@ function home($http, listService, collectionsService, $rootScope, $location, $an
           $rootScope.loadedCollections.push(res.data[i].item);
         }
         var reversed = res.data.reverse();
-        for (var i = 1; i <= 15; i++) {
-          $rootScope.recentCollections.push(reversed[i].item);
+        if ($rootScope.recentCollections.length == 0) {
+          for (var i = 1; i <= 15; i++) {
+            $rootScope.recentCollections.push(reversed[i].item);
+          }
         }
       }
     })

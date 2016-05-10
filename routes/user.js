@@ -84,7 +84,6 @@ router.put('/update', function (req, res) {
 })
 
 router.put('/img', function (req, res) {
-  console.log(req.body.url);
   dbClient.connect(dbUrl, function (err, db) {
     if (!err) {
       var users = db.collection('users');

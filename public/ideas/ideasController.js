@@ -11,7 +11,6 @@ function ideas($http, $scope, $location, $routeParams) {
   }
 
   vm.display = function () {
-    console.log($routeParams);
     var detail = $http.get('/ideas/detail/' + $routeParams.id);
     detail.then(function (res) {
       vm.detail = res.data;
@@ -21,7 +20,6 @@ function ideas($http, $scope, $location, $routeParams) {
   vm.getAllCombs = function () {
     var combs = $http.get('/ideas');
     combs.then(function (response) {
-      console.log(response.data);
       vm.combs = response.data;
     })
   }

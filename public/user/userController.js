@@ -88,7 +88,6 @@ function user($http, $scope, $location, userService, $sce, $rootScope, collectio
         file_type: file.type,
         dir_name: 'users',
       }
-      console.log(json);
       var getSignEdRequest = awsService.signIn(json);
       getSignEdRequest.then(function(res) {
         var img = {
@@ -113,7 +112,6 @@ function user($http, $scope, $location, userService, $sce, $rootScope, collectio
         $rootScope.logged = false;
       }
       vm.currentUser = res.data;
-      console.log(vm.currentUser);
     })
   }
   function activate() {

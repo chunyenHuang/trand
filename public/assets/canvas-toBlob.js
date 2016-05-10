@@ -1,18 +1,3 @@
-/* canvas-toBlob.js
- * A canvas.toBlob() implementation.
- * 2013-12-27
- * 
- * By Eli Grey, http://eligrey.com and Devin Samarin, https://github.com/eboyjr
- * License: MIT
- *   See https://github.com/eligrey/canvas-toBlob.js/blob/master/LICENSE.md
- */
-
-/*global self */
-/*jslint bitwise: true, regexp: true, confusion: true, es5: true, vars: true, white: true,
-  plusplus: true */
-
-/*! @source http://purl.eligrey.com/github/canvas-toBlob.js/blob/master/canvas-toBlob.js */
-
 (function(view) {
 "use strict";
 var
