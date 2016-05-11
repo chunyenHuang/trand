@@ -143,20 +143,22 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       newComb.then(function (response) {
         if (response.status == '201') {
           $rootScope.currentCombination._id = response.data;
-          vm.directlink = $location.absUrl().replace(/combinations/, 'ideas') + '/' + response.data;
         }
+        vm.directlink = $location.absUrl().replace(/combinations/, 'ideas') + '/' + response.data;
         resolve();
       })
     });
 
     Promise.all([pSaveImgsToTmp, pSaveFilesToDB]).then(function(values) {
+      $scope.saveMsg = 'Generating Thumbs...';
       $timeout(function () {
-        $scope.saveMsg = 'Generating Links...';
+        $scope.saveMsg = 'Saved successfully!';
         $timeout(function () {
-          vm.saveResult = true;
-          $scope.saveMsg = 'Saved successfully!';
+          $scope.saveMsg = 'Generating Links...';
           drawAndUpload($rootScope.newImgUrls);
           $timeout(function () {
+            $scope.saveMsg = 'Thanks for sharing!';
+            vm.saveResult = true;
             var rmTmp = awsService.removeUserTmp();
             rmTmp.then(function () {
             })

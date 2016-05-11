@@ -33,6 +33,24 @@
           <h4>
             {{ideas.detail.price | currency}}
           </h4>
+          <a ng-click class="btn"
+            socialshare
+            socialshare-provider="facebook"
+            socialshare-url={{ideas.directlink}}
+            socialshare-media={{ideas.detail.largeUrl}}
+            socialshare-via=process.env.FACEBOOK_APP_ID
+            socialshare-text="{{ideas.detail.information.title}} | Fashion Ideas @ Trand"
+            socialshare-hashtags="trand, fashion, brand"
+            socialshare-type="feed"
+            socialshare-caption="Trand"
+            socialshare-description="Yo! I believe this gonna become the ultimate fashion trend."
+          >
+            <i class="fa fa-facebook-official" aria-hidden="true"></i>
+            Share on Facebook
+          </a>
+          <button class="btn" ngclipboard data-clipboard-text={{ideas.directlink}}>
+            Copy Direct Link
+          </button>
           <hr>
         </div>
       </div>
