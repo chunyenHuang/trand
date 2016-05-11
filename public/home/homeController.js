@@ -3,6 +3,9 @@ app.controller('homeController', home);
 app.$inject = ['$http', 'listService', 'collectionsService', '$location', '$anchorScroll'];
 function home($http, listService, collectionsService, $rootScope, $location, $anchorScroll) {
   var vm = this;
+  var today = new Date();
+  vm.timeNow = today.getTime();
+
   vm.scrollTo = function (id) {
     $location.hash(id);
     $anchorScroll();

@@ -9,6 +9,9 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
   $scope.posX = 0;
   $scope.posY = 0;
 
+  var today = new Date();
+  vm.timeNow = today.getTime();
+
   $scope.moveX = function (pixels) {
     $scope.posX = $scope.posX + pixels;
   };

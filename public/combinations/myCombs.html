@@ -6,7 +6,7 @@
           &times;
         </div>
         <div class="brands-hoverbox" ng-show='showBrands'>
-          <span ng-repeat="obj in item.combinations">
+          <span ng-repeat="obj in item.combinations" ng-init='item.thumbUrl = item.thumbUrl + "?" + combinations.timeNow'>
             {{obj.item.brandName}},
           </span>
         </div>

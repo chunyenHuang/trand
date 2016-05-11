@@ -1,4 +1,4 @@
-<div class="container" ng-init='ideas.display()'>
+<div class="container" ng-init='ideas.display(); ideas.detail.largeUrl = ideas.detail.largeUrl + "?" + ideas.timeNow'>
   <div class="row">
     <div class="col-md-12 text-center">
       <h3 ng-hide='logged'>

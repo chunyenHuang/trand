@@ -57,7 +57,7 @@
     <h1>See what's hot </h1>
     <div>
       <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="item in home.combs track by $index">
+        <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="item in home.combs track by $index" ng-init='item.thumbUrl = item.thumbUrl + "?" + home.timeNow'>
           <div class="ideas-box" ng-click='home.linkto();' ng-mouseenter="showBrands=true" ng-mouseleave="showBrands=false">
             <div class="brands-hoverbox" ng-show='showBrands'>
               <span ng-repeat="obj in item.combinations">
