@@ -3,14 +3,19 @@ body {
   /*background: rgb(230, 230, 230);*/
   font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
 }
-form input[type='text'] {
+input[type='text'] {
   border: 1px solid rgb(224, 224, 224);
 }
-form input[type='text']:hover {
+input[type='text']:hover {
   box-shadow: 0 0 0 0 rgb(217, 217, 217);
 }
-form input[type='text']:active {
+input[type='text']:active {
   box-shadow: 0 0 0 0 rgb(217, 217, 217);
+}
+.form-control:focus {
+  border-color: black;
+  box-shadow: 0 0 0 0;
+  outline: 0 none;
 }
 form .input-group-addon {
   border: 0px;
