@@ -14,6 +14,10 @@ User can share ideas with others.
 
 ![Trand-share](https://github.com/chunyenHuang/trand/blob/master/screenshots/cover2.jpeg)
 
+User can also share on Facebook.
+
+![Trand-share-fb](https://github.com/chunyenHuang/trand/blob/master/screenshots/share%20on%20facebook.png)
+
 ## Collections to Buy
 User can have own collections, an online closet or a dream list.
 
