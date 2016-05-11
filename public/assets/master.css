@@ -57,7 +57,7 @@ div[ng-click]{
 /*individual*/
 #greeting-mainbox-1 {
   margin-top: -70px;
-  background-image: url('http://s3.amazonaws.com/trand-public/cover1.png');
+  background-image: url('http://s3.amazonaws.com/trand-public/images/cover1.png');
   background-position: 50%;
   background-size: cover;
   height:80vh;
@@ -68,7 +68,7 @@ div[ng-click]{
 }
 
 #greeting-mainbox-2 {
-  background-image: url('http://s3.amazonaws.com/trand-public/cover2.png');
+  background-image: url('http://s3.amazonaws.com/trand-public/images/cover2.png');
   background-position: 50%;
   background-size: cover;
   height:90vh;
