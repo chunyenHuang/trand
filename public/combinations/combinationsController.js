@@ -144,6 +144,7 @@ function combinations($http, $scope, $location, userService, $sce, $rootScope, c
       }
       var newComb = $http.post('/combinations/new', json);
       newComb.then(function (response) {
+        console.log(response.data);
         if (response.status == '201') {
           $rootScope.currentCombination._id = response.data;
         }
