@@ -71,7 +71,7 @@ router.post('/new', function (req, res) {
             date: new Date(),
           }
         }, function (err, results) {
-          res.sendStatus(200);
+          res.status(200).send(req.body.information._id);
           db.close();
         })
       }
