@@ -1,0 +1,330 @@
+@import "custom/variables";
+
+body{
+	font-size:$text;
+  margin-top: $fixed-nav-offset;
+  font-family: $font-family;
+}
+
+input[type='text'] {
+  @include border(1px);
+}
+
+input[type='text']:hover {
+  box-shadow: $box-shadow-reset;
+}
+
+input[type='text']:active {
+  box-shadow: $box-shadow-reset;
+}
+
+.form-control:focus {
+  border-color: $color-dark;
+  box-shadow: $box-shadow-reset;
+  outline: 0 none;
+}
+
+form .input-group-addon {
+  @include border-reset();
+}
+
+a[ng-click],
+div[ng-click]{
+  cursor: $cursor-style1;
+}
+
+a[class^="btn"] {
+  color: $color-dark;
+}
+.no-padding {
+  padding: 0px;
+}
+.no-margin {
+  margin: 0px;
+}
+.no-background {
+  background-color: $color-primary;
+}
+.no-border {
+  border: 0px;
+}
+.no-hover:hover {
+  background-color: $color-primary;
+}
+.text-center {
+  text-align: center;
+}
+.btn{
+  @include border-reset();
+  background-color: $color-primary;
+}
+.btn:hover{
+  background-color: $color-hover;
+}
+.padding-left {
+  padding-left: 30px;
+}
+
+/*individual*/
+#greeting-mainbox-1 {
+  margin-top: -$fixed-nav-offset;
+  background-image: $cover-img1-url;
+  background-position: 50%;
+  background-size: cover;
+  height:80vh;
+}
+#greeting-mainbox-1-ad {
+  height:20vh;
+  margin-bottom: 0px;
+}
+
+#greeting-mainbox-2 {
+  background-image: $cover-img2-url;
+  background-position: 50%;
+  background-size: cover;
+  height:90vh;
+}
+#greeting-mainbox-3 {
+  height: 10vh;
+  margin-bottom: 0px;
+}
+#greeting-box {
+  position: relative;
+  top: 20%;
+  left: 20%;
+  height: 40vh;
+  min-width: 200px;
+  width: 20%;
+}
+
+.show-box {
+  margin-left: -10px;
+  margin-right: -10px;
+  margin-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-shadow: 0.5 0.5 0.5 0.5 black;
+  height: 350px;
+  @include  border(1px);
+}
+.show-box p {
+  height: 15px;
+  line-height: 15px;
+  overflow:hidden;
+}
+.show-box h5 {
+  text-align: center;
+}
+.show-box-hover {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  vertical-align: middle;
+}
+.show-box-hover .click-box {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  vertical-align: middle;
+  padding: 15px;
+  z-index: 1000;
+  border-radius: 25px 25px 25px 25px;
+  background-color: rgba(200, 200, 200, 0.9);
+}
+.img-box {
+  text-align: center;
+  vertical-align: middle;
+  height:250px;
+  padding-bottom: 10px;
+}
+.img-box img{
+  display: inline-block;
+  vertical-align: middle;
+  max-height:250px;
+  max-width: 100%;
+}
+.modal-dialog {
+  width: 85%;
+  max-width: 1200px;
+}
+.modal-descriptoin-box {
+  word-wrap: break-word;
+  max-width: 95%;
+}
+.greeting-logo-box {
+  float:none;
+  display:inline-block;
+  vertical-align:middle;
+  height: 100px;
+  line-height: 100px;
+}
+.greeting-logo-box img{
+  display:inline-block;
+  vertical-align:middle;
+  max-height: 100px;
+  max-width: 100%;
+}
+.nav-show-list {
+  padding: 5px;
+}
+.nav-show-list img {
+  margin-left: 5px;
+  height: 100%;
+}
+.btn-group {
+  margin-bottom: 20px;
+}
+.search-filters .selected {
+  background-color: $color-primary;
+}
+.search-filters .related {
+  background-color: $color-hover;
+}
+.search-filters input {
+  display: none;
+}
+.item-modal-gallery img{
+  max-width: 60px;
+  max-height: 60px;
+  margin: 5px;
+}
+.combinations {
+  background-color: rgb(255, 255, 255);
+  min-width: 1100px;
+}
+.combinations .col-xs-8 {
+  width: 750px;
+}
+.combinations .col-xs-4 {
+  width: 350px;
+}
+#combox-wrapper {
+  height: 800px;
+  width: 700px;
+  padding: 15px;
+  @include border(1px);
+}
+
+.combox {
+  display: inline-block;
+  position: absolute;
+  padding: 15px;
+  cursor: $cursor-style1;
+}
+.combox:hover{
+  background-color: $color-hover;
+  opacity: 0.8;
+  @include border(1px);
+  z-index: 100;
+}
+.combox:active{
+  background-color: $color-hover;
+  opacity: 0.8;
+  @include border(1px);
+  z-index: 100;
+}
+.combox:active:hover img{
+  opacity: 0.8;
+}
+.combox img{
+  max-width:100%;
+  max-height:100%;
+}
+.combox-top,
+.combox-bot,
+.combox-head,
+.combox-eye,
+.combox-foot,
+.combox-fullbody,
+.combox-neck,
+.combox-bags {
+  width: 200px;
+}
+.comb-thumbs img {
+  margin-bottom: 10px;
+  max-height: 60px;
+  max-width: 60px;
+  opacity: 0.3;
+}
+
+.comb-thumbs-preview-box {
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 20px;
+  height: 100px;
+  padding: 5px;
+  @include border(1px);
+  vertical-align: middle;
+}
+.comb-thumbs-preview-box img {
+  display: inline-block;
+  max-height: 90px;
+  max-width: 100%;
+}
+.onshow img{
+  opacity: 1;
+}
+.navbar-default {
+  background-color: $color-hover;
+}
+.retailers-box {
+  background-color: $color-hover;
+  padding: 15px;
+}
+#img-out {
+  padding: 20px;
+  margin: auto;
+  width: 165px;
+  height: 175px;
+}
+.ideas-box {
+  @include border(1px);
+  padding: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  min-height: 250px;
+  opacity: 0.8;
+}
+
+.brands-hoverbox {
+  position: absolute;
+  height: 30px;
+  width: 100%;
+  bottom: 26px;
+  margin-left: -16px;
+  margin-right: 15px;
+  padding: 15px;
+  font-size: 80%;
+  z-index: 100;
+}
+
+.item-modal-imgbox {
+  display: inline-block;
+  width: 100%;
+  height: 700px;
+  text-align: center;
+  line-height: 700px;
+}
+
+.item-modal-imgbox img {
+  display: inline-block;
+  max-width: 100%;
+  max-height: 100%;
+  z-index: 100;
+}
+
+.ideas-favorite-remove-box {
+  position: absolute;
+  text-align: center;
+  font-size: 2em;
+  top: 10%;
+  right: 10%;
+  z-index: 600;
+  margin: -1px;
+  height: 50px;
+  width: 50px;
+  line-height: 50px;
+  @include border(1px);
+  border-radius: 25px 25px 25px 25px;
+}

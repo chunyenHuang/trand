@@ -7,6 +7,7 @@ var htmlmin = require('gulp-htmlmin');
 var csso = require('gulp-csso');
 var server = '';
 var s3 = require('gulp-s3-upload')(config);
+var sass = require('gulp-sass');
 
 var homedir = {
   public: './public',
@@ -37,14 +38,18 @@ gulp.task('go', function () {
   nodemon({script: 'app.js'})
       // .on('start', ['routes', 'casper'])
 
-  var watcherCSS = gulp.watch('./public/assets/*.css', ['minifyCSS', 'upload_s3']);
+  var watcherCSS = gulp.watch('./public/assets/**/*.css', ['minifyCSS', 'upload_s3']);
   watcherCSS.on('change', function(event){
     console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
   })
-  var watcherCSS = gulp.watch('./public/**/*.js', ['copyJS', 'upload_s3']);
-  watcherCSS.on('change', function(event){
+  var watcherJS = gulp.watch('./public/**/*.js', ['copyJS', 'upload_s3']);
+  watcherJS.on('change', function(event){
     console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
   })
+  var watcherSCSS = gulp.watch('./public/assets/scss/*.scss', ['sass']);
+  var watcherBootstrap = gulp.watch('./public/assets/scss/**/*.scss', ['sass']);
+  var watcherBootstrap2 = gulp.watch('./public/assets/scss/bootstrap/mixins/*.scss', ['sass']);
+
 })
 
 // Travis
@@ -53,7 +58,6 @@ gulp.task('test', ['go'], function () {
     return process.exit();
   }, 10000);
 });
-
 gulp.task('minifyCSS', function(){
   return gulp.src('./public/**/*.css')
           .pipe(csso())
@@ -70,3 +74,9 @@ gulp.task("upload_s3", function() {
                 ACL: 'public-read',
             }));
 });
+
+gulp.task('sass', function() {
+  return gulp.src('./public/assets/scss/*.scss')
+              .pipe(sass().on('error', sass.logError))
+              .pipe(gulp.dest('./public/assets'))
+})
