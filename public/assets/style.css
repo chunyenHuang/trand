@@ -1,0 +1,32 @@
+body {
+  font-size: 11px; }
+
+.container {
+  font-size: 11px; }
+
+#box {
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px; }
+
+.ext, body {
+  font-size: 10px;
+  width: 400px; }
+
+body {
+  height: 600px; }
+
+table.hl {
+  margin: 2em 0; }
+  table.hl td.ln {
+    text-align: right; }
+
+li {
+  font-family: serif;
+  font-weight: bold;
+  font-size: 1.2em; }
+
+body {
+  text-align: center;
+  text-indent: 10px;
+  text-transform: none; }

@@ -1,0 +1,36 @@
+$text:12px;
+
+$font-family:'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+
+$fixed-nav-offset: 70px;
+
+$color-primary:rgb(255, 255, 255);
+$color-primary2:rgb(224, 224, 224);
+
+$color-hover:rgb(245, 245, 245);
+
+$color-active:rgb(194, 194, 194);
+
+$color-dark:rgb(60, 60, 60);
+
+$cursor-style1: pointer;
+
+$box-shadow-reset: 0 0 0 0 rgb(217, 217, 217);
+
+$cover-img1-url:url('http://s3.amazonaws.com/trand-public/images/cover1.png');
+$cover-img2-url:url('http://s3.amazonaws.com/trand-public/images/cover2.png');
+
+
+@mixin border($thinkness){
+	border:$thinkness solid $color-primary2;
+  background-color: $color-primary;
+  &:hover {
+    border:$thinkness solid $color-active;
+  }
+}
+
+@mixin border-reset(){
+  background-color: $color-primary;
+	border:0px;
+  border-radius: 0 0 0 0 ;
+}
