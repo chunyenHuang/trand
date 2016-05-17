@@ -44,7 +44,7 @@ gulp.task('go', function () {
   })
   var watcherJS = gulp.watch('./public/**/*.js', ['copyJS', 'upload_s3']);
   var watcherSCSS = gulp.watch('./public/assets/scss/*.scss', ['sass']);
-
+  var watcherSCSS = gulp.watch('./public/assets/scss/**/*.scss', ['sass']);
 })
 
 // Travis
