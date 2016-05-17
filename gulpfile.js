@@ -38,17 +38,12 @@ gulp.task('go', function () {
   nodemon({script: 'app.js'})
       // .on('start', ['routes', 'casper'])
 
-  var watcherCSS = gulp.watch('./public/assets/**/*.css', ['minifyCSS', 'upload_s3']);
+  var watcherCSS = gulp.watch('./public/**/*.css', ['minifyCSS', 'upload_s3']);
   watcherCSS.on('change', function(event){
     console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
   })
   var watcherJS = gulp.watch('./public/**/*.js', ['copyJS', 'upload_s3']);
-  watcherJS.on('change', function(event){
-    console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-  })
   var watcherSCSS = gulp.watch('./public/assets/scss/*.scss', ['sass']);
-  var watcherBootstrap = gulp.watch('./public/assets/scss/**/*.scss', ['sass']);
-  var watcherBootstrap2 = gulp.watch('./public/assets/scss/bootstrap/mixins/*.scss', ['sass']);
 
 })
 
