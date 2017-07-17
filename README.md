@@ -1,5 +1,7 @@
 # [Trand](http://trand.herokuapp.com) - Explore Fashion's Infinite Style.
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/chunyenHuang/trand.svg)](https://greenkeeper.io/)
+
 Trand [(trand.herokuapp.com)](http://trand.herokuapp.com) is a website for people to share their fashion ideas with the world.  
 
 ![Trand-cover](https://github.com/chunyenHuang/trand/blob/master/screenshots/cover1.png)
