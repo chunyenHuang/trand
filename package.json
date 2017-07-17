@@ -36,16 +36,16 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
+    "chai": "^4.1.0",
     "gulp": "^3.9.1",
-    "gulp-casperjs": "0.0.5",
-    "gulp-csso": "^2.0.0",
-    "gulp-htmlmin": "^2.0.0",
-    "gulp-mocha": "^2.2.0",
+    "gulp-casperjs": "0.0.6",
+    "gulp-csso": "^3.0.0",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-mocha": "^4.3.1",
     "gulp-nodemon": "^2.0.6",
     "gulp-s3-upload": "^1.6.0",
-    "gulp-sass": "^2.3.1",
-    "mocha": "^2.4.5",
+    "gulp-sass": "^3.1.0",
+    "mocha": "^3.4.2",
     "phantomjs": "^2.1.7"
   }
 }
